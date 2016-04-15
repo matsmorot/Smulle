@@ -13,6 +13,7 @@ protocol PlayerType {
     var points: Int { get set }
     var wins: Int { get set }
     var hand: Array<Card> { get set }
+    var faceUpCards: Bool { get }
 }
 
 class Player: PlayerType {
@@ -20,12 +21,14 @@ class Player: PlayerType {
     var points: Int
     var wins: Int
     var hand: Array<Card>
+    var faceUpCards: Bool
     
-    init(name: String) {
+    init(name: String, faceUpCards: Bool) {
         self.name = name
         points = 0
         wins = 0
         hand = []
+        self.faceUpCards = faceUpCards
     }
     
     func takeCards(numCards: Int, fromDeck: Deck) {

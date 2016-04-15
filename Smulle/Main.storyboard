@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Smulle" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qPD-I1-j3l">
+                                <rect key="frame" x="20" y="556" width="560" height="44"/>
+                                <items>
+                                    <barButtonItem title="Item" id="M0Z-Or-q3f"/>
+                                </items>
+                            </toolbar>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="4HD-SU-M4Z">
+                                <rect key="frame" x="20" y="20" width="560" height="536"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" distribution="equalSpacing" alignment="center" spacing="-10" translatesAutoresizingMaskIntoConstraints="NO" id="FgP-en-TQc">
+                                        <rect key="frame" x="255" y="0.0" width="50" height="166"/>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" distribution="fillEqually" alignment="center" spacing="-30" translatesAutoresizingMaskIntoConstraints="NO" id="fnS-gc-zlO">
+                                        <rect key="frame" x="255" y="186" width="50" height="165"/>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" distribution="equalSpacing" alignment="center" spacing="-10" translatesAutoresizingMaskIntoConstraints="NO" id="Ecb-VB-5yh">
+                                        <rect key="frame" x="255" y="371" width="50" height="166"/>
+                                    </stackView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="fnS-gc-zlO" secondAttribute="trailing" constant="-20" id="Tkw-wc-O0z"/>
+                                    <constraint firstItem="fnS-gc-zlO" firstAttribute="leading" secondItem="4HD-SU-M4Z" secondAttribute="leading" constant="-20" id="eu7-NF-gB6"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="Tkw-wc-O0z"/>
+                                        <exclude reference="eu7-NF-gB6"/>
+                                    </mask>
+                                </variation>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.20311620831489563" green="0.4304046630859375" blue="0.26064181327819824" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="qPD-I1-j3l" secondAttribute="trailing" id="40g-HI-wrf"/>
+                            <constraint firstItem="4HD-SU-M4Z" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="BF1-fp-jM7"/>
+                            <constraint firstAttribute="bottom" secondItem="4HD-SU-M4Z" secondAttribute="bottom" constant="44" id="C5r-0I-XPP"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="4HD-SU-M4Z" secondAttribute="trailing" id="Izx-IE-yJZ"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="qPD-I1-j3l" secondAttribute="bottom" id="e14-fi-a6Y"/>
+                            <constraint firstItem="qPD-I1-j3l" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="qC9-KP-GBy"/>
+                            <constraint firstItem="4HD-SU-M4Z" firstAttribute="leading" secondItem="qPD-I1-j3l" secondAttribute="leading" id="sWk-Z4-Pqy"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="player1StackView" destination="Ecb-VB-5yh" id="QoO-Jd-gKQ"/>
+                        <outlet property="player2StackView" destination="FgP-en-TQc" id="leC-Ei-8CS"/>
+                        <outlet property="tableCardsStackView" destination="fnS-gc-zlO" id="ua9-QP-mbJ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="397" y="337"/>
+        </scene>
+    </scenes>
+</document>

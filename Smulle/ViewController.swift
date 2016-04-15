@@ -9,91 +9,110 @@
 import UIKit
 
 class ViewController: UIViewController {
-
-    @IBOutlet weak var cardPlace: UIImageView!
     
+    @IBOutlet weak var player2StackView: UIStackView!
+    @IBOutlet weak var tableCardsStackView: UIStackView!
+    @IBOutlet weak var player1StackView: UIStackView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        
         let decks = Deck(numDecks: 2)
        
         decks.shuffleDeck()
         
-        let player1 = Player(name: "Nisse")
-        let player2 = Player(name: "Albert")
+        let player1 = Player(name: "Nisse", faceUpCards: true)
+        let player2 = Player(name: "Albert", faceUpCards: false)
+        let tableCards = Player(name: "Table", faceUpCards: true)
         player1.takeCards(4, fromDeck: decks)
         player2.takeCards(4, fromDeck: decks)
+        tableCards.takeCards(4, fromDeck: decks)
     
-
-        let cardHolder = UIImageView()
-        var cardHolders = Array(count: decks.deck.count, repeatedValue: cardHolder)
-        cardHolders[0].frame.offsetInPlace(dx: cardPlace.frame.origin.x, dy: cardPlace.frame.origin.y)
-        self.view.addSubview(cardHolders[0])
         
-        // Print out all cards in deck in ViewController
-        /*
-        for i in 1..<decks.deck.count {
-            let cardImage = UIImage(named: "\(decks.deck[i].rank.simpleDescription())_\(decks.deck[i].suit)")
-
-            cardHolders[i] = UIImageView(image: cardImage)
+        // Display cards in play
         
-            cardHolders[i].frame.offsetInPlace(dx: cardHolders[i-1].frame.origin.x + 2, dy: cardHolders[i-1].frame.origin.y)
-            self.view.addSubview(cardHolders[i])
+        func displayCards(player: Player, stack: UIStackView) {
+            for card in 0..<player.hand.count {
+                let tap = UITapGestureRecognizer(target: self, action: #selector(ViewController.cardTapped(_:)))
+                
+                var cardImage = UIImageView(image: player.hand[card].cardImage)
+                let cardObject = player.hand[card]
+                
+                // Create a shadow for each card
+                cardImage.layer.shadowPath = UIBezierPath(rect: cardImage.bounds).CGPath
+                cardImage.layer.shadowColor = UIColor.blackColor().CGColor
+                cardImage.layer.shadowOpacity = 0.6
+                cardImage.layer.shadowOffset = CGSizeZero
+                cardImage.layer.shadowRadius = 1
+                
+                if player.faceUpCards == false {
+                    let cardBackImage = UIImage(named: "Back")
+                    cardImage = UIImageView(image: cardBackImage)
+                    cardObject.setContentHuggingPriority(1000, forAxis: UILayoutConstraintAxis.Horizontal)
+                    cardObject.setContentCompressionResistancePriority(1000, forAxis: UILayoutConstraintAxis.Horizontal)
+                } else {
+                
+                cardObject.userInteractionEnabled = true
+                cardObject.setContentHuggingPriority(1000, forAxis: UILayoutConstraintAxis.Horizontal)
+                cardObject.setContentCompressionResistancePriority(1000, forAxis: UILayoutConstraintAxis.Horizontal)
+                }
+                cardObject.addGestureRecognizer(tap)
+                cardObject.heightAnchor.constraintEqualToConstant(cardImage.frame.height).active = true
+                cardObject.widthAnchor.constraintEqualToConstant(cardImage.frame.width).active = true
+                cardObject.addSubview(cardImage)
+                stack.addArrangedSubview(cardObject)
+                
+            }
         }
-        */
         
-        // Display cards in players hands
-        let player1Card1Image = UIImageView(image: player1.hand[0].cardImage)
-        let player1Card2Image = UIImageView(image: player1.hand[1].cardImage)
-        let player1Card3Image = UIImageView(image: player1.hand[2].cardImage)
-        let player1Card4Image = UIImageView(image: player1.hand[3].cardImage)
+        displayCards(player1, stack: player1StackView)
+        displayCards(tableCards, stack: tableCardsStackView)
+        displayCards(player2, stack: player2StackView)
         
-        let player2Card1Image = UIImageView(image: player2.hand[0].cardImage)
-        let player2Card2Image = UIImageView(image: player2.hand[1].cardImage)
-        let player2Card3Image = UIImageView(image: player2.hand[2].cardImage)
-        let player2Card4Image = UIImageView(image: player2.hand[3].cardImage)
         
-        let player1CardPlaceX = self.view.frame.width / 2 - (player1Card1Image.frame.width * 2)
-        let player1CardPlaceY = self.view.frame.height - self.view.frame.height / 5
+        // Debugging
         
-        let player2CardPlaceX = player1CardPlaceX
-        let player2CardPlaceY = (self.view.frame.height / 5) - player2Card1Image.frame.height
+        let testCard = UIImageView(image: decks.deck[0].cardImage)
+        let testCardOverlayImage = testCard.image?.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
+        //testCard.image = testCard.image?.imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
+        //testCard.tintColor = UIColor.blueColor().colorWithAlphaComponent(0.2)
+        testCard.highlightedImage = testCardOverlayImage
+        testCard.alpha = 0.2
+        testCard.highlighted = true
+        testCard.layer.borderWidth = 2.0
+        self.view.addSubview(testCard)
         
-        player1Card1Image.frame.offsetInPlace(dx: player1CardPlaceX, dy: player1CardPlaceY)
-        player1Card2Image.frame.offsetInPlace(dx: player1CardPlaceX + player1Card2Image.frame.width, dy: player1CardPlaceY)
-        player1Card3Image.frame.offsetInPlace(dx: player1CardPlaceX + player1Card3Image.frame.width * 2, dy: player1CardPlaceY)
-        player1Card4Image.frame.offsetInPlace(dx: player1CardPlaceX + player1Card4Image.frame.width * 3, dy: player1CardPlaceY)
-        
-        player2Card1Image.frame.offsetInPlace(dx: player2CardPlaceX, dy: player2CardPlaceY)
-        player2Card2Image.frame.offsetInPlace(dx: player2CardPlaceX + player2Card2Image.frame.width, dy: player2CardPlaceY)
-        player2Card3Image.frame.offsetInPlace(dx: player2CardPlaceX + player2Card3Image.frame.width * 2, dy: player2CardPlaceY)
-        player2Card4Image.frame.offsetInPlace(dx: player2CardPlaceX + player2Card4Image.frame.width * 3, dy: player2CardPlaceY)
-        
-        self.view.addSubview(player1Card1Image)
-        self.view.addSubview(player1Card2Image)
-        self.view.addSubview(player1Card3Image)
-        self.view.addSubview(player1Card4Image)
-        
-        self.view.addSubview(player2Card1Image)
-        self.view.addSubview(player2Card2Image)
-        self.view.addSubview(player2Card3Image)
-        self.view.addSubview(player2Card4Image)
-            
-        // Debug prints
         print(decks)
         for card in decks.deck {
             print("\(card.rank.simpleDescription()) of \(card.suit)")
         }
         print(decks.deck.count)
         print("Top card in deck: \(decks.deck[0].rank.simpleDescription())_\(decks.deck[0].suit)")
-        print("\(player1.name) has \(player1.hand)")
-        for c in player1.hand {
-            print("Hand: \(c.rank.simpleDescription()) of \(c.suit)")
-        }
 
+        print(tableCardsStackView.arrangedSubviews.count)
+    }
+    
+    override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
+        
+        coordinator.animateAlongsideTransition({ (UIViewControllerTransitionCoordinatorContext) -> Void in
+            
+            let orient = UIApplication.sharedApplication().statusBarOrientation
+            
+            switch orient {
+            case .Portrait:
+                print("Portrait")
+                self.tableCardsStackView.distribution = .FillEqually
+            default:
+                print("Anything But Portrait")
+                self.tableCardsStackView.distribution = .EqualSpacing
+            }
+            
+            }, completion: { (UIViewControllerTransitionCoordinatorContext) -> Void in
+                print("rotation completed")
+        })
+        
+        super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
     }
 
     override func didReceiveMemoryWarning() {
@@ -101,6 +120,30 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
+    func cardTapped(sender: UITapGestureRecognizer) {
+        
+        let card = sender.view as! Card
+        
+        if card.highlighted == false {
+            // Move tapped card 20p up and increase shadow
+            card.frame.offsetInPlace(dx: 0, dy: -20)
+            card.layer.shadowPath = UIBezierPath(rect: card.bounds).CGPath
+            card.layer.shadowOpacity = 0.6
+            card.layer.shadowOffset = CGSizeZero
+            card.layer.shadowRadius = 5
+            card.highlighted = true
+        } else {
+            // Move tapped card 20p down and decrease shadow
+            card.frame.offsetInPlace(dx: 0, dy: 20)
+            //card.layer.shadowPath = UIBezierPath(rect: card.bounds).CGPath
+            //card.layer.shadowOpacity = 0.6
+            //card.layer.shadowOffset = CGSizeZero
+            card.layer.shadowRadius = 1
+            card.highlighted = false
+        }
+        print("\(card.rank) of \(card.suit) tapped! Points: \(card.getCardPoints(card))")
+    }
+    
 
 }
 

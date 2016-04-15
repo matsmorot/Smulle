@@ -33,7 +33,6 @@ class Deck {
     func getTopCardFromDeck() -> Card {
         let card = deck[0]
         deck.removeAtIndex(0)
-        print("Top card taken: \(card.rank)")
         return card
     }
 }

@@ -10,10 +10,10 @@
 		B29F6D8C1CB2B1AB0021194D /* Deck.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29F6D8B1CB2B1AB0021194D /* Deck.swift */; };
 		B2C097BB1C9AE738003BDA9E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C097BA1C9AE738003BDA9E /* AppDelegate.swift */; };
 		B2C097BD1C9AE738003BDA9E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C097BC1C9AE738003BDA9E /* ViewController.swift */; };
-		B2C097C01C9AE738003BDA9E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B2C097BE1C9AE738003BDA9E /* Main.storyboard */; };
 		B2C097C21C9AE738003BDA9E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B2C097C11C9AE738003BDA9E /* Assets.xcassets */; };
 		B2C097C51C9AE738003BDA9E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B2C097C31C9AE738003BDA9E /* LaunchScreen.storyboard */; };
 		B2C097CD1C9B0A4E003BDA9E /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C097CC1C9B0A4E003BDA9E /* Card.swift */; };
+		B2C7DB931CBC49B300AFB1AA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B2C7DB921CBC49B300AFB1AA /* Main.storyboard */; };
 		B2E13B651CAF3043002F0613 /* GamePlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E13B641CAF3043002F0613 /* GamePlay.swift */; };
 		B2E13B671CAFFF2E002F0613 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E13B661CAFFF2E002F0613 /* Player.swift */; };
 /* End PBXBuildFile section */
@@ -23,11 +23,11 @@
 		B2C097B71C9AE738003BDA9E /* Smulle.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Smulle.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2C097BA1C9AE738003BDA9E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B2C097BC1C9AE738003BDA9E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		B2C097BF1C9AE738003BDA9E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B2C097C11C9AE738003BDA9E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B2C097C41C9AE738003BDA9E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B2C097C61C9AE738003BDA9E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B2C097CC1C9B0A4E003BDA9E /* Card.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
+		B2C7DB921CBC49B300AFB1AA /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		B2E13B641CAF3043002F0613 /* GamePlay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GamePlay.swift; sourceTree = "<group>"; };
 		B2E13B661CAFFF2E002F0613 /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -68,8 +68,8 @@
 				B2C097CC1C9B0A4E003BDA9E /* Card.swift */,
 				B29F6D8B1CB2B1AB0021194D /* Deck.swift */,
 				B2E13B641CAF3043002F0613 /* GamePlay.swift */,
-				B2C097BE1C9AE738003BDA9E /* Main.storyboard */,
 				B2C097C11C9AE738003BDA9E /* Assets.xcassets */,
+				B2C7DB921CBC49B300AFB1AA /* Main.storyboard */,
 				B2C097C31C9AE738003BDA9E /* LaunchScreen.storyboard */,
 				B2C097C61C9AE738003BDA9E /* Info.plist */,
 			);
@@ -135,9 +135,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B2C7DB931CBC49B300AFB1AA /* Main.storyboard in Resources */,
 				B2C097C51C9AE738003BDA9E /* LaunchScreen.storyboard in Resources */,
 				B2C097C21C9AE738003BDA9E /* Assets.xcassets in Resources */,
-				B2C097C01C9AE738003BDA9E /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -160,14 +160,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		B2C097BE1C9AE738003BDA9E /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				B2C097BF1C9AE738003BDA9E /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		B2C097C31C9AE738003BDA9E /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
