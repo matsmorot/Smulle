@@ -33,20 +33,18 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" distribution="fillEqually" alignment="center" spacing="-30" translatesAutoresizingMaskIntoConstraints="NO" id="fnS-gc-zlO">
                                         <rect key="frame" x="255" y="186" width="50" height="165"/>
                                     </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" distribution="equalSpacing" alignment="center" spacing="-10" translatesAutoresizingMaskIntoConstraints="NO" id="Ecb-VB-5yh">
-                                        <rect key="frame" x="255" y="371" width="50" height="166"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" alignment="center" spacing="25" translatesAutoresizingMaskIntoConstraints="NO" id="gbc-Ny-i8e">
+                                        <rect key="frame" x="93" y="371" width="375" height="166"/>
+                                        <subviews>
+                                            <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" distribution="equalSpacing" alignment="center" spacing="-10" translatesAutoresizingMaskIntoConstraints="NO" id="Ecb-VB-5yh">
+                                                <rect key="frame" x="0.0" y="0.0" width="240" height="166"/>
+                                            </stackView>
+                                            <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" distribution="fillEqually" alignment="center" spacing="-50" translatesAutoresizingMaskIntoConstraints="NO" id="gtA-aH-ELw">
+                                                <rect key="frame" x="265" y="0.0" width="110" height="166"/>
+                                            </stackView>
+                                        </subviews>
                                     </stackView>
                                 </subviews>
-                                <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="fnS-gc-zlO" secondAttribute="trailing" constant="-20" id="Tkw-wc-O0z"/>
-                                    <constraint firstItem="fnS-gc-zlO" firstAttribute="leading" secondItem="4HD-SU-M4Z" secondAttribute="leading" constant="-20" id="eu7-NF-gB6"/>
-                                </constraints>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="Tkw-wc-O0z"/>
-                                        <exclude reference="eu7-NF-gB6"/>
-                                    </mask>
-                                </variation>
                             </stackView>
                         </subviews>
                         <color key="backgroundColor" red="0.20311620831489563" green="0.4304046630859375" blue="0.26064181327819824" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -62,6 +60,7 @@
                     </view>
                     <connections>
                         <outlet property="player1StackView" destination="Ecb-VB-5yh" id="QoO-Jd-gKQ"/>
+                        <outlet property="player1StockView" destination="gtA-aH-ELw" id="Jpy-jY-bfh"/>
                         <outlet property="player2StackView" destination="FgP-en-TQc" id="leC-Ei-8CS"/>
                         <outlet property="tableCardsStackView" destination="fnS-gc-zlO" id="ua9-QP-mbJ"/>
                     </connections>

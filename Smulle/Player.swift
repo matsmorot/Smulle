@@ -21,6 +21,9 @@ class Player: PlayerType {
     var points: Int
     var wins: Int
     var hand: Array<Card>
+    var stock: Array<Card>
+    var smulleCards: Array<Card>
+    var tabbeCards: Array<Card>
     var faceUpCards: Bool
     
     init(name: String, faceUpCards: Bool) {
@@ -28,10 +31,13 @@ class Player: PlayerType {
         points = 0
         wins = 0
         hand = []
+        stock = []
+        smulleCards = []
+        tabbeCards = []
         self.faceUpCards = faceUpCards
     }
     
-    func takeCards(numCards: Int, fromDeck: Deck) {
+    func takeCardsFromDeck(numCards: Int, fromDeck: Deck) {
         for _ in 1...numCards {
             hand.append(fromDeck.getTopCardFromDeck())
         }
