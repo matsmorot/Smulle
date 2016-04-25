@@ -16,30 +16,24 @@ protocol PlayerType {
     var faceUpCards: Bool { get }
 }
 
-class Player: PlayerType {
+class Player: CardHolder, PlayerType {
     var name: String
     var points: Int
     var wins: Int
-    var hand: Array<Card>
     var stock: Array<Card>
     var smulleCards: Array<Card>
-    var tabbeCards: Array<Card>
+    var tabbeCards: Int
     var faceUpCards: Bool
+    var isDealer: Bool
     
     init(name: String, faceUpCards: Bool) {
         self.name = name
         points = 0
         wins = 0
-        hand = []
         stock = []
         smulleCards = []
-        tabbeCards = []
+        tabbeCards = 0
         self.faceUpCards = faceUpCards
-    }
-    
-    func takeCardsFromDeck(numCards: Int, fromDeck: Deck) {
-        for _ in 1...numCards {
-            hand.append(fromDeck.getTopCardFromDeck())
-        }
+        isDealer = false
     }
 }

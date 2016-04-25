@@ -14,14 +14,18 @@ class Card: UIImageView {
     var rank: Rank
     var suit: Suit
     var cardImage = UIImage(named: "Back")
+    var cardImageView: UIImageView
     
     init(rank: Rank, suit: Suit) {
         
         self.rank = rank
         self.suit = suit
         cardImage = UIImage(named: "\(self.rank.simpleDescription())_\(self.suit)")
+        cardImageView = UIImageView(image: cardImage)
         
         super.init(frame: CGRectMake(0, 0, 0, 0)) // Initialize a dummy UIView
+        
+        addShadow(cardImageView)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -69,5 +73,16 @@ class Card: UIImageView {
             return 0
         }
     
+    }
+    
+    func addShadow(cardImage: UIImageView) {
+        
+        cardImage.layer.shadowPath = UIBezierPath(rect: cardImage.bounds).CGPath //reduce cost of rendering
+        // Create a shadow
+        cardImage.layer.shadowColor = UIColor.blackColor().CGColor
+        cardImage.layer.shadowOpacity = 0.6
+        cardImage.layer.shadowOffset = CGSizeZero
+        cardImage.layer.shadowRadius = 1
+        
     }
 }
