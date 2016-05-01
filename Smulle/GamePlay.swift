@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 // Shuffle functions written by Nate Cook ---
 extension CollectionType {
@@ -33,3 +34,21 @@ extension MutableCollectionType where Index == Int {
 }
 // -------------------------------------------
 
+class GamePlay {
+
+    var cardHolderIsActive = false
+    let numberOfRounds = 4
+    var numberOfCardsHighlighted = 0
+    var sumOfHighlightedCards = 0
+    var highlightedCards: Array<Card> = []
+    let player1 = Player(name: "You", faceUpCards: true)
+    let player2 = Player(name: "Komp Jutah", faceUpCards: false)
+    var players: Array<Player> = []
+    var activePlayer: Player = Player(name: "Dummy", faceUpCards: false)
+    let tableCards = CardHolder()
+    var deckPosition: CGRect = CGRect(x: 0, y: 0, width: 0, height: 0)
+    
+    let decks = Deck(numDecks: 2)
+
+    
+}

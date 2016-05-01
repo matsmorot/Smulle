@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 protocol PlayerType {
     var name: String { get }
@@ -25,6 +26,9 @@ class Player: CardHolder, PlayerType {
     var tabbeCards: Int
     var faceUpCards: Bool
     var isDealer: Bool
+    var stackView: UIStackView
+    var stockView: UIStackView
+    var smulleView: UIStackView
     
     init(name: String, faceUpCards: Bool) {
         self.name = name
@@ -35,5 +39,8 @@ class Player: CardHolder, PlayerType {
         tabbeCards = 0
         self.faceUpCards = faceUpCards
         isDealer = false
+        stackView = UIStackView()
+        stockView = UIStackView()
+        smulleView = UIStackView()
     }
 }
