@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -49,15 +49,15 @@
                                 <rect key="frame" x="20" y="61" width="560" height="495"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" alignment="center" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="bKC-nw-UN7">
-                                        <rect key="frame" x="193" y="0.0" width="175" height="165"/>
+                                        <rect key="frame" x="114" y="0.0" width="333" height="165"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" distribution="equalSpacing" alignment="center" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="FgP-en-TQc">
-                                                <rect key="frame" x="0.0" y="58" width="50" height="50"/>
+                                                <rect key="frame" x="0.0" y="58" width="208" height="50"/>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" axis="vertical" distribution="equalCentering" spacing="27" translatesAutoresizingMaskIntoConstraints="NO" id="VhI-dw-vHr" userLabel="Player 2 Stock And Smulle View">
-                                                <rect key="frame" x="65" y="19" width="110" height="127"/>
+                                                <rect key="frame" x="223" y="19" width="110" height="127"/>
                                                 <subviews>
-                                                    <stackView opaque="NO" clipsSubviews="YES" contentMode="top" misplaced="YES" axis="vertical" distribution="fillEqually" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="CIo-41-E2x">
+                                                    <stackView opaque="NO" clipsSubviews="YES" contentMode="top" misplaced="YES" spacing="-50" translatesAutoresizingMaskIntoConstraints="NO" id="CIo-41-E2x">
                                                         <rect key="frame" x="0.0" y="0.0" width="110" height="50"/>
                                                     </stackView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" spacing="-50" translatesAutoresizingMaskIntoConstraints="NO" id="yY0-UA-AUD">
@@ -68,26 +68,26 @@
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" alignment="center" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="wC5-ND-10O">
-                                        <rect key="frame" x="228" y="165" width="105" height="165"/>
+                                        <rect key="frame" x="149" y="165" width="263" height="165"/>
                                         <subviews>
-                                            <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" distribution="fillEqually" alignment="center" spacing="-30" translatesAutoresizingMaskIntoConstraints="NO" id="fnS-gc-zlO">
-                                                <rect key="frame" x="0.0" y="58" width="50" height="50"/>
+                                            <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" distribution="fillEqually" alignment="center" spacing="-30" baselineRelativeArrangement="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fnS-gc-zlO">
+                                                <rect key="frame" x="0.0" y="58" width="208" height="50"/>
                                             </stackView>
-                                            <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Uvi-6t-fQP">
-                                                <rect key="frame" x="55" y="58" width="50" height="50"/>
+                                            <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" baselineRelativeArrangement="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Uvi-6t-fQP">
+                                                <rect key="frame" x="213" y="58" width="50" height="50"/>
                                             </stackView>
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" alignment="center" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="gbc-Ny-i8e">
-                                        <rect key="frame" x="193" y="330" width="175" height="165"/>
+                                        <rect key="frame" x="114" y="330" width="333" height="165"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" distribution="equalSpacing" alignment="center" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="Ecb-VB-5yh">
-                                                <rect key="frame" x="0.0" y="58" width="50" height="50"/>
+                                                <rect key="frame" x="0.0" y="58" width="208" height="50"/>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" axis="vertical" distribution="equalCentering" spacing="27" translatesAutoresizingMaskIntoConstraints="NO" id="In8-q6-OcT">
-                                                <rect key="frame" x="65" y="19" width="110" height="127"/>
+                                                <rect key="frame" x="223" y="19" width="110" height="127"/>
                                                 <subviews>
-                                                    <stackView opaque="NO" clipsSubviews="YES" contentMode="top" misplaced="YES" axis="vertical" distribution="fillEqually" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="q9a-h3-oJS">
+                                                    <stackView opaque="NO" clipsSubviews="YES" contentMode="top" misplaced="YES" spacing="-50" translatesAutoresizingMaskIntoConstraints="NO" id="q9a-h3-oJS">
                                                         <rect key="frame" x="0.0" y="0.0" width="110" height="50"/>
                                                     </stackView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" spacing="-50" translatesAutoresizingMaskIntoConstraints="NO" id="gtA-aH-ELw">
@@ -102,7 +102,6 @@
                         </subviews>
                         <color key="backgroundColor" red="0.18356444250000001" green="1" blue="0.61819109269999994" alpha="0.60048491380000002" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstAttribute="trailingMargin" secondItem="qPD-I1-j3l" secondAttribute="trailing" id="40g-HI-wrf"/>
                             <constraint firstItem="4HD-SU-M4Z" firstAttribute="top" secondItem="gnb-5J-zwn" secondAttribute="bottom" id="70h-eC-We3"/>
                             <constraint firstItem="gnb-5J-zwn" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="-3" id="98B-nO-c77"/>
                             <constraint firstAttribute="trailingMargin" secondItem="4HD-SU-M4Z" secondAttribute="trailing" id="GfQ-NS-6Ni"/>
@@ -114,17 +113,10 @@
                             <constraint firstAttribute="leadingMargin" secondItem="qPD-I1-j3l" secondAttribute="leading" id="fSd-o6-bQC"/>
                             <constraint firstItem="gnb-5J-zwn" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="gOa-nQ-w8C"/>
                             <constraint firstAttribute="trailingMargin" secondItem="gnb-5J-zwn" secondAttribute="trailing" constant="-20" id="leF-c7-EUi"/>
-                            <constraint firstItem="qPD-I1-j3l" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="qC9-KP-GBy"/>
                             <constraint firstItem="4HD-SU-M4Z" firstAttribute="bottom" secondItem="qPD-I1-j3l" secondAttribute="top" id="tPA-bs-K72"/>
                             <constraint firstItem="LW3-9K-aNz" firstAttribute="top" secondItem="CeU-JY-1QL" secondAttribute="bottom" constant="8" symbolic="YES" id="tlN-F6-4Ky"/>
                             <constraint firstItem="LW3-9K-aNz" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="22" id="xSr-ro-v76"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="40g-HI-wrf"/>
-                                <exclude reference="qC9-KP-GBy"/>
-                            </mask>
-                        </variation>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>

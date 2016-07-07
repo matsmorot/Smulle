@@ -13,19 +13,23 @@ class Card: UIImageView {
     
     var rank: Rank
     var suit: Suit
-    var cardImage = UIImage(named: "Back")
+    var cardImageBack: UIImage
+    var cardImage: UIImage
     var cardImageView: UIImageView
+    var faceUp: Bool
     
     init(rank: Rank, suit: Suit) {
         
         self.rank = rank
         self.suit = suit
-        cardImage = UIImage(named: "\(self.rank.simpleDescription())_\(self.suit)")
+        cardImageBack = UIImage(named: "Back")!
+        cardImage = UIImage(named: "\(self.rank.simpleDescription())_\(self.suit)")!
         cardImageView = UIImageView(image: cardImage)
+        faceUp = true
         
         super.init(frame: CGRectMake(0, 0, 0, 0)) // Initialize a dummy UIView
         
-        addShadow(cardImageView)
+        addBorder(cardImageView)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -40,6 +44,7 @@ class Card: UIImageView {
     }
     
     enum Rank: Int {
+        
         case Ace = 1
         case Two, Three, Four, Five, Six, Seven, Eight, Nine, Ten
         case Jack, Queen, King
@@ -80,9 +85,20 @@ class Card: UIImageView {
         cardImage.layer.shadowPath = UIBezierPath(rect: cardImage.bounds).CGPath //reduce cost of rendering
         // Create a shadow
         cardImage.layer.shadowColor = UIColor.blackColor().CGColor
-        cardImage.layer.shadowOpacity = 0.6
+        cardImage.layer.shadowOpacity = 0.3
         cardImage.layer.shadowOffset = CGSizeZero
-        cardImage.layer.shadowRadius = 1
+        cardImage.layer.shadowRadius = 0.5
         
     }
+    
+    func addBorder(cardImage: UIImageView) {
+        
+        cardImage.layer.borderWidth = 0.6
+        cardImage.layer.cornerRadius = 2
+        let borderColor = UIColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5).CGColor
+        cardImage.layer.borderColor = borderColor
+        
+    }
+    
+    
 }
