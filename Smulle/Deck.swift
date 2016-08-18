@@ -31,8 +31,8 @@ class Deck {
     }
     
     func getTopCardFromDeck() -> Card {
-        let card = deck[0]
-        deck.removeAtIndex(0)
-        return card
+        let card = deck.last
+        deck.removeAtIndex(deck.indexOf(card!)!)
+        return card!
     }
 }

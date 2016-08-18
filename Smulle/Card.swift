@@ -17,6 +17,7 @@ class Card: UIImageView {
     var cardImage: UIImage
     var cardImageView: UIImageView
     var faceUp: Bool
+    var origin: CGPoint
     
     init(rank: Rank, suit: Suit) {
         
@@ -26,6 +27,7 @@ class Card: UIImageView {
         cardImage = UIImage(named: "\(self.rank.simpleDescription())_\(self.suit)")!
         cardImageView = UIImageView(image: cardImage)
         faceUp = true
+        origin = CGPoint(x: 0, y: 0)
         
         super.init(frame: CGRectMake(0, 0, 0, 0)) // Initialize a dummy UIView
         

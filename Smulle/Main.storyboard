@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Game View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Smulle" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="GameViewController" customModule="Smulle" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -45,7 +45,7 @@
                                 <color key="textColor" red="0.73706556950000002" green="0.97047275639999997" blue="0.81056173330000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="4HD-SU-M4Z">
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="4HD-SU-M4Z" userLabel="Main Stack View">
                                 <rect key="frame" x="20" y="61" width="560" height="495"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" alignment="center" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="bKC-nw-UN7">
@@ -68,13 +68,10 @@
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" alignment="center" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="wC5-ND-10O">
-                                        <rect key="frame" x="149" y="165" width="263" height="165"/>
+                                        <rect key="frame" x="176" y="165" width="208" height="165"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" distribution="fillEqually" alignment="center" spacing="-30" baselineRelativeArrangement="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fnS-gc-zlO">
                                                 <rect key="frame" x="0.0" y="58" width="208" height="50"/>
-                                            </stackView>
-                                            <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" baselineRelativeArrangement="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Uvi-6t-fQP">
-                                                <rect key="frame" x="213" y="58" width="50" height="50"/>
                                             </stackView>
                                         </subviews>
                                     </stackView>
@@ -121,6 +118,7 @@
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
                     <connections>
+                        <outlet property="mainStackView" destination="4HD-SU-M4Z" id="1vR-Qw-q1g"/>
                         <outlet property="navigationBar" destination="gnb-5J-zwn" id="IQe-WZ-qu9"/>
                         <outlet property="player1NameLabel" destination="CeU-JY-1QL" id="5Hd-pf-KHi"/>
                         <outlet property="player1SmulleView" destination="q9a-h3-oJS" id="YTU-8J-lqt"/>
@@ -131,7 +129,6 @@
                         <outlet property="player2SmulleView" destination="CIo-41-E2x" id="QoL-Op-xei"/>
                         <outlet property="player2StackView" destination="FgP-en-TQc" id="leC-Ei-8CS"/>
                         <outlet property="player2StockView" destination="yY0-UA-AUD" id="BFP-Fu-3yO"/>
-                        <outlet property="tableCardsEmptyCardView" destination="Uvi-6t-fQP" id="wka-uM-FCg"/>
                         <outlet property="tableCardsStackView" destination="fnS-gc-zlO" id="ua9-QP-mbJ"/>
                     </connections>
                 </viewController>

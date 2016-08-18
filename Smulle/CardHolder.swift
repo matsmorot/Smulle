@@ -7,13 +7,24 @@
 //
 
 import Foundation
+import UIKit
+
+//let vc = GameViewController()
 
 class CardHolder {
+    
     var hand: Array<Card> = []
     
     func takeCardsFromDeck(numCards: Int, fromDeck: Deck) {
         for _ in 1...numCards {
+            //UIView.animateWithDuration(0.3, animations: {
+            //    vc.decks.deck.last!.cardImageView.center = vc.player1StackView.center
+            //})
             hand.append(fromDeck.getTopCardFromDeck())
         }
+    }
+    
+    func moveCard(player: Player, fromView: UIView, toView: UIView) {
+        UIView.transitionFromView(fromView, toView: toView, duration: 1, options: UIViewAnimationOptions.CurveEaseOut, completion: nil)
     }
 }
