@@ -22,6 +22,7 @@ class GameViewController: UIViewController {
     
     @IBOutlet weak var player1NameLabel: UILabel!
     @IBOutlet weak var player2NameLabel: UILabel!
+    @IBOutlet weak var pointsLabel: UILabel!
     @IBOutlet weak var navigationBar: UINavigationBar!
     
     var deckHolder: UIView = UIView()
@@ -53,8 +54,10 @@ class GameViewController: UIViewController {
         player2.stockView = player2StockView
         player2.smulleView = player2SmulleView
         
-        player1.stockView.spacing = -50.8
-        player2.stockView.spacing = -50.8
+        player1.stockView.spacing = -50.5
+        player2.stockView.spacing = -50.5
+        
+        pointsLabel.alpha = 0
         
         
         // Populate variable players with players
@@ -65,21 +68,22 @@ class GameViewController: UIViewController {
         
         decks.shuffleDeck()
         
-        // Deal cards
-        
-        //player1.moveCard(player1, fromView: deckHolder, toView: player1StackView)
-        player1.takeCardsFromDeck(4, fromDeck: decks)
-        
-        player2.takeCardsFromDeck(4, fromDeck: decks)
-        
-        tableCards.takeCardsFromDeck(4, fromDeck: decks)
-        
-        
         // Show deck next to the player who is currently dealer (needs improvement)
         showDeck()
         
+        // Deal cards
+        
+        //player1.moveCard(player1, fromView: deckHolder, toView: player1StackView)
+        
+        player1.takeCardsFromDeck(4, fromDeck: decks)
+        displayHandCards(player1)
+        player2.takeCardsFromDeck(4, fromDeck: decks)
+        displayHandCards(player2)
+        tableCards.takeCardsFromDeck(4, fromDeck: decks)
+        displayTableCards()
+        
         // Display cards in play
-        updateView()
+        //updateView(nil)
         
         
         // Debugging
@@ -128,8 +132,6 @@ class GameViewController: UIViewController {
             player2.isDealer = false
         }
         
-        
-        
         if player2.isDealer {
             let startY = navigationBar.frame.height + 25
             deckHolder.frame.origin.y = startY
@@ -143,21 +145,23 @@ class GameViewController: UIViewController {
         view.addSubview(deckHolder)
         
         for card in decks.deck {
-            //card.cardImageView = UIImageView(image: card.cardImageBack)
+            card.cardImageView = UIImageView(image: card.cardImageBack)
             
-            let tap = UITapGestureRecognizer(target: self, action: #selector(testCardTapped(_:)))
+            /*let tap = UITapGestureRecognizer(target: self, action: #selector(testCardTapped(_:)))
             card.userInteractionEnabled = true
             card.setContentHuggingPriority(1000, forAxis: UILayoutConstraintAxis.Horizontal)
             card.setContentCompressionResistancePriority(1000, forAxis: UILayoutConstraintAxis.Horizontal)
             card.addGestureRecognizer(tap)
             card.heightAnchor.constraintEqualToConstant(card.cardImageView.frame.height).active = true
             card.widthAnchor.constraintEqualToConstant(card.cardImageView.frame.width).active = true
-            
+            */
             card.addSubview(card.cardImageView)
+            
             deckHolder.addSubview(card)
+            
             card.origin = card.frame.origin
-            print("Position of top card: \(card.origin)")
         }
+        
         deckPosition = CGPoint(x: deckHolder.frame.origin.x, y: deckHolder.frame.origin.y)
         print("deckPosition: \(deckPosition)")
     }
@@ -167,6 +171,7 @@ class GameViewController: UIViewController {
         for card in tableCards.hand {
             
             let tap = UITapGestureRecognizer(target: self, action: #selector(cardTapped(_:)))
+            
             card.userInteractionEnabled = true
             card.setContentHuggingPriority(1000, forAxis: UILayoutConstraintAxis.Horizontal)
             card.setContentCompressionResistancePriority(1000, forAxis: UILayoutConstraintAxis.Horizontal)
@@ -174,6 +179,7 @@ class GameViewController: UIViewController {
             card.heightAnchor.constraintEqualToConstant(card.cardImageView.frame.height).active = true
             card.widthAnchor.constraintEqualToConstant(card.cardImageView.frame.width).active = true
             card.addSubview(card.cardImageView)
+            flipCard(card)
             tableCardsStackView.addArrangedSubview(card)
         }
         
@@ -185,48 +191,49 @@ class GameViewController: UIViewController {
         
         for card in player.hand {
             let tap = UITapGestureRecognizer(target: self, action: #selector(cardTapped(_:)))
-            let longPress = UILongPressGestureRecognizer(target: self, action: #selector(cardLongPressed(_:)))
+            //let longPress = UILongPressGestureRecognizer(target: self, action: #selector(cardLongPressed(_:)))
+            let swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(cardSwipedUp(_:)))
+            swipeUp.direction = .Up
 
-            if player.faceUpCards == false {
+            /*if player.faceUpCards == false {
                 
                 card.cardImageView.removeFromSuperview()
                 card.cardImageView = UIImageView(image: card.cardImageBack)
                 card.addBorder(card)
                 card.faceUp = false
                 
-            }
+            }*/
+            
+            card.heightAnchor.constraintEqualToConstant(card.cardImageView.frame.height).active = true
+            card.widthAnchor.constraintEqualToConstant(card.cardImageView.frame.width).active = true
+            card.addSubview(card.cardImageView)
+            
+            if player.faceUpCards {
             
             card.userInteractionEnabled = true
             
-            card.setContentHuggingPriority(1000, forAxis: UILayoutConstraintAxis.Horizontal)
-            card.setContentCompressionResistancePriority(1000, forAxis: UILayoutConstraintAxis.Horizontal)
+            //card.setContentHuggingPriority(1000, forAxis: UILayoutConstraintAxis.Horizontal)
+            //card.setContentCompressionResistancePriority(1000, forAxis: UILayoutConstraintAxis.Horizontal)
             card.addGestureRecognizer(tap)
-            card.addGestureRecognizer(longPress)
-            card.heightAnchor.constraintEqualToConstant(card.cardImageView.frame.height).active = true
-            card.widthAnchor.constraintEqualToConstant(card.cardImageView.frame.width).active = true
-            
-            card.addSubview(card.cardImageView)
-            
-            /*UIView.animateWithDuration(1.3, animations: {
-                
-                card.frame.origin = self.mainStackView.convertPoint(card.frame.origin, fromView: player.stackView)
-                
-            })*/
+            //card.addGestureRecognizer(longPress)
+            card.addGestureRecognizer(swipeUp)
+            flipCard(card)
+            }
             
             player.stackView.addArrangedSubview(card)
         }
         
-        // Show stock cards. Also has to be tappable.
+        // Show stock cards
         for card in player.stock {
-            let tap = UITapGestureRecognizer(target: self, action: #selector(cardTapped(_:)))
+            //let tap = UITapGestureRecognizer(target: self, action: #selector(cardTapped(_:)))
             
             card.userInteractionEnabled = true
             card.setContentHuggingPriority(1000, forAxis: UILayoutConstraintAxis.Horizontal)
             card.setContentCompressionResistancePriority(1000, forAxis: UILayoutConstraintAxis.Horizontal)
             
-            card.addGestureRecognizer(tap)
-            card.heightAnchor.constraintEqualToConstant(card.cardImageView.frame.height).active = true
-            card.widthAnchor.constraintEqualToConstant(card.cardImageView.frame.width).active = true
+            //card.addGestureRecognizer(tap) // Do we really need a tap here?
+            //card.heightAnchor.constraintEqualToConstant(card.cardImageView.frame.height).active = true
+            //card.widthAnchor.constraintEqualToConstant(card.cardImageView.frame.width).active = true
             
             player.stockView.addArrangedSubview(card)
         }
@@ -256,7 +263,7 @@ class GameViewController: UIViewController {
         
         UIView.animateWithDuration(0.3, animations: {
             
-            card.frame.origin = self.mainStackView.convertPoint(card.frame.origin, fromView: self.player1StackView)
+            card.center = self.deckPosition
             
         })
         
@@ -270,8 +277,6 @@ class GameViewController: UIViewController {
     func cardTapped(sender: UITapGestureRecognizer) { // Tappee will always be player1
         
         let card = sender.view as! Card
-        
-        print(self.view.convertPoint(card.frame.origin, fromView: player1StackView))
         
         // Card selection
         if tableCardsStackView.arrangedSubviews.contains(card) {
@@ -307,12 +312,19 @@ class GameViewController: UIViewController {
             if highlightedCards.count > 0 {
                 if cardsAreCorrectlyChosen(card) {
                     
+                    UIView.animateWithDuration(0.3, delay: 0, options: [], animations: {
+                        
+                        card.frame.origin = card.convertPoint(self.view.frame.origin, fromView: nil)
+                        
+                        }, completion: nil)
+                    
                     takeSmulle(card) // Check for smulle
                     player1.stock.append(card)
+                    player1StockView.addArrangedSubview(card)
                     player1.points += card.getCardPoints(card)
                     
                     player1.hand.removeAtIndex(player1.hand.indexOf(card)!) // ...and remove it from hand
-                    player1StackView.arrangedSubviews[player1StackView.arrangedSubviews.indexOf(card)!].removeFromSuperview()
+                    //player1StackView.arrangedSubviews[player1StackView.arrangedSubviews.indexOf(card)!].removeFromSuperview()
                     
                     collectCards(highlightedCards, player: player1)
                     
@@ -353,18 +365,43 @@ class GameViewController: UIViewController {
         }
     }
     
+    func cardSwipedUp(sender: UISwipeGestureRecognizer) {
+        let card = sender.view as! Card
+        UIView.animateWithDuration(0.3, delay: 0, options: [], animations: {
+            
+            card.center = card.convertPoint(card.center, toView: self.view)
+
+            }, completion: nil)
+        
+        card.gestureRecognizers?.removeAll()
+        let tap = UITapGestureRecognizer(target: self, action: #selector(cardTapped(_:)))
+        
+        card.userInteractionEnabled = true
+        card.addGestureRecognizer(tap)
+        card.heightAnchor.constraintEqualToConstant(card.cardImageView.frame.height).active = true
+        card.widthAnchor.constraintEqualToConstant(card.cardImageView.frame.width).active = true
+        
+        tableCards.hand.append(card)
+        player1.hand.removeAtIndex(player1.hand.indexOf(card)!)
+        tableCardsStackView.addArrangedSubview(card)
+        
+        nextPlayer()
+    }
+    
+    /*
     func cardLongPressed(sender: UILongPressGestureRecognizer) {
         print("LongPress!")
         let card = sender.view as! Card
         
         if sender.state == .Began {
             
-            UIView.animateWithDuration(0.3, delay: 0.5, options: [], animations: {
+            UIView.animateWithDuration(0.3, delay: 0, options: [], animations: {
                 
-                card.frame.origin = self.player1StackView.frame.origin
+                card.frame.origin = card.convertPoint(self.view.frame.origin, fromView: nil)
                 
                 }, completion: nil)
             
+            card.gestureRecognizers?.removeAll()
             tableCards.hand.append(card)
             player1.hand.removeAtIndex(player1.hand.indexOf(card)!)
             
@@ -373,7 +410,8 @@ class GameViewController: UIViewController {
         } else if sender.state == .Ended {
             print("LongPress ended!")
         }
-    }
+     }
+     */
     
     func cardsAreCorrectlyChosen(handCard: Card) -> Bool {
         
@@ -404,6 +442,8 @@ class GameViewController: UIViewController {
                     
                     activePlayer.points += h.getCardPoints(h) + 5
                     
+                    animatePointsTaken(h.getCardPoints(h) + 5, origin: h.origin)
+                    
                 }
             }
             hcIndex += 1
@@ -412,10 +452,14 @@ class GameViewController: UIViewController {
             if hc.rank == handCard.rank && hc.suit == handCard.suit {
                 
                 activePlayer.smulleCards.append(hc)
-                //highlightedCards.removeAtIndex(highlightedCards.indexOf(hc)!)
+                activePlayer.smulleView.addArrangedSubview(hc)
+                highlightedCards.removeAtIndex(highlightedCards.indexOf(hc)!)
                 //tableCards.hand.removeAtIndex(tableCards.hand.indexOf(hc)!)
                 
                 activePlayer.points += hc.getCardPoints(hc) + 5
+                
+                animatePointsTaken(hc.getCardPoints(hc) + 5, origin: hc.origin)
+
                 
             }
         }
@@ -424,31 +468,51 @@ class GameViewController: UIViewController {
     
     func collectCards(cards: Array<Card>, player: Player) {
         
-        var delay = 0.5
+        var delay = 0.1
+        var cardPoints = 0
+        var cardOrigin = CGPointZero
         
         // Loop through collected cards, insert them in stock and remove them from stack views and table hand
         for card in cards {
             
             UIView.animateWithDuration(0.3, delay: delay, options: [], animations: {
                 
-                //card.frame.origin = self.mainStackView.convertPoint(card.frame.origin, fromView: self.tableCardsStackView)
-                card.frame.origin = self.tableCardsStackView.convertPoint(card.frame.origin, toView: self.view)
+                card.center = self.tableCardsStackView.center
                 
                 }, completion: nil)
             
             card.layer.shadowRadius = 0
             player.stock.insert(card, atIndex: 0)
+            player.stockView.addArrangedSubview(card)
             tableCards.hand.removeAtIndex(tableCards.hand.indexOf(card)!)
-            player.points += card.getCardPoints(card)
+            
+            cardPoints += card.getCardPoints(card)
+            cardOrigin = card.origin
             
             delay += delay
             
-            print("\(card.rank) of \(card.suit) taken! \(card.getCardPoints(card)) points! Origin: \(card.frame.origin)")
+        }
+        
+        player.points += cardPoints
+        if cardPoints > 0 {
+            animatePointsTaken(cardPoints, origin: cardOrigin)
         }
         
         // If no cards exist on table you get a TABBE
         if tableCards.hand.count == 0 {
             player.points += 1
+            
+            pointsLabel.center = self.view.center
+            pointsLabel.text = "TABBE, +1"
+            pointsLabel.alpha = 1
+            pointsLabel.transform = CGAffineTransformMakeScale(1, 1)
+            
+            UIView.animateWithDuration(2, animations: {
+                self.pointsLabel.alpha = 0
+                self.pointsLabel.frame.origin.y -= 200
+                self.pointsLabel.transform = CGAffineTransformMakeScale(4, 4)
+            })
+            
             print("TABBE!")
         }
         
@@ -460,13 +524,29 @@ class GameViewController: UIViewController {
         nextPlayer()
     }
     
-    func updateView() {
+    func updateView(player: Player?) {
         
-        self.player1NameLabel.text = "\(self.player1.name): \(self.player1.points) p (\(self.player1.smulleCards.count) smullar)"
-        self.player2NameLabel.text = "\(self.player2.name): \(self.player2.points) p (\(self.player2.smulleCards.count) smullar)"
-        self.displayHandCards(self.player1)
-        self.displayHandCards(self.player2)
-        self.displayTableCards()
+        //UIView.animateWithDuration(1, delay: 0, options: [], animations: {
+            if player?.name == self.player1.name {
+                
+                self.player1NameLabel.text = "\(self.player1.name): \(self.player1.points) p (\(self.player1.smulleCards.count) smullar)"
+                self.displayHandCards(self.player1)
+                
+            } else if player?.name == self.player2.name {
+                
+                self.player2NameLabel.text = "\(self.player2.name): \(self.player2.points) p (\(self.player2.smulleCards.count) smullar)"
+                self.displayHandCards(self.player2)
+                
+            } else {
+                
+                self.player1NameLabel.text = "\(self.player1.name): \(self.player1.points) p (\(self.player1.smulleCards.count) smullar)"
+                self.displayHandCards(self.player1)
+                self.player2NameLabel.text = "\(self.player2.name): \(self.player2.points) p (\(self.player2.smulleCards.count) smullar)"
+                self.displayHandCards(self.player2)
+            }
+        
+            //self.displayTableCards()
+        //}, completion: nil)
         
         print("\(decks.deck.count) cards left in decks.")
         print(player1.smulleCards.count + player1.hand.count + player1.stock.count + player2.smulleCards.count + player2.hand.count + player2.stock.count + tableCards.hand.count + decks.deck.count)
@@ -490,7 +570,7 @@ class GameViewController: UIViewController {
         if activePlayer.hand.count == 0 {
             dealNewCards()
         }
-        updateView()
+        //updateView(nil)
     }
     
     func playAI() {
@@ -520,6 +600,7 @@ class GameViewController: UIViewController {
                     
                     flipCard(hc)
                     
+                    player2StockView.addArrangedSubview(hc)
                     player2.stock.append(hc) // Add chosen card from hand to stock
                     player2.hand.removeAtIndex(hcIndex) // ...and remove it from hand
                     player2.points += hc.getCardPoints(hc)
@@ -544,11 +625,19 @@ class GameViewController: UIViewController {
             let cardIndexToDiscard = findCardIndexToDiscard(player2.hand)
             let disCard = player2.hand[cardIndexToDiscard]
             flipCard(disCard)
-            //tableCardsStackView.addArrangedSubview(disCard)
+            tableCardsStackView.addArrangedSubview(disCard)
+            
+            let tap = UITapGestureRecognizer(target: self, action: #selector(cardTapped(_:)))
+            
+            disCard.userInteractionEnabled = true
+            disCard.addGestureRecognizer(tap)
+            disCard.heightAnchor.constraintEqualToConstant(disCard.cardImageView.frame.height).active = true
+            disCard.widthAnchor.constraintEqualToConstant(disCard.cardImageView.frame.width).active = true
+            
             tableCards.hand.append(disCard)
             player2.hand.removeAtIndex(cardIndexToDiscard)
             
-            updateView()
+            //updateView(player2)
             nextPlayer()
         }
         
@@ -559,15 +648,20 @@ class GameViewController: UIViewController {
     func dealNewCards() {
         if decks.deck.count > 12 {
             player1.takeCardsFromDeck(4, fromDeck: decks)
+            updateView(player1)
             player2.takeCardsFromDeck(4, fromDeck: decks)
+            updateView(player2)
         } else {
             player1.takeCardsFromDeck(4, fromDeck: decks)
+            updateView(player1)
             player2.takeCardsFromDeck(4, fromDeck: decks)
+            updateView(player2)
             tableCards.takeCardsFromDeck(4, fromDeck: decks)
+            updateView(nil)
             // New round
             
         }
-        updateView()
+        //updateView(nil)
     }
     
     func findCardIndexToDiscard(cards: Array<Card>) -> Int {
@@ -611,6 +705,19 @@ class GameViewController: UIViewController {
             print("Card flipped from back to front! \(card.faceUp)")
         }
         
+    }
+    
+    func animatePointsTaken(points: Int, origin: CGPoint) {
+        pointsLabel.center = origin
+        pointsLabel.text = "+\(points)"
+        pointsLabel.alpha = 1
+        pointsLabel.transform = CGAffineTransformMakeScale(1, 1)
+        
+        UIView.animateWithDuration(2, animations: {
+            self.pointsLabel.alpha = 0
+            self.pointsLabel.frame.origin.y -= 200
+            self.pointsLabel.transform = CGAffineTransformMakeScale(4, 4)
+        })
     }
     
     

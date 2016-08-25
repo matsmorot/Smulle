@@ -26,11 +26,12 @@ class Card: UIImageView {
         cardImageBack = UIImage(named: "Back")!
         cardImage = UIImage(named: "\(self.rank.simpleDescription())_\(self.suit)")!
         cardImageView = UIImageView(image: cardImage)
-        faceUp = true
+        faceUp = false
         origin = CGPoint(x: 0, y: 0)
         
         super.init(frame: CGRectMake(0, 0, 0, 0)) // Initialize a dummy UIView
         
+        //cardImageView.transform = CGAffineTransformMakeScale(1.1, 1.1)
         addBorder(cardImageView)
     }
     
