@@ -26,7 +26,7 @@ class Card: UIImageView {
         cardImageBack = UIImage(named: "Back")!
         cardImage = UIImage(named: "\(self.rank.simpleDescription())_\(self.suit)")!
         cardImageView = UIImageView(image: cardImage)
-        faceUp = true
+        faceUp = false
         origin = CGPoint(x: 0, y: 0)
         
         super.init(frame: CGRectMake(0, 0, 0, 0)) // Initialize a dummy UIView
@@ -47,13 +47,13 @@ class Card: UIImageView {
     
     enum Rank: Int {
         
-        case Ace = 1
+        case AceOnTable = 1
         case Two, Three, Four, Five, Six, Seven, Eight, Nine, Ten
-        case Jack, Queen, King
+        case Jack, Queen, King, Ace
         
         func simpleDescription() -> String {
             switch self {
-            case .Ace:
+            case .Ace, .AceOnTable:
                 return "A"
             case .Jack:
                 return "J"
@@ -70,7 +70,7 @@ class Card: UIImageView {
     func getCardPoints(card: Card) -> Int {
         
         switch card {
-        case _ where card.rank == .Ace:
+        case _ where card.rank == .Ace || card.rank == .AceOnTable:
             return 1
         case _ where card.rank == .Two && card.suit == .S:
             return 1
