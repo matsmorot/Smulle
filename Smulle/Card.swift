@@ -65,6 +65,15 @@ class Card: UIImageView {
                 return String(self.rawValue)
             }
         }
+        
+        func changeAceValue() -> Rank {
+            switch self {
+            case .AceOnTable:
+                return .Ace
+            default:
+                return .AceOnTable
+            }
+        }
     }
     
     func getCardPoints(card: Card) -> Int {
@@ -95,7 +104,7 @@ class Card: UIImageView {
     
     func addBorder(cardImage: UIImageView) {
         
-        cardImage.layer.borderWidth = 0.6
+        cardImage.layer.borderWidth = 0.2
         cardImage.layer.cornerRadius = 2
         let borderColor = UIColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5).CGColor
         cardImage.layer.borderColor = borderColor

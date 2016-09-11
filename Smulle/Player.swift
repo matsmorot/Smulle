@@ -30,7 +30,7 @@ class Player: CardHolder, PlayerType, Hashable {
     var numberOfSpades: Int
     var stock: Array<Card>
     var smulleCards: Array<Card>
-    var tabbeCards: Int
+    var numberOfTabbeCards: Int
     var faceUpCards: Bool
     var isDealer: Bool
     var stackView: UIStackView
@@ -49,7 +49,7 @@ class Player: CardHolder, PlayerType, Hashable {
         numberOfSpades = 0
         stock = []
         smulleCards = []
-        tabbeCards = 0
+        numberOfTabbeCards = 0
         self.faceUpCards = faceUpCards
         isDealer = false
         stackView = UIStackView()
