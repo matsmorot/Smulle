@@ -25,8 +25,14 @@ class GameViewController: UIViewController {
     @IBOutlet weak var pointsLabel: UILabel!
     @IBOutlet weak var roundLabel: UILabel!
     @IBOutlet weak var navigationBar: UINavigationBar!
+    @IBOutlet weak var toolBar: UIToolbar!
+    @IBAction func helpButton(sender: UIBarButtonItem) {
+        presentRulesCard()
+    }
     
-    var deckHolder: UIView = UIView()
+    var deckHolder = UIView()
+    var rulesCard = UIView()
+    let rulesTextView = UITextView()
     var cardHolderIsActive = false
     var numberOfRounds = 4
     var sumOfHighlightedCards = 0
@@ -46,7 +52,9 @@ class GameViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+
         navigationBar.setBackgroundImage(UIImage(named: "top_bar"), forBarMetrics: UIBarMetrics.Default)
+        toolBar.setBackgroundImage(nil, forToolbarPosition: .Any, barMetrics: .Default)
         
         pointsLabel.alpha = 0
         
@@ -72,7 +80,7 @@ class GameViewController: UIViewController {
         beginNewRound()
         
         // Debugging
-        
+        print(rulesCard.bounds)
         //let testCard = Card(rank: .Queen, suit: .H)
         
     }
@@ -109,33 +117,36 @@ class GameViewController: UIViewController {
     // Show remaining cards in deck next to the player who is currently dealer (for later version)
     func showDeck() {
         
-        if player2.isDealer {
-            let startY = navigationBar.frame.height + 25
-            deckHolder.frame.origin.y = startY
-            deckHolder.frame.origin.x = view.layoutMargins.left
-        } else if player1.isDealer {
-            let startY = view.frame.height - 125
-            deckHolder.frame.origin.y = startY
-            deckHolder.frame.origin.x = view.layoutMargins.left
+        if self.view.frame.width > 320.0 {
+            if player2.isDealer {
+                let startY = navigationBar.frame.height + 25
+                deckHolder.frame.origin.y = startY
+                deckHolder.frame.origin.x = view.layoutMargins.left
+            } else if player1.isDealer {
+                let startY = view.frame.height - 125
+                deckHolder.frame.origin.y = startY
+                deckHolder.frame.origin.x = view.layoutMargins.left
+            }
+        
+            view.addSubview(deckHolder)
+            
+            for card in decks.deck {
+                card.cardImageView = UIImageView(image: card.cardImageBack)
+                
+                card.userInteractionEnabled = true
+                card.setContentHuggingPriority(1000, forAxis: UILayoutConstraintAxis.Horizontal)
+                card.setContentCompressionResistancePriority(1000, forAxis: UILayoutConstraintAxis.Horizontal)
+                
+                card.heightAnchor.constraintEqualToConstant(card.cardImageView.frame.height).active = true
+                card.widthAnchor.constraintEqualToConstant(card.cardImageView.frame.width).active = true
+                
+                card.addSubview(card.cardImageView)
+                deckHolder.addSubview(card)
+            }
+        } else {
+            
         }
         
-        view.addSubview(deckHolder)
-        
-        for card in decks.deck {
-            card.cardImageView = UIImageView(image: card.cardImageBack)
-            
-            //let tap = UITapGestureRecognizer(target: self, action: #selector(testCardTapped(_:)))
-            card.userInteractionEnabled = true
-            card.setContentHuggingPriority(1000, forAxis: UILayoutConstraintAxis.Horizontal)
-            card.setContentCompressionResistancePriority(1000, forAxis: UILayoutConstraintAxis.Horizontal)
-            //card.addGestureRecognizer(tap)
-            card.heightAnchor.constraintEqualToConstant(card.cardImageView.frame.height).active = true
-            card.widthAnchor.constraintEqualToConstant(card.cardImageView.frame.width).active = true
-            
-            card.addSubview(card.cardImageView)
-            deckHolder.addSubview(card)
-            card.origin = card.frame.origin
-        }
         deckPosition = CGPoint(x: deckHolder.frame.origin.x, y: deckHolder.frame.origin.y)
         print("deckPosition: \(deckPosition)")
     }
@@ -302,7 +313,7 @@ class GameViewController: UIViewController {
         let card = sender.view as! Card
         UIView.animateWithDuration(0.3, delay: 0, options: [], animations: {
             
-            card.center = card.convertPoint(card.center, toView: self.view)
+            card.center = self.view.center
             
             }, completion: nil)
         
@@ -329,6 +340,18 @@ class GameViewController: UIViewController {
         }
         
         nextPlayer()
+    }
+    
+    func rulesCardTapped(sender: UITapGestureRecognizer) {
+        
+        UIView.animateWithDuration(0.3, delay: 0, options: [], animations: {
+            self.rulesCard.frame.origin = CGPoint(x: self.view.frame.width, y: 10)
+            self.rulesTextView.frame = self.rulesCard.frame
+            }, completion: { (finished: Bool) -> Void in
+        
+                self.rulesCard.subviews.forEach({ $0.removeFromSuperview() })
+                self.rulesCard.removeFromSuperview()
+        })
     }
     
     func cardsAreCorrectlyChosen(handCard: Card) -> Bool {
@@ -374,7 +397,7 @@ class GameViewController: UIViewController {
                     
                     activePlayer.points += h.getCardPoints(h) + 5
                     
-                    animatePointsTaken(h.getCardPoints(h) + 5, origin: h.origin)
+                    animatePointsTaken(h.getCardPoints(h) + 5, origin: h.frame.origin)
                     
                 }
             }
@@ -393,7 +416,7 @@ class GameViewController: UIViewController {
                 
                 activePlayer.points += hc.getCardPoints(hc) + 5
                 
-                animatePointsTaken(hc.getCardPoints(hc) + 5, origin: hc.origin)
+                animatePointsTaken(hc.getCardPoints(hc) + 5, origin: hc.frame.origin)
                 
             }
         }
@@ -420,7 +443,7 @@ class GameViewController: UIViewController {
             tableCards.hand.removeAtIndex(tableCards.hand.indexOf(card)!)
             
             cardPoints += card.getCardPoints(card)
-            cardOrigin = card.origin
+            cardOrigin = card.frame.origin
             
             delay += 0.1
             lastPlayerToCollectCards = player
@@ -614,6 +637,11 @@ class GameViewController: UIViewController {
                 flipCard(card)
             }
             player2.takeCardsFromDeck(4, fromDeck: decks)
+            for card in player2.hand {
+                if card.faceUp {
+                    flipCard(card)
+                }
+            }
         // If deck is new or there are less than 12 cards left, deal to players and table
         } else {
             player1.takeCardsFromDeck(4, fromDeck: decks)
@@ -621,9 +649,13 @@ class GameViewController: UIViewController {
                 flipCard(card)
             }
             player2.takeCardsFromDeck(4, fromDeck: decks)
+            for card in player2.hand {
+                if card.faceUp {
+                    flipCard(card)
+                }
+            }
             
             tableCards.takeCardsFromDeck(4, fromDeck: decks)
-            
             for card in tableCards.hand {
                 if !card.faceUp {
                     flipCard(card)
@@ -830,6 +862,77 @@ class GameViewController: UIViewController {
             }
         }
         
+    }
+    
+    func presentRulesCard() {
+        createRulesCard()
+        UIView.animateWithDuration(0.3, delay: 0, options: [], animations: {
+            self.rulesCard.frame.origin = CGPoint(x: 10, y: 10)
+            self.rulesTextView.frame = self.rulesCard.frame
+        }, completion: nil)
+    }
+    
+    func createRulesCard() {
+        
+        rulesCard.frame = CGRect(origin: CGPoint(x: self.view.frame.width, y: 10), size: CGSize(width: view.frame.width - 20, height: view.frame.height - 20))
+        let tap = UITapGestureRecognizer(target: self, action: #selector(rulesCardTapped(_:)))
+        rulesCard.addGestureRecognizer(tap)
+        
+        let rulesTextFile = NSBundle.mainBundle().pathForResource("smulle_rules", ofType: "txt")
+        var rulesTextString = ""
+        do {
+            rulesTextString = try String(contentsOfFile: rulesTextFile!)
+        } catch let error as NSError {
+            print("Failed reading from \(rulesTextFile). Error: " + error.localizedDescription)
+        }
+        
+        rulesTextView.bounds = rulesCard.bounds
+        rulesTextView.clipsToBounds = true
+        rulesTextView.text = rulesTextString
+        rulesTextView.backgroundColor = .None
+        rulesTextView.textColor = UIColor.whiteColor()
+        rulesTextView.editable = false
+        rulesTextView.textContainerInset = UIEdgeInsetsMake(20, 10, 20, 25)
+        
+        let deck = Deck(numDecks: 1)
+        
+        let blurView = UIVisualEffectView(effect: UIBlurEffect(style: .Dark))
+        rulesCard.layoutMargins = UIEdgeInsetsMake(20, 20, 20, 20)
+        blurView.frame = rulesCard.bounds
+        blurView.clipsToBounds = true
+        blurView.layer.cornerRadius = 20
+        
+        rulesCard.addSubview(blurView)
+        rulesCard.addSubview(rulesTextView)
+        rulesCard.layer.cornerRadius = 20
+        rulesCard.alpha = 0.97
+        
+        view.addSubview(rulesCard)
+        print(rulesCard.bounds)
+        /*
+        var cardYPosition = rulesCard.frame.origin.y + 20
+        var cardXPosition = rulesCard.frame.origin.x
+        
+        for card in deck.deck {
+            if card.getCardPoints(card) == 1 {
+                
+                card.frame.origin = CGPoint(x: cardXPosition, y: rulesCard.frame.origin.y)
+                rulesCard.addSubview(card)
+                flipCard(card)
+                card.addShadow(card.cardImageView)
+                cardXPosition += 20
+                cardYPosition = card.cardImageView.frame.height + 20
+                
+            }
+            if card.getCardPoints(card) > 1 {
+                
+                card.frame.origin = CGPoint(x: rulesCard.frame.origin.x, y: cardYPosition)
+                self.view.addSubview(card)
+                flipCard(card)
+                card.addShadow(card.cardImageView)
+                cardYPosition += card.cardImageView.frame.height + 20
+            }
+        }*/
     }
 
 }

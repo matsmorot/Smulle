@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B2144BF91D874386001DAE39 /* smulle_rules.txt in Resources */ = {isa = PBXBuildFile; fileRef = B2144BF81D874386001DAE39 /* smulle_rules.txt */; };
 		B215199C1CCBCC0000A2E47D /* CardHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B215199B1CCBCC0000A2E47D /* CardHolder.swift */; };
 		B29F6D8C1CB2B1AB0021194D /* Deck.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29F6D8B1CB2B1AB0021194D /* Deck.swift */; };
 		B2C097BB1C9AE738003BDA9E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C097BA1C9AE738003BDA9E /* AppDelegate.swift */; };
@@ -20,6 +21,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B2144BF81D874386001DAE39 /* smulle_rules.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = smulle_rules.txt; sourceTree = "<group>"; };
 		B215199B1CCBCC0000A2E47D /* CardHolder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardHolder.swift; sourceTree = "<group>"; };
 		B29F6D8B1CB2B1AB0021194D /* Deck.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Deck.swift; sourceTree = "<group>"; };
 		B2C097B71C9AE738003BDA9E /* Smulle.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Smulle.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -66,6 +68,7 @@
 			children = (
 				B2C097BA1C9AE738003BDA9E /* AppDelegate.swift */,
 				B2C097BC1C9AE738003BDA9E /* GameViewController.swift */,
+				B2144BF81D874386001DAE39 /* smulle_rules.txt */,
 				B2E13B661CAFFF2E002F0613 /* Player.swift */,
 				B215199B1CCBCC0000A2E47D /* CardHolder.swift */,
 				B2C097CC1C9B0A4E003BDA9E /* Card.swift */,
@@ -140,6 +143,7 @@
 			files = (
 				B2C7DB931CBC49B300AFB1AA /* Main.storyboard in Resources */,
 				B2C097C51C9AE738003BDA9E /* LaunchScreen.storyboard in Resources */,
+				B2144BF91D874386001DAE39 /* smulle_rules.txt in Resources */,
 				B2C097C21C9AE738003BDA9E /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -24,12 +24,14 @@
                                     <navigationItem id="tpF-9I-SO0"/>
                                 </items>
                             </navigationBar>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" alpha="0.5" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qPD-I1-j3l">
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleAspectFill" preservesSuperviewLayoutMargins="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qPD-I1-j3l">
                                 <rect key="frame" x="20" y="556" width="560" height="44"/>
                                 <items>
                                     <barButtonItem enabled="NO" title="Restart" style="plain" id="M0Z-Or-q3f"/>
-                                    <barButtonItem enabled="NO" title="?" id="NeO-HW-wj2">
-                                        <color key="tintColor" red="0.80143000330000003" green="0.35039415680000002" blue="0.99134615380000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <barButtonItem image="info" id="NeO-HW-wj2">
+                                        <connections>
+                                            <action selector="helpButton:" destination="BYZ-38-t0r" id="hNT-fG-xCB"/>
+                                        </connections>
                                     </barButtonItem>
                                 </items>
                             </toolbar>
@@ -162,6 +164,7 @@
                         <outlet property="pointsLabel" destination="0CN-kl-N0k" id="cUa-li-m5s"/>
                         <outlet property="roundLabel" destination="Z4l-5g-kqa" id="nXC-KA-iJb"/>
                         <outlet property="tableCardsStackView" destination="fnS-gc-zlO" id="ua9-QP-mbJ"/>
+                        <outlet property="toolBar" destination="qPD-I1-j3l" id="tOz-8B-lh0"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -169,4 +172,7 @@
             <point key="canvasLocation" x="340" y="230"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="info" width="30" height="30"/>
+    </resources>
 </document>

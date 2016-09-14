@@ -1,0 +1,24 @@
+SMULLE
+
+Two decks are used in this game. Hence, you can build a pair, a Smulle, with two identical cards. A Smulle will give you 5 points.
+
+You collect cards from the table (in the middle, by tapping) using ONE of your hand cards. The cards you choose can be the sum of, equal to, or multiples of your hand card. If you're unable to take cards you have to discard one from your hand. You do that by swiping up on the card you want to discard.
+
+Example:
+With any 10 on your hand you can choose 5 + 5, 4 + 6, 2 + 2 + 3 + 3 and so on, or any number of 10's.
+
+Some cards have points and they are the following.
+
+10 of diamonds = 2 p
+2 of spades = 1 p
+Ace = 1 p
+
+In addition to these cards you will get 1 p if you can take all the cards on the table, and at the end of each round, the player with the most collected spades will get 6 extra points.
+
+The value of J is 11, Q is 12, K is 13 and A is 1 on the table and 14 on the hand, unless the Ace on the table is the same Ace you've got, then it's 14 and is OK to take with your Ace.
+
+Example:
+Q + A + A on table = A on hand
+Ace of clubs on table = Ace of clubs on hand
+
+You can steal your opponent's collected cards if you have the top card of the opponent's collected cards on your hand. You do that by simply tapping your card without having chosen cards on the table.
