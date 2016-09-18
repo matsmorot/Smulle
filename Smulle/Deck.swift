@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import GameplayKit
 
 class Deck {
     
@@ -15,7 +16,7 @@ class Deck {
     init(numDecks: Int) {
         deck = []
         
-        let suits = [Card.Suit.S, Card.Suit.H, Card.Suit.D, Card.Suit.C]
+        let suits = [Card.Suit.s, Card.Suit.h, Card.Suit.d, Card.Suit.c]
         
         for _ in 1...numDecks {
             for i in 1...13 {
@@ -27,12 +28,13 @@ class Deck {
     }
     
     func shuffleDeck() {
-        deck = deck.shuffle()
+        
+        deck = GKRandomSource.sharedRandom().arrayByShufflingObjects(in: deck) as! [Card]
     }
     
     func getTopCardFromDeck() -> Card {
         let card = deck.last
-        deck.removeAtIndex(deck.indexOf(card!)!)
+        deck.remove(at: deck.index(of: card!)!)
         return card!
     }
 }

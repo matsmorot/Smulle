@@ -23,11 +23,11 @@ class Card: UIImageView {
         self.rank = rank
         self.suit = suit
         cardImageBack = UIImage(named: "Back")!
-        cardImage = UIImage(named: "\(self.rank.simpleDescription())_\(self.suit)")!
+        cardImage = UIImage(named: "\(rank.simpleDescription())_\(suit)")!
         cardImageView = UIImageView(image: cardImageBack)
         faceUp = false
         
-        super.init(frame: CGRectMake(0, 0, 0, 0)) // Initialize a dummy UIView
+        super.init(frame: CGRect(x: 0, y: 0, width: 0, height: 0)) // Initialize a dummy UIView
         
         addBorder(cardImageView)
     }
@@ -37,27 +37,27 @@ class Card: UIImageView {
     }
     
     enum Suit {
-        case H //Hearts
-        case S //Spades
-        case D //Diamonds
-        case C //Clubs
+        case h //Hearts
+        case s //Spades
+        case d //Diamonds
+        case c //Clubs
     }
     
     enum Rank: Int {
         
-        case AceOnTable = 1
-        case Two, Three, Four, Five, Six, Seven, Eight, Nine, Ten
-        case Jack, Queen, King, Ace
+        case aceOnTable = 1
+        case two, three, four, five, six, seven, eight, nine, ten
+        case jack, queen, king, ace
         
         func simpleDescription() -> String {
             switch self {
-            case .Ace, .AceOnTable:
+            case .ace, .aceOnTable:
                 return "A"
-            case .Jack:
+            case .jack:
                 return "J"
-            case .Queen:
+            case .queen:
                 return "Q"
-            case .King:
+            case .king:
                 return "K"
             default:
                 return String(self.rawValue)
@@ -66,22 +66,22 @@ class Card: UIImageView {
         
         func changeAceValue() -> Rank {
             switch self {
-            case .AceOnTable:
-                return .Ace
+            case .aceOnTable:
+                return .ace
             default:
-                return .AceOnTable
+                return .aceOnTable
             }
         }
     }
     
-    func getCardPoints(card: Card) -> Int {
+    func getCardPoints(_ card: Card) -> Int {
         
         switch card {
-        case _ where card.rank == .Ace || card.rank == .AceOnTable:
+        case _ where card.rank == .ace || card.rank == .aceOnTable:
             return 1
-        case _ where card.rank == .Two && card.suit == .S:
+        case _ where card.rank == .two && card.suit == .s:
             return 1
-        case _ where card.rank == .Ten && card.suit == .D:
+        case _ where card.rank == .ten && card.suit == .d:
             return 2
         default:
             return 0
@@ -89,22 +89,22 @@ class Card: UIImageView {
     
     }
     
-    func addShadow(cardImage: UIImageView) {
+    func addShadow(_ cardImage: UIImageView) {
         
-        cardImage.layer.shadowPath = UIBezierPath(rect: cardImage.bounds).CGPath //reduce cost of rendering
+        cardImage.layer.shadowPath = UIBezierPath(rect: cardImage.bounds).cgPath //reduce cost of rendering
         // Create a shadow
-        cardImage.layer.shadowColor = UIColor.blackColor().CGColor
+        cardImage.layer.shadowColor = UIColor.black.cgColor
         cardImage.layer.shadowOpacity = 0.3
-        cardImage.layer.shadowOffset = CGSizeZero
+        cardImage.layer.shadowOffset = CGSize.zero
         cardImage.layer.shadowRadius = 0.5
         
     }
     
-    func addBorder(cardImage: UIImageView) {
+    func addBorder(_ cardImage: UIImageView) {
         
         cardImage.layer.borderWidth = 0.2
         cardImage.layer.cornerRadius = 2
-        let borderColor = UIColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5).CGColor
+        let borderColor = UIColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5).cgColor
         cardImage.layer.borderColor = borderColor
         
     }

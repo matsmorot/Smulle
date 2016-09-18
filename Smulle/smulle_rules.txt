@@ -5,7 +5,7 @@ Two decks are used in this game. Hence, you can build a pair, a Smulle, with two
 You collect cards from the table (in the middle, by tapping) using ONE of your hand cards. The cards you choose can be the sum of, equal to, or multiples of your hand card. If you're unable to take cards you have to discard one from your hand. You do that by swiping up on the card you want to discard.
 
 Example:
-With any 10 on your hand you can choose 5 + 5, 4 + 6, 2 + 2 + 3 + 3 and so on, or any number of 10's.
+With any 10 on your hand you can choose 5 + 5, 4 + 6 + 10, 2 + 2 + 3 + 3 and so on, or any number of 10's.
 
 Some cards have points and they are the following.
 
@@ -21,4 +21,4 @@ Example:
 Q + A + A on table = A on hand
 Ace of clubs on table = Ace of clubs on hand
 
-You can steal your opponent's collected cards if you have the top card of the opponent's collected cards on your hand. You do that by simply tapping your card without having chosen cards on the table.
+You can steal your opponent's collected cards if you have the top card of the opponent's collected cards on your hand. This will get you a Smulle. The same goes for your own top card. You do this by simply tapping your card without having chosen cards on the table.

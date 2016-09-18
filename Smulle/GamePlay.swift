@@ -8,47 +8,36 @@
 
 import Foundation
 import UIKit
+import GameplayKit
 
+/*
 // Shuffle functions written by Nate Cook ---
-extension CollectionType {
+extension Collection {
     /// Return a copy of `self` with its elements shuffled
-    func shuffle() -> [Generator.Element] {
+    func shuffle() -> [Iterator.Element] {
         var list = Array(self)
         list.shuffleInPlace()
         return list
     }
 }
 
-extension MutableCollectionType where Index == Int {
+extension MutableCollection where Index == Int {
     /// Shuffle the elements of `self` in-place.
     mutating func shuffleInPlace() {
         // empty and single-element collections don't shuffle
         if count < 2 { return }
         
-        for i in 0..<count - 1 {
-            let j = Int(arc4random_uniform(UInt32(count - i))) + i
+        for i in 0..<count.toIntMax() - 1 {
+            let j = Int(arc4random_uniform(UInt32(count.toIntMax() - i))) + i
             guard i != j else { continue }
             swap(&self[i], &self[j])
         }
     }
 }
 // -------------------------------------------
-
+*/
 class GamePlay {
 
-    var cardHolderIsActive = false
-    let numberOfRounds = 4
-    var numberOfCardsHighlighted = 0
-    var sumOfHighlightedCards = 0
-    var highlightedCards: Array<Card> = []
-    let player1 = Player(name: "You", faceUpCards: true)
-    let player2 = Player(name: "Komp Jutah", faceUpCards: false)
-    var players: Array<Player> = []
-    var activePlayer: Player = Player(name: "Dummy", faceUpCards: false)
-    let tableCards = CardHolder()
-    var deckPosition: CGRect = CGRect(x: 0, y: 0, width: 0, height: 0)
     
-    let decks = Deck(numDecks: 2)
-
     
 }

@@ -18,6 +18,7 @@
 		B2C7DB931CBC49B300AFB1AA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B2C7DB921CBC49B300AFB1AA /* Main.storyboard */; };
 		B2E13B651CAF3043002F0613 /* GamePlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E13B641CAF3043002F0613 /* GamePlay.swift */; };
 		B2E13B671CAFFF2E002F0613 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E13B661CAFFF2E002F0613 /* Player.swift */; };
+		B2F01E571D8B2C7B005A5E3B /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2F01E561D8B2C7B005A5E3B /* StartViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +35,7 @@
 		B2C7DB921CBC49B300AFB1AA /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		B2E13B641CAF3043002F0613 /* GamePlay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GamePlay.swift; sourceTree = "<group>"; };
 		B2E13B661CAFFF2E002F0613 /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
+		B2F01E561D8B2C7B005A5E3B /* StartViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StartViewController.swift; path = ../StartViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,6 +69,7 @@
 			isa = PBXGroup;
 			children = (
 				B2C097BA1C9AE738003BDA9E /* AppDelegate.swift */,
+				B2F01E561D8B2C7B005A5E3B /* StartViewController.swift */,
 				B2C097BC1C9AE738003BDA9E /* GameViewController.swift */,
 				B2144BF81D874386001DAE39 /* smulle_rules.txt */,
 				B2E13B661CAFFF2E002F0613 /* Player.swift */,
@@ -115,6 +118,7 @@
 					B2C097B61C9AE738003BDA9E = {
 						CreatedOnToolsVersion = 7.2.1;
 						DevelopmentTeam = A2A57RA22F;
+						LastSwiftMigration = 0800;
 					};
 				};
 			};
@@ -156,6 +160,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B29F6D8C1CB2B1AB0021194D /* Deck.swift in Sources */,
+				B2F01E571D8B2C7B005A5E3B /* StartViewController.swift in Sources */,
 				B215199C1CCBCC0000A2E47D /* CardHolder.swift in Sources */,
 				B2E13B651CAF3043002F0613 /* GamePlay.swift in Sources */,
 				B2C097CD1C9B0A4E003BDA9E /* Card.swift in Sources */,
@@ -268,6 +273,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = se.pixlig.Smulle;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -280,6 +286,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = se.pixlig.Smulle;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
