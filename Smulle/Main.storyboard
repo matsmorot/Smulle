@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="yGN-4P-w2X">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="16B2338c" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="yGN-4P-w2X">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
@@ -149,15 +149,12 @@
                             <constraint firstItem="Z4l-5g-kqa" firstAttribute="baseline" secondItem="LW3-9K-aNz" secondAttribute="baseline" id="CEC-Oj-4St"/>
                             <constraint firstAttribute="trailingMargin" secondItem="4HD-SU-M4Z" secondAttribute="trailing" id="GfQ-NS-6Ni"/>
                             <constraint firstAttribute="trailingMargin" secondItem="qPD-I1-j3l" secondAttribute="trailing" constant="-16" id="TRJ-xI-aOm"/>
-                            <constraint firstItem="LW3-9K-aNz" firstAttribute="bottom" secondItem="gnb-5J-zwn" secondAttribute="bottom" id="TYH-02-kbc"/>
                             <constraint firstItem="CeU-JY-1QL" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="UXl-QN-7HC"/>
                             <constraint firstItem="LW3-9K-aNz" firstAttribute="top" secondItem="CeU-JY-1QL" secondAttribute="bottom" constant="6" id="VLV-jm-XV9"/>
                             <constraint firstItem="4HD-SU-M4Z" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="WVD-Wf-IrI"/>
-                            <constraint firstItem="0CN-kl-N0k" firstAttribute="centerX" secondItem="4HD-SU-M4Z" secondAttribute="centerX" id="agU-e8-1A9"/>
                             <constraint firstItem="LW3-9K-aNz" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="b2Z-5b-CMb"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Z4l-5g-kqa" secondAttribute="trailing" id="chm-xi-ewj"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="qPD-I1-j3l" secondAttribute="bottom" id="e14-fi-a6Y"/>
-                            <constraint firstItem="0CN-kl-N0k" firstAttribute="centerY" secondItem="4HD-SU-M4Z" secondAttribute="centerY" id="e7G-5Q-dwy"/>
                             <constraint firstAttribute="leadingMargin" secondItem="qPD-I1-j3l" secondAttribute="leading" constant="16" id="fSd-o6-bQC"/>
                             <constraint firstItem="gnb-5J-zwn" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="gOa-nQ-w8C"/>
                             <constraint firstItem="0CN-kl-N0k" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="gwQ-lO-H0w"/>
@@ -165,18 +162,7 @@
                             <constraint firstAttribute="trailingMargin" secondItem="gnb-5J-zwn" secondAttribute="trailing" constant="-20" id="leF-c7-EUi"/>
                             <constraint firstItem="LW3-9K-aNz" firstAttribute="bottom" secondItem="gnb-5J-zwn" secondAttribute="bottom" id="niD-3L-5gV"/>
                             <constraint firstItem="4HD-SU-M4Z" firstAttribute="bottom" secondItem="qPD-I1-j3l" secondAttribute="top" id="tPA-bs-K72"/>
-                            <constraint firstItem="LW3-9K-aNz" firstAttribute="top" secondItem="CeU-JY-1QL" secondAttribute="bottom" constant="8" symbolic="YES" id="tlN-F6-4Ky"/>
-                            <constraint firstItem="LW3-9K-aNz" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="22" id="xSr-ro-v76"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="agU-e8-1A9"/>
-                                <exclude reference="e7G-5Q-dwy"/>
-                                <exclude reference="TYH-02-kbc"/>
-                                <exclude reference="tlN-F6-4Ky"/>
-                                <exclude reference="xSr-ro-v76"/>
-                            </mask>
-                        </variation>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <nil key="simulatedStatusBarMetrics"/>
