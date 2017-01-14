@@ -10,6 +10,10 @@ import UIKit
 
 class StartViewController: UIViewController {
     
+    let gradientLayer = CAGradientLayer()
+    let color1 = UIColor.green
+    let color2 = UIColor.purple
+    
     @IBAction func unwindToStartViewController(unwindSegue: UIStoryboardSegue) {
         
     }
@@ -18,6 +22,15 @@ class StartViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        gradientLayer.frame = view.frame
+        gradientLayer.colors = [color1.cgColor, color2.cgColor]
+        
+        //view.layer.addSublayer(gradientLayer)
+
     }
 
     override func didReceiveMemoryWarning() {

@@ -26,6 +26,11 @@ protocol PlayerType {
 class Player: CardHolder, PlayerType, Hashable {
     var name: String
     var points: Int
+    var roundPoints: Int {
+        didSet {
+            print(self.roundPoints - oldValue)
+        }
+    }
     var wins: Int
     var numberOfSpades: Int
     var stock: Array<Card>
@@ -45,6 +50,7 @@ class Player: CardHolder, PlayerType, Hashable {
     init(name: String, faceUpCards: Bool) {
         self.name = name
         points = 0
+        roundPoints = 0
         wins = 0
         numberOfSpades = 0
         stock = []

@@ -17,14 +17,14 @@ class CardHolder {
     
     func takeCardsFromDeck(_ numCards: Int, fromDeck: Deck) {
         for _ in 1...numCards {
-            //UIView.animateWithDuration(0.3, animations: {
-            //    vc.decks.deck.last!.cardImageView.center = vc.player1StackView.center
-            //})
             hand.append(fromDeck.getTopCardFromDeck())
         }
     }
     
+    // Not implemented
+    /*
     func moveCard(_ player: Player, fromView: UIView, toView: UIView) {
         UIView.transition(from: fromView, to: toView, duration: 1, options: UIViewAnimationOptions.curveEaseOut, completion: nil)
     }
+    */
 }
