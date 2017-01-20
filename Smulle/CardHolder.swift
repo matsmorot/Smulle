@@ -9,8 +9,6 @@
 import Foundation
 import UIKit
 
-//let vc = GameViewController()
-
 class CardHolder {
     
     var hand: Array<Card> = []

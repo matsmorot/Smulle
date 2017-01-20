@@ -96,7 +96,7 @@ class Card: UIImageView {
         cardImage.layer.shadowColor = UIColor.black.cgColor
         cardImage.layer.shadowOpacity = 0.3
         cardImage.layer.shadowOffset = CGSize.zero
-        cardImage.layer.shadowRadius = 0.5
+        cardImage.layer.shadowRadius = 5
         
     }
     
