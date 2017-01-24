@@ -29,13 +29,12 @@ class GameViewController: UIViewController {
     @IBOutlet weak var navigationBar: UINavigationBar!
     @IBOutlet weak var toolBar: UIToolbar!
     @IBAction func helpButton(_ sender: UIBarButtonItem) {
-        presentRulesCard()
+        let rulesCard = ModalView(parentView: self.view)
+        rulesCard.presentModal()
+        
     }
     
     var deckHolder = UIView()
-    var rulesCard = UIView()
-    let rulesTextView = UITextView()
-    let blurView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
     var numberOfRounds = 4
     var sumOfHighlightedCards = 0
     var highlightedCards: Array<Card> = []
@@ -761,7 +760,8 @@ class GameViewController: UIViewController {
         } else {
             
             card.addSubview(front)
-            card.cardImageView.layoutIfNeeded()
+            card.setNeedsDisplay()
+            card.layoutIfNeeded()
             UIView.transition(from: card.cardImageView, to: front, duration: 0.32, options: [.transitionFlipFromLeft, .showHideTransitionViews], completion: { (finished: Bool) -> Void in
                 
                 // Should something happen after card has been flipped?
@@ -1023,110 +1023,6 @@ class GameViewController: UIViewController {
             }
         }
         
-    }
-    
-    
-    func createRulesCard() {
-        
-        rulesCard.frame = CGRect(origin: CGPoint(x: self.view.frame.width, y: 10), size: CGSize(width: view.frame.width - 20, height: view.frame.height - 20))
-        let tap = UITapGestureRecognizer(target: self, action: #selector(rulesCardTapped(_:)))
-        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(rulesCardSwipedRight(_:)))
-        swipeRight.direction = .right
-        rulesCard.addGestureRecognizer(tap)
-        rulesCard.addGestureRecognizer(swipeRight)
-        
-        let rulesTextFile = Bundle.main.path(forResource: "smulle_rules", ofType: "txt")
-        var rulesTextString = ""
-        do {
-            rulesTextString = try String(contentsOfFile: rulesTextFile!)
-        } catch let error as NSError {
-            print("Failed reading from \(rulesTextFile). Error: " + error.localizedDescription)
-        }
-        
-        rulesTextView.frame = rulesCard.frame
-        rulesTextView.clipsToBounds = true
-        rulesTextView.text = rulesTextString
-        rulesTextView.backgroundColor = .none
-        rulesTextView.textColor = UIColor.white
-        rulesTextView.isEditable = false
-        rulesTextView.textContainerInset = UIEdgeInsetsMake(20, 10, 20, 25)
-        
-        rulesCard.layoutMargins = UIEdgeInsetsMake(20, 20, 20, 20)
-        blurView.frame = rulesCard.bounds
-        blurView.clipsToBounds = true
-        blurView.layer.cornerRadius = 20
-        blurView.alpha = 0.94
-        
-        rulesCard.layer.cornerRadius = 20
-        
-        if #available(iOS 10.0, *) {
-            
-        } else {
-            rulesCard.alpha = 0.97 // defining alpha < 1 will break blur effect in iOS10
-        }
-        view.addSubview(rulesCard)
-        dump(rulesCard.bounds)
-        /*
-         
-         let deck = Deck(numDecks: 1)
-         var cardYPosition = rulesCard.frame.origin.y + 20
-         var cardXPosition = rulesCard.frame.origin.x
-         
-         for card in deck.deck {
-         if card.getCardPoints(card) == 1 {
-         
-         card.frame.origin = CGPoint(x: cardXPosition, y: rulesCard.frame.origin.y)
-         rulesCard.addSubview(card)
-         flipCard(card)
-         card.addShadow(card.cardImageView)
-         cardXPosition += 20
-         cardYPosition = card.cardImageView.frame.height + 20
-         
-         }
-         if card.getCardPoints(card) > 1 {
-         
-         card.frame.origin = CGPoint(x: rulesCard.frame.origin.x, y: cardYPosition)
-         self.view.addSubview(card)
-         flipCard(card)
-         card.addShadow(card.cardImageView)
-         cardYPosition += card.cardImageView.frame.height + 20
-         }
-         }*/
-    }
-
-    
-    func presentRulesCard() {
-        createRulesCard()
-        UIView.animate(withDuration: 0.3, delay: 0, options: [], animations: {
-            self.rulesCard.frame.origin = CGPoint(x: 10, y: 10)
-            self.rulesTextView.frame = self.rulesCard.frame
-            }, completion: nil)
-        self.rulesCard.addSubview(self.blurView)
-        self.rulesCard.addSubview(self.rulesTextView)
-    }
-    
-    func rulesCardSwipedRight(_ sender: UISwipeGestureRecognizer) {
-        UIView.animate(withDuration: 0.3, delay: 0, options: [], animations: {
-            self.rulesCard.frame.origin = CGPoint(x: self.view.frame.width, y: 10)
-            self.rulesTextView.frame = self.rulesCard.frame
-            }, completion: { (finished: Bool) -> Void in
-                
-                self.rulesCard.subviews.forEach({ $0.removeFromSuperview() })
-                self.rulesCard.removeFromSuperview()
-        })
-        
-    }
-    
-    func rulesCardTapped(_ sender: UITapGestureRecognizer) {
-        
-        UIView.animate(withDuration: 0.3, delay: 0, options: [], animations: {
-            self.rulesCard.frame.origin = CGPoint(x: self.view.frame.width, y: 10)
-            self.rulesTextView.frame = self.rulesCard.frame
-            }, completion: { (finished: Bool) -> Void in
-                
-                self.rulesCard.subviews.forEach({ $0.removeFromSuperview() })
-                self.rulesCard.removeFromSuperview()
-        })
     }
     
     func playSound(soundEffect: String) {

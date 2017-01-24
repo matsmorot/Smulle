@@ -18,33 +18,42 @@ class ModalView: UIView {
     }
     */
     
-    /*
-    init() {
-        self.frame = CGRect(origin: CGPoint(x: self.view.frame.width, y: 10), size: CGSize(width: view.frame.width - 20, height: view.frame.height - 20))
-        let tap = UITapGestureRecognizer(target: self, action: #selector(rulesCardTapped(_:)))
-        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(rulesCardSwipedRight(_:)))
+    let textView: UITextView
+    let blurView: UIVisualEffectView
+    
+    init(parentView: UIView) {
+        
+        textView = UITextView()
+        blurView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
+        
+        super.init(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
+        
+        self.frame = CGRect(origin: CGPoint(x: parentView.frame.width, y: 10), size: CGSize(width: parentView.frame.width - 20, height: parentView.frame.height - 20))
+        let tap = UITapGestureRecognizer(target: self, action: #selector(modalTapped(_:)))
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(modalSwipedRight(_:)))
         swipeRight.direction = .right
         self.addGestureRecognizer(tap)
         self.addGestureRecognizer(swipeRight)
         
-        let rulesTextFile = Bundle.main.path(forResource: "smulle_rules", ofType: "txt")
-        var rulesTextString = ""
+        let textFile = Bundle.main.path(forResource: "smulle_rules", ofType: "txt")
+        var textString = ""
         do {
-            rulesTextString = try String(contentsOfFile: rulesTextFile!)
+            textString = try String(contentsOfFile: textFile!)
         } catch let error as NSError {
-            print("Failed reading from \(rulesTextFile). Error: " + error.localizedDescription)
+            print("Failed reading from \(textFile). Error: " + error.localizedDescription)
         }
         
-        rulesTextView.frame = rulesCard.frame
-        rulesTextView.clipsToBounds = true
-        rulesTextView.text = rulesTextString
-        rulesTextView.backgroundColor = .none
-        rulesTextView.textColor = UIColor.white
-        rulesTextView.isEditable = false
-        rulesTextView.textContainerInset = UIEdgeInsetsMake(20, 10, 20, 25)
+        textView.frame = self.frame
+        textView.clipsToBounds = true
+        textView.text = textString
+        textView.backgroundColor = .none
+        textView.textColor = UIColor.white
+        textView.isEditable = false
+        textView.textContainerInset = UIEdgeInsetsMake(20, 10, 20, 25)
         
         self.layoutMargins = UIEdgeInsetsMake(20, 20, 20, 20)
-        blurView.frame = rulesCard.bounds
+        
+        blurView.frame = self.bounds
         blurView.clipsToBounds = true
         blurView.layer.cornerRadius = 20
         blurView.alpha = 0.94
@@ -56,10 +65,10 @@ class ModalView: UIView {
         } else {
             self.alpha = 0.97 // defining alpha < 1 will break blur effect in iOS10
         }
-        view.addSubview(self)
+        parentView.addSubview(self)
         //dump(rulesCard.bounds)
-        /*
-         
+        
+         /*
          let deck = Deck(numDecks: 1)
          var cardYPosition = rulesCard.frame.origin.y + 20
          var cardXPosition = rulesCard.frame.origin.x
@@ -86,25 +95,29 @@ class ModalView: UIView {
          }*/
     }
     
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     func presentModal() {
         
         UIView.animate(withDuration: 0.3, delay: 0, options: [], animations: {
             self.frame.origin = CGPoint(x: 10, y: 10)
-            self.rulesTextView.frame = self.rulesCard.frame
+            self.textView.frame = self.frame
         }, completion: nil)
         
-        self.rulesCard.addSubview(self.blurView)
-        self.rulesCard.addSubview(self.rulesTextView)
+        self.addSubview(self.blurView)
+        self.addSubview(self.textView)
     }
     
-    func rulesCardSwipedRight(_ sender: UISwipeGestureRecognizer) {
+    func modalSwipedRight(_ sender: UISwipeGestureRecognizer) {
         UIView.animate(withDuration: 0.3, delay: 0, options: [], animations: {
-            self.rulesCard.frame.origin = CGPoint(x: self.view.frame.width, y: 10)
-            self.rulesTextView.frame = self.rulesCard.frame
+            self.frame.origin = CGPoint(x: self.frame.width, y: 10)
+            self.textView.frame = self.frame
         }, completion: { (finished: Bool) -> Void in
             
-            self.rulesCard.subviews.forEach({ $0.removeFromSuperview() })
-            self.rulesCard.removeFromSuperview()
+            self.subviews.forEach({ $0.removeFromSuperview() })
+            self.removeFromSuperview()
         })
         
     }
@@ -112,14 +125,14 @@ class ModalView: UIView {
     func modalTapped(_ sender: UITapGestureRecognizer) {
         
         UIView.animate(withDuration: 0.3, delay: 0, options: [], animations: {
-            self.rulesCard.frame.origin = CGPoint(x: self.view.frame.width, y: 10)
-            self.rulesTextView.frame = self.rulesCard.frame
+            self.frame.origin = CGPoint(x: self.frame.width, y: 10)
+            self.textView.frame = self.frame
         }, completion: { (finished: Bool) -> Void in
             
-            self.rulesCard.subviews.forEach({ $0.removeFromSuperview() })
-            self.rulesCard.removeFromSuperview()
+            self.subviews.forEach({ $0.removeFromSuperview() })
+            self.removeFromSuperview()
         })
     }
 
-    */
+ 
 }
