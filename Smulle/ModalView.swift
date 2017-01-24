@@ -60,6 +60,9 @@ class ModalView: UIView {
         
         self.layer.cornerRadius = 20
         
+        addSubview(blurView)
+        blurView.addSubview(textView)
+        
         if #available(iOS 10.0, *) {
             
         } else {
@@ -106,8 +109,8 @@ class ModalView: UIView {
             self.textView.frame = self.frame
         }, completion: nil)
         
-        self.addSubview(self.blurView)
-        self.addSubview(self.textView)
+        //self.addSubview(self.blurView)
+        //self.addSubview(self.textView)
     }
     
     func modalSwipedRight(_ sender: UISwipeGestureRecognizer) {
