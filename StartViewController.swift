@@ -8,11 +8,26 @@
 
 import UIKit
 
+extension UIColor {
+    convenience init(red: Int, green: Int, blue: Int) {
+        assert(red >= 0 && red <= 255, "Invalid red component")
+        assert(green >= 0 && green <= 255, "Invalid green component")
+        assert(blue >= 0 && blue <= 255, "Invalid blue component")
+        
+        self.init(red: CGFloat(red) / 255.0, green: CGFloat(green) / 255.0, blue: CGFloat(blue) / 255.0, alpha: 1.0)
+    }
+    
+    convenience init(netHex:Int) {
+        self.init(red:(netHex >> 16) & 0xff, green:(netHex >> 8) & 0xff, blue:netHex & 0xff)
+    }
+}
+
 class StartViewController: UIViewController {
     
     let gradientLayer = CAGradientLayer()
-    let color1 = UIColor.green
-    let color2 = UIColor.purple
+    let color1 = UIColor(red: 0x0A, green: 0xC9, blue: 0x5F)
+    let color2 = UIColor(red: 0x09, green: 0xA0, blue: 0x43)
+    
     
     @IBAction func unwindToStartViewController(unwindSegue: UIStoryboardSegue) {
         
@@ -25,11 +40,15 @@ class StartViewController: UIViewController {
         
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        //showModal()
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         gradientLayer.frame = view.frame
         gradientLayer.colors = [color1.cgColor, color2.cgColor]
         
-        //view.layer.addSublayer(gradientLayer)
+        view.layer.insertSublayer(gradientLayer, at: 0)
 
     }
 
@@ -38,6 +57,13 @@ class StartViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    func showModal() {
+        let modalViewController = ModalViewController()
+        modalViewController.modalPresentationStyle = .overCurrentContext
+        //modalViewController.view.alpha = 0.5
+        //modalViewController.view.backgroundColor = UIColor.red
+        present(modalViewController, animated: true, completion: nil)
+    }
 
     
     // MARK: - Navigation

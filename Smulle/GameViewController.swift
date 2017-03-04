@@ -28,14 +28,27 @@ class GameViewController: UIViewController {
     @IBOutlet weak var roundLabel: UILabel!
     @IBOutlet weak var navigationBar: UINavigationBar!
     @IBOutlet weak var toolBar: UIToolbar!
-    @IBAction func helpButton(_ sender: UIBarButtonItem) {
-        let rulesCard = ModalView(parentView: self.view)
-        rulesCard.presentModal()
+    
+    @IBAction func restartButton(_ sender: UIBarButtonItem) {
+        // Temporarily a button for stats
+        let statCard = ModalViewController()
+        statCard.modalPresentationStyle = .overCurrentContext
+        statCard.players = players
         
+        present(statCard, animated: true, completion: nil)
     }
+    @IBAction func helpButton(_ sender: UIBarButtonItem) {
+        //let rulesCard = ModalView(parentView: self.view, textFile: "smulle_rules")
+        //rulesCard.presentModal()
+    }
+    
+    let gradientLayer = CAGradientLayer()
+    let color1 = UIColor(red: 0x0A, green: 0xC9, blue: 0x5F)
+    let color2 = UIColor(red: 0x09, green: 0xA0, blue: 0x43)
     
     var deckHolder = UIView()
     var numberOfRounds = 4
+    var roundNumber = 0
     var sumOfHighlightedCards = 0
     var highlightedCards: Array<Card> = []
     let player1 = Player(name: "You", faceUpCards: true)
@@ -115,6 +128,15 @@ class GameViewController: UIViewController {
         super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
     }
  */
+    
+    override func viewWillAppear(_ animated: Bool) {
+        gradientLayer.frame = view.frame
+        gradientLayer.colors = [color1.cgColor, color2.cgColor]
+        
+        view.layer.insertSublayer(gradientLayer, at: 0)
+        tableCardsStackView.setContentCompressionResistancePriority(1000, for: .horizontal)
+        
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -144,11 +166,11 @@ class GameViewController: UIViewController {
         for card in decks.deck {
             card.cardImageView = UIImageView(image: card.cardImageBack)
             
-            card.setContentHuggingPriority(1000, for: UILayoutConstraintAxis.horizontal)
-            card.setContentCompressionResistancePriority(1000, for: UILayoutConstraintAxis.horizontal)
+            card.setContentHuggingPriority(1000, for: .horizontal)
+            card.setContentCompressionResistancePriority(1000, for: .horizontal)
             
-            card.heightAnchor.constraint(equalToConstant: card.cardImageView.frame.height).isActive = true
-            card.widthAnchor.constraint(equalToConstant: card.cardImageView.frame.width).isActive = true
+            card.heightAnchor.constraint(lessThanOrEqualToConstant: card.cardImageView.frame.height).isActive = true
+            card.widthAnchor.constraint(lessThanOrEqualToConstant: card.cardImageView.frame.width).isActive = true
             
             card.addSubview(card.cardImageView)
             deckHolder.addSubview(card)
@@ -164,8 +186,8 @@ class GameViewController: UIViewController {
             
             let tap = UITapGestureRecognizer(target: self, action: #selector(cardTapped(_:)))
             card.isUserInteractionEnabled = true
-            card.setContentHuggingPriority(1000, for: UILayoutConstraintAxis.horizontal)
-            card.setContentCompressionResistancePriority(1000, for: UILayoutConstraintAxis.horizontal)
+            //card.setContentHuggingPriority(1000, for: .horizontal)
+            //card.setContentCompressionResistancePriority(1000, for: .horizontal)
             card.addGestureRecognizer(tap)
             card.heightAnchor.constraint(equalToConstant: card.cardImageView.frame.height).isActive = true
             card.widthAnchor.constraint(equalToConstant: card.cardImageView.frame.width).isActive = true
@@ -190,8 +212,8 @@ class GameViewController: UIViewController {
                 card.addGestureRecognizer(swipeUp)
             }
             
-            card.setContentHuggingPriority(1000, for: UILayoutConstraintAxis.horizontal)
-            card.setContentCompressionResistancePriority(1000, for: UILayoutConstraintAxis.horizontal)
+            //card.setContentHuggingPriority(1000, for: UILayoutConstraintAxis.horizontal)
+            //card.setContentCompressionResistancePriority(1000, for: UILayoutConstraintAxis.horizontal)
             
             card.heightAnchor.constraint(equalToConstant: card.cardImageView.frame.height).isActive = true
             card.widthAnchor.constraint(equalToConstant: card.cardImageView.frame.width).isActive = true
@@ -212,18 +234,18 @@ class GameViewController: UIViewController {
         // Show top Smulle card, cropped, to save space
         if player.smulleCards.count > 0 {
             let lastCard = player.smulleCards.last
-            let cardImage = UIImageView(image: lastCard!.cardImage)
-            player.smulleView.contentMode = UIViewContentMode.top
-            player.smulleView.clipsToBounds = true
-            player.smulleView.frame.size.height = cardImage.frame.height / 3
-            player.smulleView.frame.origin.x = cardImage.frame.origin.x
-            player.smulleView.frame.origin.y = cardImage.frame.origin.y
+            let cardImageView = UIImageView(image: lastCard!.cardImage)
+            //player.smulleView.contentMode = UIViewContentMode.top
+            //player.smulleView.clipsToBounds = true
+            //player.smulleView.frame.size.height = cardImage.frame.height / 3
+            //player.smulleView.frame.origin.x = cardImage.frame.origin.x
+            //player.smulleView.frame.origin.y = cardImage.frame.origin.y
             
-            cardImage.contentMode = UIViewContentMode.top
-            cardImage.clipsToBounds = true
-            cardImage.frame.size.height = cardImage.frame.height / 3
+            cardImageView.contentMode = UIViewContentMode.top
+            cardImageView.clipsToBounds = true
+            cardImageView.frame.size.height = cardImageView.frame.height / 3
             
-            player.smulleView.addSubview(cardImage)
+            player.smulleView.addSubview(cardImageView)
         }
         
     }
@@ -506,9 +528,6 @@ class GameViewController: UIViewController {
         displayHandCards(player1)
         displayHandCards(player2)
         displayTableCards()
-        
-        print("\(decks.deck.count) cards left in decks.")
-        print(player1.smulleCards.count + player1.hand.count + player1.stock.count + player2.smulleCards.count + player2.hand.count + player2.stock.count + tableCards.hand.count + decks.deck.count)
     }
     
     func nextPlayer() {
@@ -584,7 +603,7 @@ class GameViewController: UIViewController {
                         
                         // and if you have opponent's top stock card on hand you steal whole stock and also a smulle
                     } else if self.player1.stock.last?.rank == hc.rank && self.player1.stock.last?.suit == hc.suit {
-                        self.flipCard(hc)
+                        hc.flipCard()
                         self.player2.stock.append(hc)
                         self.player1.stock.removeLast()
                         for card in self.player1.stock {
@@ -614,7 +633,7 @@ class GameViewController: UIViewController {
                         //animatePointsTaken(tc.getCardPoints(tc) + 5, origin: tc.center)
                         self.tableCards.hand.remove(at: self.tableCards.hand.index(of: tc)!)
                         self.tableCardsStackView.arrangedSubviews[self.tableCardsStackView.arrangedSubviews.index(of: tc)!].removeFromSuperview()
-                        self.flipCard(hc)
+                        hc.flipCard()
                         self.player2.stock.append(hc)
                         self.player2.roundPoints += hc.getCardPoints(hc)
                         self.pointsToAnimate.append(hc.getCardPoints(hc))
@@ -630,7 +649,7 @@ class GameViewController: UIViewController {
                         self.highlightedCards.append(tc)
                         self.sumOfHighlightedCards += tc.rank.rawValue
                         
-                        self.flipCard(hc)
+                        hc.flipCard()
                         
                         self.player2.stock.append(hc) // Add chosen card from hand to stock
                         self.player2.hand.remove(at: hcIndex) // ...and remove it from hand
@@ -658,7 +677,7 @@ class GameViewController: UIViewController {
                 print("\(self.player2.name) didn't find any cards to collect!")
                 let cardIndexToDiscard = self.findCardIndexToDiscard(self.player2.hand)
                 let disCard = self.player2.hand[cardIndexToDiscard]
-                self.flipCard(disCard)
+                disCard.flipCard()
                 
                 //tableCardsStackView.addArrangedSubview(disCard)
                 self.tableCards.hand.append(disCard)
@@ -679,31 +698,31 @@ class GameViewController: UIViewController {
         if decks.deck.count > 12 && decks.deck.count < 104 {
             player1.takeCardsFromDeck(4, fromDeck: decks)
             for card in player1.hand {
-                flipCard(card)
+                card.flipCard()
             }
             player2.takeCardsFromDeck(4, fromDeck: decks)
             for card in player2.hand {
                 if card.faceUp {
-                    flipCard(card)
+                    card.flipCard()
                 }
             }
         // If deck is new or there are less than 12 cards left, deal to players and table
         } else {
             player1.takeCardsFromDeck(4, fromDeck: decks)
             for card in player1.hand {
-                flipCard(card)
+                card.flipCard()
             }
             player2.takeCardsFromDeck(4, fromDeck: decks)
             for card in player2.hand {
                 if card.faceUp {
-                    flipCard(card)
+                    card.flipCard()
                 }
             }
             
             tableCards.takeCardsFromDeck(4, fromDeck: decks)
             for card in tableCards.hand {
                 if !card.faceUp {
-                    flipCard(card)
+                    card.flipCard()
                 }
             }
         }
@@ -739,7 +758,7 @@ class GameViewController: UIViewController {
         let maxValueIndex = values.index(of: values.max()!)
         return maxValueIndex!
     }
-    
+    /*
     func flipCard(_ card: Card) {
         
         playSound(soundEffect: "flipcard2")
@@ -772,7 +791,7 @@ class GameViewController: UIViewController {
             print("Card flipped from back to front! \(card.faceUp)")
         }
         
-    }
+    }*/
     
     func animatePointsTaken(_ points: [Int], origin: CGPoint) {
         
@@ -851,8 +870,59 @@ class GameViewController: UIViewController {
         pointsToAnimate.removeAll() // Empty pointsToAnimate after animations are done
     }
     
+    func checkForMostSpades() {
+        // The player with the most spades in stock will get 6 points
+        // If equal, 3 points each is given
+        
+        for player in players {
+            for card in player.stock {
+                if card.suit == Card.Suit.s {
+                    player.numberOfSpades += 1
+                }
+            }
+            playersNumberOfSpades[player] = player.numberOfSpades
+        }
+        
+        if player1.numberOfSpades > player2.numberOfSpades {
+            player1.roundPoints += 6
+            player1.hasMostSpades = true
+        } else if player1.numberOfSpades < player2.numberOfSpades {
+            player2.roundPoints += 6
+            player2.hasMostSpades = true
+        } else {
+            player1.roundPoints += 3
+            player2.roundPoints += 3
+        }
+        /*
+         if player1.numberOfSpades != player2.numberOfSpades {
+         var largest = 0
+         var playerWithMostSpades: Player = Player(name: "Dummy", faceUpCards: false)
+         for (player, value) in playersNumberOfSpades {
+         if value > largest {
+         largest = value
+         playerWithMostSpades = player
+         player.hasMostSpades = true
+         } else {
+         player.hasMostSpades = false
+         }
+         }
+         
+         print("\(playerWithMostSpades.name) has got the most spades!")
+         playerWithMostSpades.roundPoints += 6
+         pointsToAnimate.append(6)
+         animatePointsTaken(pointsToAnimate, origin: self.view.center)
+         } else {
+         print("Both players have equal amount of spades. 3 points each!")
+         player1.roundPoints += 3
+         player2.roundPoints += 3
+         }
+         */
+
+    }
+    
     func beginNewRound() {
-        roundLabel.text = "Rounds left: \(numberOfRounds)"
+        roundNumber += 1
+        roundLabel.text = "Round \(roundNumber)"
         
         player1.roundPoints = 0
         player1.numberOfTabbeCards = 0
@@ -910,37 +980,7 @@ class GameViewController: UIViewController {
             animatePointsTaken(pointsToAnimate, origin: self.view.center)
         }
         
-        // The player with the most spades in stock will get 6 points
-        // If equal, 3 points each is given
-        
-        for player in players {
-            for card in player.stock {
-                if card.suit == Card.Suit.s {
-                    player.numberOfSpades += 1
-                }
-            }
-            playersNumberOfSpades[player] = player.numberOfSpades
-        }
-        
-        if player1.numberOfSpades != player2.numberOfSpades {
-            var largest = 0
-            var playerWithMostSpades: Player = Player(name: "Dummy", faceUpCards: false)
-            for (player, value) in playersNumberOfSpades {
-                if value > largest {
-                    largest = value
-                    playerWithMostSpades = player
-                }
-            }
-            
-            print("\(playerWithMostSpades.name) has got the most spades!")
-            playerWithMostSpades.roundPoints += 6
-            pointsToAnimate.append(6)
-            animatePointsTaken(pointsToAnimate, origin: self.view.center)
-        } else {
-            print("Both players have equal amount of spades. 3 points each!")
-            player1.roundPoints += 3
-            player2.roundPoints += 3
-        }
+        checkForMostSpades()
         
         // Add points from round to total points
         player1.points += player1.roundPoints
@@ -954,28 +994,17 @@ class GameViewController: UIViewController {
         
         assert(totalCardPoints == 20, "Total points don't add up! \(totalCardPoints)")
         
-        // Clear the table and hands
-        tableCards.hand.removeAll()
-        player1.hand.removeAll()
-        player1.stock.removeAll()
-        player1.smulleCards.removeAll()
-        player2.hand.removeAll()
-        player2.stock.removeAll()
-        player2.smulleCards.removeAll()
-        decks.deck.removeAll()
         
-        tableCardsStackView.arrangedSubviews.forEach({ $0.removeFromSuperview() })
-        player1SmulleView.subviews.forEach({ $0.removeFromSuperview() })
-        player1StackView.arrangedSubviews.forEach({ $0.removeFromSuperview() })
-        player1StockView.arrangedSubviews.forEach({ $0.removeFromSuperview() })
-        player2SmulleView.subviews.forEach({ $0.removeFromSuperview() })
-        player2StackView.arrangedSubviews.forEach({ $0.removeFromSuperview() })
-        player2StockView.arrangedSubviews.forEach({ $0.removeFromSuperview() })
-        
-        if numberOfRounds > 0 {
-            numberOfRounds -= 1
-            // TODO: Modal of round stats
+        if roundNumber <= numberOfRounds {
             
+            // TODO: Modal of round stats
+            let statCard = ModalViewController()
+            statCard.modalPresentationStyle = .overCurrentContext
+            statCard.players = players
+            
+            present(statCard, animated: true, completion: nil)
+            
+            clearTable()
             beginNewRound()
         } else {
             endGame()
@@ -1025,10 +1054,32 @@ class GameViewController: UIViewController {
         
     }
     
+    func clearTable() {
+        
+        // Clear the table and hands
+        tableCards.hand.removeAll()
+        player1.hand.removeAll()
+        player1.stock.removeAll()
+        player1.smulleCards.removeAll()
+        player2.hand.removeAll()
+        player2.stock.removeAll()
+        player2.smulleCards.removeAll()
+        decks.deck.removeAll()
+        
+        tableCardsStackView.arrangedSubviews.forEach({ $0.removeFromSuperview() })
+        player1SmulleView.subviews.forEach({ $0.removeFromSuperview() })
+        player1StackView.arrangedSubviews.forEach({ $0.removeFromSuperview() })
+        player1StockView.arrangedSubviews.forEach({ $0.removeFromSuperview() })
+        player2SmulleView.subviews.forEach({ $0.removeFromSuperview() })
+        player2StackView.arrangedSubviews.forEach({ $0.removeFromSuperview() })
+        player2StockView.arrangedSubviews.forEach({ $0.removeFromSuperview() })
+
+    }
+    
     func playSound(soundEffect: String) {
         let url = Bundle.main.url(forResource: soundEffect, withExtension: "m4a")
             let player = AVAudioPlayerPool.playerWithURL(url: url!)
             player?.play()
-        }
+    }
 }
 

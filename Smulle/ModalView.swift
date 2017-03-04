@@ -21,21 +21,78 @@ class ModalView: UIView {
     let textView: UITextView
     let blurView: UIVisualEffectView
     
-    init(parentView: UIView) {
-        
+    let tap = UITapGestureRecognizer(target: self, action: #selector(modalTapped(_:)))
+    let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(modalSwipedRight(_:)))
+    
+    let mainStackView = UIStackView()
+    let player1StackView = UIStackView()
+    let player2StackView = UIStackView()
+    
+    init(parentView: UIView, players: [Player]) {
         textView = UITextView()
-        blurView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
+        blurView = UIVisualEffectView(effect: UIBlurEffect(style: .extraLight))
+        super.init(frame: CGRect())
         
-        super.init(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
+        mainStackView.axis = .vertical
+        mainStackView.distribution = .fillEqually
+        mainStackView.alignment = .center
+        mainStackView.spacing = 10
+        mainStackView.translatesAutoresizingMaskIntoConstraints = false
+        
+        player1StackView.axis = .vertical
+        player1StackView.distribution = .fillEqually
+        player1StackView.alignment = .center
+        player1StackView.spacing = 10
+        
+        player2StackView.axis = .vertical
+        player2StackView.distribution = .fillEqually
+        player2StackView.alignment = .center
+        player2StackView.spacing = 10
         
         self.frame = CGRect(origin: CGPoint(x: parentView.frame.width, y: 10), size: CGSize(width: parentView.frame.width - 20, height: parentView.frame.height - 20))
-        let tap = UITapGestureRecognizer(target: self, action: #selector(modalTapped(_:)))
-        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(modalSwipedRight(_:)))
+        
         swipeRight.direction = .right
         self.addGestureRecognizer(tap)
         self.addGestureRecognizer(swipeRight)
         
-        let textFile = Bundle.main.path(forResource: "smulle_rules", ofType: "txt")
+        blurView.frame = self.bounds
+        blurView.clipsToBounds = true
+        blurView.layer.cornerRadius = 20
+        blurView.alpha = 0.94
+        
+        addSubview(blurView)
+        addSubview(mainStackView)
+        mainStackView.addArrangedSubview(player1StackView)
+        mainStackView.addArrangedSubview(player2StackView)
+        
+        mainStackView.centerXAnchor.constraint(equalTo: blurView.centerXAnchor).isActive = true
+        mainStackView.centerYAnchor.constraint(equalTo: blurView.centerYAnchor).isActive = true
+        mainStackView.leftAnchor.constraint(equalTo: blurView.leftAnchor).isActive = true
+        mainStackView.rightAnchor.constraint(equalTo: blurView.rightAnchor).isActive = true
+        mainStackView.topAnchor.constraint(equalTo: blurView.topAnchor).isActive = true
+        mainStackView.bottomAnchor.constraint(equalTo: blurView.bottomAnchor).isActive = true
+        
+        showCardsWithPoints(players)
+        
+        parentView.addSubview(self)
+        
+        
+    }
+    
+    init(parentView: UIView, textFile: String) {
+        
+        textView = UITextView()
+        blurView = UIVisualEffectView(effect: UIBlurEffect(style: .extraLight))
+        
+        super.init(frame: CGRect())
+        
+        self.frame = CGRect(origin: CGPoint(x: parentView.frame.width, y: 10), size: CGSize(width: parentView.frame.width - 20, height: parentView.frame.height - 20))
+        
+        swipeRight.direction = .right
+        self.addGestureRecognizer(tap)
+        self.addGestureRecognizer(swipeRight)
+        
+        let textFile = Bundle.main.path(forResource: textFile, ofType: "txt")
         var textString = ""
         do {
             textString = try String(contentsOfFile: textFile!)
@@ -47,11 +104,11 @@ class ModalView: UIView {
         textView.clipsToBounds = true
         textView.text = textString
         textView.backgroundColor = .none
-        textView.textColor = UIColor.white
+        textView.textColor = UIColor.darkText
         textView.isEditable = false
         textView.textContainerInset = UIEdgeInsetsMake(20, 10, 20, 25)
         
-        self.layoutMargins = UIEdgeInsetsMake(20, 20, 20, 20)
+        self.layoutMargins = UIEdgeInsetsMake(0, 20, 20, 20)
         
         blurView.frame = self.bounds
         blurView.clipsToBounds = true
@@ -62,6 +119,7 @@ class ModalView: UIView {
         
         addSubview(blurView)
         blurView.addSubview(textView)
+
         
         if #available(iOS 10.0, *) {
             
@@ -108,28 +166,24 @@ class ModalView: UIView {
             self.frame.origin = CGPoint(x: 10, y: 10)
             self.textView.frame = self.frame
         }, completion: nil)
-        
-        //self.addSubview(self.blurView)
-        //self.addSubview(self.textView)
     }
     
     func modalSwipedRight(_ sender: UISwipeGestureRecognizer) {
         UIView.animate(withDuration: 0.3, delay: 0, options: [], animations: {
             self.frame.origin = CGPoint(x: self.frame.width, y: 10)
-            self.textView.frame = self.frame
+            
         }, completion: { (finished: Bool) -> Void in
             
             self.subviews.forEach({ $0.removeFromSuperview() })
             self.removeFromSuperview()
         })
-        
     }
     
     func modalTapped(_ sender: UITapGestureRecognizer) {
         
         UIView.animate(withDuration: 0.3, delay: 0, options: [], animations: {
             self.frame.origin = CGPoint(x: self.frame.width, y: 10)
-            self.textView.frame = self.frame
+            
         }, completion: { (finished: Bool) -> Void in
             
             self.subviews.forEach({ $0.removeFromSuperview() })
@@ -137,5 +191,26 @@ class ModalView: UIView {
         })
     }
 
- 
+    func showCardsWithPoints(_ players: [Player]) {
+        
+        for player in players {
+            let pointCards = player.stock + player.smulleCards
+            
+            for card in pointCards {
+                if card.getCardPoints(card) > 0 {
+                    
+                    let pointCard = Card(rank: card.rank, suit: card.suit)
+                    
+                    if player == players[0] {
+                        player1StackView.addArrangedSubview(pointCard)
+                    } else {
+                        player2StackView.addArrangedSubview(pointCard)
+                    }
+                    
+                    pointCard.flipCard()
+                    pointCard.addBorder(pointCard)
+                }
+            }
+        }
+    }
 }

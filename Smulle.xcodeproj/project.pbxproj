@@ -14,10 +14,10 @@
 		B26C39A61E2EA1D10093C411 /* shuffle.m4a in Resources */ = {isa = PBXBuildFile; fileRef = B26C39A51E2EA1D10093C411 /* shuffle.m4a */; };
 		B26C39A81E2EA6470093C411 /* flipcard.m4a in Resources */ = {isa = PBXBuildFile; fileRef = B26C39A71E2EA6470093C411 /* flipcard.m4a */; };
 		B26C39AA1E2ED1A80093C411 /* shift2.m4a in Resources */ = {isa = PBXBuildFile; fileRef = B26C39A91E2ED1A80093C411 /* shift2.m4a */; };
-		B273F68E1DCFC36A00DB4E63 /* ModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B273F68D1DCFC36A00DB4E63 /* ModalView.swift */; };
 		B2914BEA1E2EDC4B00185C97 /* discard.m4a in Resources */ = {isa = PBXBuildFile; fileRef = B2914BE91E2EDC4B00185C97 /* discard.m4a */; };
 		B2914BEC1E2EE08F00185C97 /* flipcard2.m4a in Resources */ = {isa = PBXBuildFile; fileRef = B2914BEB1E2EE08F00185C97 /* flipcard2.m4a */; };
 		B29F6D8C1CB2B1AB0021194D /* Deck.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29F6D8B1CB2B1AB0021194D /* Deck.swift */; };
+		B2B4270A1E3FF19D005C7AAB /* ModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2B427091E3FF19C005C7AAB /* ModalViewController.swift */; };
 		B2C097BB1C9AE738003BDA9E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C097BA1C9AE738003BDA9E /* AppDelegate.swift */; };
 		B2C097BD1C9AE738003BDA9E /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C097BC1C9AE738003BDA9E /* GameViewController.swift */; };
 		B2C097C21C9AE738003BDA9E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B2C097C11C9AE738003BDA9E /* Assets.xcassets */; };
@@ -40,10 +40,10 @@
 		B26C39A51E2EA1D10093C411 /* shuffle.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = shuffle.m4a; sourceTree = "<group>"; };
 		B26C39A71E2EA6470093C411 /* flipcard.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = flipcard.m4a; sourceTree = "<group>"; };
 		B26C39A91E2ED1A80093C411 /* shift2.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = shift2.m4a; sourceTree = "<group>"; };
-		B273F68D1DCFC36A00DB4E63 /* ModalView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModalView.swift; sourceTree = "<group>"; };
 		B2914BE91E2EDC4B00185C97 /* discard.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = discard.m4a; sourceTree = "<group>"; };
 		B2914BEB1E2EE08F00185C97 /* flipcard2.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = flipcard2.m4a; sourceTree = "<group>"; };
 		B29F6D8B1CB2B1AB0021194D /* Deck.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Deck.swift; sourceTree = "<group>"; };
+		B2B427091E3FF19C005C7AAB /* ModalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModalViewController.swift; sourceTree = "<group>"; };
 		B2C097B71C9AE738003BDA9E /* Smulle.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Smulle.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2C097BA1C9AE738003BDA9E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B2C097BC1C9AE738003BDA9E /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
@@ -102,8 +102,8 @@
 				B2C097BA1C9AE738003BDA9E /* AppDelegate.swift */,
 				B2F01E561D8B2C7B005A5E3B /* StartViewController.swift */,
 				B2C097BC1C9AE738003BDA9E /* GameViewController.swift */,
+				B2B427091E3FF19C005C7AAB /* ModalViewController.swift */,
 				B2C13B941E302D18005D3530 /* AVAudioPlayerPool.swift */,
-				B273F68D1DCFC36A00DB4E63 /* ModalView.swift */,
 				B2144BF81D874386001DAE39 /* smulle_rules.txt */,
 				B2E13B661CAFFF2E002F0613 /* Player.swift */,
 				B215199B1CCBCC0000A2E47D /* CardHolder.swift */,
@@ -205,11 +205,11 @@
 				B29F6D8C1CB2B1AB0021194D /* Deck.swift in Sources */,
 				B2F01E571D8B2C7B005A5E3B /* StartViewController.swift in Sources */,
 				B215199C1CCBCC0000A2E47D /* CardHolder.swift in Sources */,
+				B2B4270A1E3FF19D005C7AAB /* ModalViewController.swift in Sources */,
 				B2E13B651CAF3043002F0613 /* GamePlay.swift in Sources */,
 				B2C097CD1C9B0A4E003BDA9E /* Card.swift in Sources */,
 				B2C097BD1C9AE738003BDA9E /* GameViewController.swift in Sources */,
 				B2C13B951E302D18005D3530 /* AVAudioPlayerPool.swift in Sources */,
-				B273F68E1DCFC36A00DB4E63 /* ModalView.swift in Sources */,
 				B2E13B671CAFFF2E002F0613 /* Player.swift in Sources */,
 				B2C097BB1C9AE738003BDA9E /* AppDelegate.swift in Sources */,
 			);

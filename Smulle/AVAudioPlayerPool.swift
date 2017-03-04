@@ -13,7 +13,7 @@ import AVFoundation
 
 // An array of all players stored in the pool; not accessible
 // outside this file
-private var players : [AVAudioPlayer] = []
+private var audioPlayers : [AVAudioPlayer] = []
 private var newPlayer: AVAudioPlayer?
 
 class AVAudioPlayerPool: NSObject {
@@ -22,7 +22,7 @@ class AVAudioPlayerPool: NSObject {
     class func playerWithURL(url : URL) -> AVAudioPlayer? {
         
         // Try to find a player that can be reused and is not playing
-        let availablePlayers = players.filter { (player) -> Bool in
+        let availablePlayers = audioPlayers.filter { (player) -> Bool in
             return player.isPlaying == false && player.url == url
         }
         
@@ -36,7 +36,7 @@ class AVAudioPlayerPool: NSObject {
             do {
                 newPlayer = try AVAudioPlayer(contentsOf: url)
                 print("Creating new player for url \(url.lastPathComponent)")
-                players.append(newPlayer!)
+                audioPlayers.append(newPlayer!)
                 
             } catch let error {
                 print(error.localizedDescription)

@@ -29,7 +29,7 @@ class Card: UIImageView {
         
         super.init(frame: CGRect(x: 0, y: 0, width: 0, height: 0)) // Initialize a dummy UIView
         
-        addBorder(cardImageView)
+        //addBorder(cardImageView)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -100,12 +100,45 @@ class Card: UIImageView {
         
     }
     
-    func addBorder(_ cardImage: UIImageView) {
+    func addBorder(_ cardImageView: UIImageView) {
         
-        cardImage.layer.borderWidth = 0.2
-        cardImage.layer.cornerRadius = 2
+        cardImageView.layer.borderWidth = 0.2
+        cardImageView.layer.cornerRadius = 2
         let borderColor = UIColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5).cgColor
-        cardImage.layer.borderColor = borderColor
+        cardImageView.layer.borderColor = borderColor
+        cardImageView.setContentCompressionResistancePriority(1000, for: .horizontal)
+    }
+    
+    func flipCard() {
+        
+        //playSound(soundEffect: "flipcard2")
+        
+        let back = UIImageView(image: self.cardImageBack)
+        let front = UIImageView(image: self.cardImage)
+        
+        if self.faceUp {
+            
+            self.addSubview(back)
+            UIView.transition(from: self.cardImageView, to: back, duration: 0.32, options: [.transitionFlipFromRight, .showHideTransitionViews], completion: { (finished: Bool) -> Void in
+                
+                // Should something happen after card has been flipped?
+                
+            })
+            self.faceUp = false
+            print("Card flipped from front to back!")
+        } else {
+            
+            self.addSubview(front)
+            
+            UIView.transition(from: self.cardImageView, to: front, duration: 0.32, options: [.transitionFlipFromLeft, .showHideTransitionViews], completion: { (finished: Bool) -> Void in
+                
+                // Should something happen after card has been flipped?
+                
+            })
+            self.addBorder(front)
+            self.faceUp = true
+            print("Card flipped from back to front!")
+        }
         
     }
     
