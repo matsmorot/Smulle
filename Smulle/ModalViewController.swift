@@ -89,11 +89,10 @@ import UIKit
             let noCard = Card(rank: .ace, suit: .s)
             noCard.cardImageView.alpha = 0
             
-            let pointsCardPoints = player.roundPoints - (player.numberOfTabbeCards + (player.smulleCards.count * 5))
+            let pointsCardPoints = player.roundPoints - (player.spadePoints + player.numberOfTabbeCards + (player.smulleCards.count * 5))
             let smulleCardPoints = player.smulleCards.count * 5
-            let spadePoints = (player.hasMostSpades ? 6 : 0)
             
-            let scale = CGFloat(0.8)
+            let scale = CGFloat(0.8) // Used to scale card images a bit to save space
             
             let nameLabel = UILabel()
             let pointsLabel = UILabel()
@@ -121,7 +120,7 @@ import UIKit
             smulleLabel.text = "Smulle cards"
             smulleCardPointsLabel.text = "\(smulleCardPoints)"
             spadeLabel.text = "Spade cards"
-            spadePointsLabel.text = "\(spadePoints)"
+            spadePointsLabel.text = "\(player.spadePoints)"
             tabbeLabel.text = "Tabs x \(player.numberOfTabbeCards)"
             tabbePointsLabel.text = "\(player.numberOfTabbeCards)"
             totalLabel.text = "Total:"

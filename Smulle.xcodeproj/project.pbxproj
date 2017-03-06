@@ -71,7 +71,7 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		B2C097AE1C9AE738003BDA9E = {
+		B204CD0A1E6B021000792F76 /* Sounds */ = {
 			isa = PBXGroup;
 			children = (
 				B2C13B961E31769B005D3530 /* 1p.m4a */,
@@ -83,6 +83,14 @@
 				B26C39A51E2EA1D10093C411 /* shuffle.m4a */,
 				B26C39A31E2E9FC20093C411 /* unshift.m4a */,
 				B26C39A11E2E9EE30093C411 /* shift.m4a */,
+			);
+			name = Sounds;
+			path = ..;
+			sourceTree = "<group>";
+		};
+		B2C097AE1C9AE738003BDA9E = {
+			isa = PBXGroup;
+			children = (
 				B2C097B91C9AE738003BDA9E /* Smulle */,
 				B2C097B81C9AE738003BDA9E /* Products */,
 			);
@@ -110,6 +118,7 @@
 				B2C097CC1C9B0A4E003BDA9E /* Card.swift */,
 				B29F6D8B1CB2B1AB0021194D /* Deck.swift */,
 				B2E13B641CAF3043002F0613 /* GamePlay.swift */,
+				B204CD0A1E6B021000792F76 /* Sounds */,
 				B2C097C11C9AE738003BDA9E /* Assets.xcassets */,
 				B2C7DB921CBC49B300AFB1AA /* Main.storyboard */,
 				B2C097C31C9AE738003BDA9E /* LaunchScreen.storyboard */,

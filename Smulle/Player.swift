@@ -34,6 +34,7 @@ class Player: CardHolder, PlayerType, Hashable {
     var wins: Int
     var numberOfSpades: Int
     var hasMostSpades: Bool
+    var spadePoints: Int
     var stock: Array<Card>
     var smulleCards: Array<Card>
     var numberOfTabbeCards: Int
@@ -55,6 +56,7 @@ class Player: CardHolder, PlayerType, Hashable {
         wins = 0
         numberOfSpades = 0
         hasMostSpades = false
+        spadePoints = 0
         stock = []
         smulleCards = []
         numberOfTabbeCards = 0

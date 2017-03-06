@@ -583,6 +583,10 @@ class GameViewController: UIViewController {
             // Check for SMULLE or cards with equal rank to collect. Else discard one card.
             var hcIndex = 0
             var handCard = Card(rank: .ace, suit: .h) // Create dummy for handcard for use outside of handloop
+            var p1LastCard = Card(rank: .ace, suit: .s)
+            if self.player1.stock.last != nil {
+                p1LastCard = self.player1.stock.last!
+            }
             handLoop: for hc in self.player2.hand {
                 handCard = hc
                 
@@ -602,9 +606,11 @@ class GameViewController: UIViewController {
                         break handLoop
                         
                         // and if you have opponent's top stock card on hand you steal whole stock and also a smulle
-                    } else if self.player1.stock.last?.rank == hc.rank && self.player1.stock.last?.suit == hc.suit {
+                    } else if p1LastCard.rank == hc.rank && p1LastCard.suit == hc.suit {
                         hc.flipCard()
                         self.player2.stock.append(hc)
+                        self.player2.roundPoints += hc.getCardPoints(hc)
+                        self.player1.roundPoints -= p1LastCard.getCardPoints(p1LastCard)
                         self.player1.stock.removeLast()
                         for card in self.player1.stock {
                             self.player2.stock.insert(card, at: 0)
@@ -884,15 +890,21 @@ class GameViewController: UIViewController {
         }
         
         if player1.numberOfSpades > player2.numberOfSpades {
-            player1.roundPoints += 6
-            player1.hasMostSpades = true
+            player1.spadePoints = 6
+            
         } else if player1.numberOfSpades < player2.numberOfSpades {
-            player2.roundPoints += 6
-            player2.hasMostSpades = true
+            player2.spadePoints = 6
+            
         } else {
-            player1.roundPoints += 3
-            player2.roundPoints += 3
+            player1.spadePoints = 3
+            player2.spadePoints = 3
+            
         }
+        
+        for player in players {
+            player.roundPoints += player.spadePoints
+        }
+        
         /*
          if player1.numberOfSpades != player2.numberOfSpades {
          var largest = 0
@@ -924,10 +936,11 @@ class GameViewController: UIViewController {
         roundNumber += 1
         roundLabel.text = "Round \(roundNumber)"
         
-        player1.roundPoints = 0
-        player1.numberOfTabbeCards = 0
-        player2.roundPoints = 0
-        player2.numberOfTabbeCards = 0
+        for player in players {
+            player.roundPoints = 0
+            player.spadePoints = 0
+            player.numberOfTabbeCards = 0
+        }
         
         decks = Deck(numDecks: 2)
         
@@ -983,8 +996,9 @@ class GameViewController: UIViewController {
         checkForMostSpades()
         
         // Add points from round to total points
-        player1.points += player1.roundPoints
-        player2.points += player2.roundPoints
+        for player in players {
+            player.points += player.roundPoints
+        }
         
         // Sanity check. Should add up to 20.
         
