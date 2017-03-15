@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		B2144BF91D874386001DAE39 /* smulle_rules.txt in Resources */ = {isa = PBXBuildFile; fileRef = B2144BF81D874386001DAE39 /* smulle_rules.txt */; };
 		B215199C1CCBCC0000A2E47D /* CardHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B215199B1CCBCC0000A2E47D /* CardHolder.swift */; };
+		B25C5C3A1E6DB07B00D5C9C2 /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = B25C5C391E6DB07B00D5C9C2 /* Common.swift */; };
+		B25C5C3C1E721F0F00D5C9C2 /* 1p.m4a in Resources */ = {isa = PBXBuildFile; fileRef = B25C5C3B1E721F0000D5C9C2 /* 1p.m4a */; };
 		B26C39A21E2E9EE30093C411 /* shift.m4a in Resources */ = {isa = PBXBuildFile; fileRef = B26C39A11E2E9EE30093C411 /* shift.m4a */; };
 		B26C39A41E2E9FC20093C411 /* unshift.m4a in Resources */ = {isa = PBXBuildFile; fileRef = B26C39A31E2E9FC20093C411 /* unshift.m4a */; };
 		B26C39A61E2EA1D10093C411 /* shuffle.m4a in Resources */ = {isa = PBXBuildFile; fileRef = B26C39A51E2EA1D10093C411 /* shuffle.m4a */; };
@@ -25,7 +27,7 @@
 		B2C097CD1C9B0A4E003BDA9E /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C097CC1C9B0A4E003BDA9E /* Card.swift */; };
 		B2C13B931E2EE6E7005D3530 /* collect.m4a in Resources */ = {isa = PBXBuildFile; fileRef = B2C13B921E2EE6E7005D3530 /* collect.m4a */; };
 		B2C13B951E302D18005D3530 /* AVAudioPlayerPool.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C13B941E302D18005D3530 /* AVAudioPlayerPool.swift */; };
-		B2C13B971E31769B005D3530 /* 1p.m4a in Resources */ = {isa = PBXBuildFile; fileRef = B2C13B961E31769B005D3530 /* 1p.m4a */; };
+		B2C13B971E31769B005D3530 /* 5p.m4a in Resources */ = {isa = PBXBuildFile; fileRef = B2C13B961E31769B005D3530 /* 5p.m4a */; };
 		B2C7DB931CBC49B300AFB1AA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B2C7DB921CBC49B300AFB1AA /* Main.storyboard */; };
 		B2E13B651CAF3043002F0613 /* GamePlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E13B641CAF3043002F0613 /* GamePlay.swift */; };
 		B2E13B671CAFFF2E002F0613 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E13B661CAFFF2E002F0613 /* Player.swift */; };
@@ -35,6 +37,8 @@
 /* Begin PBXFileReference section */
 		B2144BF81D874386001DAE39 /* smulle_rules.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = smulle_rules.txt; sourceTree = "<group>"; };
 		B215199B1CCBCC0000A2E47D /* CardHolder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardHolder.swift; sourceTree = "<group>"; };
+		B25C5C391E6DB07B00D5C9C2 /* Common.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
+		B25C5C3B1E721F0000D5C9C2 /* 1p.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = 1p.m4a; sourceTree = "<group>"; };
 		B26C39A11E2E9EE30093C411 /* shift.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = shift.m4a; sourceTree = "<group>"; };
 		B26C39A31E2E9FC20093C411 /* unshift.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = unshift.m4a; sourceTree = "<group>"; };
 		B26C39A51E2EA1D10093C411 /* shuffle.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = shuffle.m4a; sourceTree = "<group>"; };
@@ -53,7 +57,7 @@
 		B2C097CC1C9B0A4E003BDA9E /* Card.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
 		B2C13B921E2EE6E7005D3530 /* collect.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = collect.m4a; sourceTree = "<group>"; };
 		B2C13B941E302D18005D3530 /* AVAudioPlayerPool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AVAudioPlayerPool.swift; sourceTree = "<group>"; };
-		B2C13B961E31769B005D3530 /* 1p.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = 1p.m4a; sourceTree = "<group>"; };
+		B2C13B961E31769B005D3530 /* 5p.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = 5p.m4a; sourceTree = "<group>"; };
 		B2C7DB921CBC49B300AFB1AA /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		B2E13B641CAF3043002F0613 /* GamePlay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GamePlay.swift; sourceTree = "<group>"; };
 		B2E13B661CAFFF2E002F0613 /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
@@ -74,7 +78,8 @@
 		B204CD0A1E6B021000792F76 /* Sounds */ = {
 			isa = PBXGroup;
 			children = (
-				B2C13B961E31769B005D3530 /* 1p.m4a */,
+				B25C5C3B1E721F0000D5C9C2 /* 1p.m4a */,
+				B2C13B961E31769B005D3530 /* 5p.m4a */,
 				B2C13B921E2EE6E7005D3530 /* collect.m4a */,
 				B2914BEB1E2EE08F00185C97 /* flipcard2.m4a */,
 				B2914BE91E2EDC4B00185C97 /* discard.m4a */,
@@ -110,6 +115,7 @@
 				B2C097BA1C9AE738003BDA9E /* AppDelegate.swift */,
 				B2F01E561D8B2C7B005A5E3B /* StartViewController.swift */,
 				B2C097BC1C9AE738003BDA9E /* GameViewController.swift */,
+				B25C5C391E6DB07B00D5C9C2 /* Common.swift */,
 				B2B427091E3FF19C005C7AAB /* ModalViewController.swift */,
 				B2C13B941E302D18005D3530 /* AVAudioPlayerPool.swift */,
 				B2144BF81D874386001DAE39 /* smulle_rules.txt */,
@@ -188,11 +194,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B2C13B971E31769B005D3530 /* 1p.m4a in Resources */,
+				B2C13B971E31769B005D3530 /* 5p.m4a in Resources */,
 				B2C13B931E2EE6E7005D3530 /* collect.m4a in Resources */,
 				B2914BEC1E2EE08F00185C97 /* flipcard2.m4a in Resources */,
 				B2914BEA1E2EDC4B00185C97 /* discard.m4a in Resources */,
 				B26C39AA1E2ED1A80093C411 /* shift2.m4a in Resources */,
+				B25C5C3C1E721F0F00D5C9C2 /* 1p.m4a in Resources */,
 				B26C39A81E2EA6470093C411 /* flipcard.m4a in Resources */,
 				B26C39A61E2EA1D10093C411 /* shuffle.m4a in Resources */,
 				B26C39A41E2E9FC20093C411 /* unshift.m4a in Resources */,
@@ -215,6 +222,7 @@
 				B2F01E571D8B2C7B005A5E3B /* StartViewController.swift in Sources */,
 				B215199C1CCBCC0000A2E47D /* CardHolder.swift in Sources */,
 				B2B4270A1E3FF19D005C7AAB /* ModalViewController.swift in Sources */,
+				B25C5C3A1E6DB07B00D5C9C2 /* Common.swift in Sources */,
 				B2E13B651CAF3043002F0613 /* GamePlay.swift in Sources */,
 				B2C097CD1C9B0A4E003BDA9E /* Card.swift in Sources */,
 				B2C097BD1C9AE738003BDA9E /* GameViewController.swift in Sources */,

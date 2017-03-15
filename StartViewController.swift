@@ -41,7 +41,12 @@ class StartViewController: UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        //showModal()
+        /*
+        let modal = ModalViewController()
+        modal.addHelpText()
+        
+        present(modal, animated: true, completion: nil)
+ */
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -55,14 +60,6 @@ class StartViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
-    }
-    
-    func showModal() {
-        let modalViewController = ModalViewController()
-        modalViewController.modalPresentationStyle = .overCurrentContext
-        //modalViewController.view.alpha = 0.5
-        //modalViewController.view.backgroundColor = UIColor.red
-        present(modalViewController, animated: true, completion: nil)
     }
 
     

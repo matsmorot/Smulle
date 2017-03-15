@@ -6,7 +6,7 @@
 //  Copyright © 2016 pixlig.se. All rights reserved.
 //
 
-import Foundation
+
 import UIKit
 
 class Card: UIImageView {
@@ -125,7 +125,6 @@ class Card: UIImageView {
                 
             })
             self.faceUp = false
-            print("Card flipped from front to back!")
         } else {
             
             self.addSubview(front)
@@ -137,7 +136,6 @@ class Card: UIImageView {
             })
             self.addBorder(front)
             self.faceUp = true
-            print("Card flipped from back to front!")
         }
         
     }

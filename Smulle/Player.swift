@@ -28,7 +28,10 @@ class Player: CardHolder, PlayerType, Hashable {
     var points: Int
     var roundPoints: Int {
         didSet {
-            print(self.roundPoints - oldValue)
+            if roundPoints - oldValue == 1 {
+                // Play sound from here instead?
+                
+            }
         }
     }
     var wins: Int

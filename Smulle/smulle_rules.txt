@@ -15,7 +15,7 @@ Ace = 1 p
 
 In addition to these cards you will get 1 p if you can take all the cards on the table, and at the end of each round, the player with the most collected spades will get 6 extra points.
 
-The value of J is 11, Q is 12, K is 13 and A is 1 on the table and 14 on the hand, unless the Ace on the table is the same Ace you've got, then it's 14 and is OK to take with your Ace.
+The value of J is 11, Q is 12, K is 13 and A is 1 on the table and 14 on the hand, unless the Ace on the table is the EXACT same Ace you've got, then it's 14 and is OK to take with your Ace.
 
 Example:
 Q + A + A on table = A on hand

@@ -31,16 +31,27 @@ class GameViewController: UIViewController {
     
     @IBAction func restartButton(_ sender: UIBarButtonItem) {
         // Temporarily a button for stats
+        
         let statCard = ModalViewController()
+        
         statCard.modalPresentationStyle = .overCurrentContext
         statCard.players = players
+        statCard.roundNumber = roundNumber
+        statCard.addStats()
         
         present(statCard, animated: true, completion: nil)
+        
     }
     @IBAction func helpButton(_ sender: UIBarButtonItem) {
-        //let rulesCard = ModalView(parentView: self.view, textFile: "smulle_rules")
-        //rulesCard.presentModal()
+        
+        let rulesModal = ModalViewController()
+        rulesModal.modalPresentationStyle = .overCurrentContext
+        rulesModal.addHelpText()
+        
+        present(rulesModal, animated: true, completion: nil)
     }
+    
+    var statCard = ModalViewController()
     
     let gradientLayer = CAGradientLayer()
     let color1 = UIColor(red: 0x0A, green: 0xC9, blue: 0x5F)
@@ -69,13 +80,15 @@ class GameViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        print("viewDidLoad")
         
         navigationBar.setBackgroundImage(UIImage(named: "top_bar"), for: UIBarMetrics.default)
         toolBar.setBackgroundImage(nil, forToolbarPosition: .any, barMetrics: .default)
         
         pointsLabel.alpha = 0
         infoLabel.alpha = 0
-        infoLabel.textColor = UIColor.white
+        infoLabel.textColor = UIColor.lightText
+        roundLabel.textColor = ColorPalette.mint
         
         // Assign stack views to players
         player1.stackView = player1StackView
@@ -96,8 +109,6 @@ class GameViewController: UIViewController {
         player2.isDealer = true
         
         
-        // Start game
-        beginNewRound()
         
         // Debugging
         
@@ -134,8 +145,10 @@ class GameViewController: UIViewController {
         gradientLayer.colors = [color1.cgColor, color2.cgColor]
         
         view.layer.insertSublayer(gradientLayer, at: 0)
-        tableCardsStackView.setContentCompressionResistancePriority(1000, for: .horizontal)
+        //tableCardsStackView.setContentCompressionResistancePriority(1000, for: .horizontal)
         
+        // Start game
+        beginNewRound()
     }
 
     override func didReceiveMemoryWarning() {
@@ -191,7 +204,9 @@ class GameViewController: UIViewController {
             card.addGestureRecognizer(tap)
             card.heightAnchor.constraint(equalToConstant: card.cardImageView.frame.height).isActive = true
             card.widthAnchor.constraint(equalToConstant: card.cardImageView.frame.width).isActive = true
+            card.translatesAutoresizingMaskIntoConstraints = false
             card.addSubview(card.cardImageView)
+            
             tableCardsStackView.addArrangedSubview(card)
         }
         
@@ -537,8 +552,12 @@ class GameViewController: UIViewController {
         highlightedCards.removeAll()
         sumOfHighlightedCards = 0
         
+        var nameLabel = UILabel()
+        
         nextPlayerLoop: if activePlayer == player1 {
             activePlayer = player2
+            
+            nameLabel = player2NameLabel
             if player2.hand.count > 0 {
                 print("Now it's \(activePlayer.name)'s turn!")
                 playAI()
@@ -552,31 +571,33 @@ class GameViewController: UIViewController {
             }
         } else if activePlayer == player2 {
             activePlayer = player1
+            nameLabel = player1NameLabel
             print("Now it's \(activePlayer.name)'s turn!")
         }
         
         if activePlayer.hand.count == 0 && decks.deck.count > 0 {
             dealNewCards()
-        } else if decks.deck.count == 0 && activePlayer.hand.count == 0 {
+        } else if activePlayer.hand.count == 0 && decks.deck.count == 0 && !statCard.isBeingPresented {
             endRound()
         }
         updateView()
+        nameLabel.text = "\(nameLabel.text!) <-"
     }
 
     
     func playAI() {
         
-        //infoLabel.transform = CGAffineTransform(scaleX: 1, y: 1)
+        infoLabel.alpha = 0
         view.isUserInteractionEnabled = false
-        UIView.animate(withDuration: 1, delay: 0, options: [.autoreverse], animations: {
+        UIView.animate(withDuration: 1, delay: 1, options: [], animations: {
             
             self.infoLabel.alpha = 1
             self.infoLabel.text = "Now it's \(self.player2.name)´s turn!"
             
         }, completion: { (finished: Bool) -> Void in
             
-            self.view.isUserInteractionEnabled = true
             self.infoLabel.alpha = 0
+            self.view.isUserInteractionEnabled = true
             
             var tookCards = false
             
@@ -593,20 +614,8 @@ class GameViewController: UIViewController {
                 hcIndex = self.player2.hand.index(of: hc)!
                 tableLoop: for tc in self.tableCards.hand {
                     
-                    // If same card in hand as top card in stock, you can take a smulle with that
-                    if self.player2.stock.last?.rank == hc.rank && self.player2.stock.last?.suit == hc.suit {
-                        self.player2.smulleCards.append(hc)
-                        self.player2.roundPoints += hc.getCardPoints(hc) + 5
-                        self.pointsToAnimate += [hc.getCardPoints(hc), 5]
-                        self.animatePointsTaken(self.pointsToAnimate, origin: hc.center)
-                        self.player2.hand.remove(at: self.player2.hand.index(of: hc)!)
-                        self.player2StackView.arrangedSubviews[self.player2StackView.arrangedSubviews.index(of: hc)!].removeFromSuperview()
-                        tookCards = true
-                        print("Player2 took a smulle with top card of stock")
-                        break handLoop
-                        
-                        // and if you have opponent's top stock card on hand you steal whole stock and also a smulle
-                    } else if p1LastCard.rank == hc.rank && p1LastCard.suit == hc.suit {
+                    // If you have opponent's top stock card on hand you steal whole stock and also a smulle (prio 1)
+                    if p1LastCard.rank == hc.rank && p1LastCard.suit == hc.suit {
                         hc.flipCard()
                         self.player2.stock.append(hc)
                         self.player2.roundPoints += hc.getCardPoints(hc)
@@ -631,7 +640,20 @@ class GameViewController: UIViewController {
                         print("Player2 took your stock with \(hc.rank.rawValue) of \(hc.suit)!")
                         break handLoop
                         
-                    } else if hc.rank == tc.rank && hc.suit == tc.suit { // Smulle?
+                    // and if you have the top card of your stock in your hand, take smulle (prio 2)
+                    } else if self.player2.stock.last?.rank == hc.rank && self.player2.stock.last?.suit == hc.suit {
+                        self.player2.smulleCards.append(hc)
+                        self.player2.roundPoints += hc.getCardPoints(hc) + 5
+                        self.pointsToAnimate += [hc.getCardPoints(hc), 5]
+                        self.animatePointsTaken(self.pointsToAnimate, origin: hc.center)
+                        self.player2.hand.remove(at: self.player2.hand.index(of: hc)!)
+                        self.player2StackView.arrangedSubviews[self.player2StackView.arrangedSubviews.index(of: hc)!].removeFromSuperview()
+                        tookCards = true
+                        print("Player2 took a smulle with top card of stock")
+                        break handLoop
+                    
+                    // Is there a smulle on the table? (prio 3)
+                    } else if hc.rank == tc.rank && hc.suit == tc.suit {
                         
                         self.player2.smulleCards.append(tc)
                         self.player2.roundPoints += tc.getCardPoints(tc) + 5
@@ -697,6 +719,22 @@ class GameViewController: UIViewController {
         })
     }
     
+    func pickCards() {
+        
+        // Can we take all of the table cards?
+        var sumOfTableCards: Int = 0
+        let bestCardIndex = findCardIndexToUse(player2.hand) // Begin with the best card in hand
+        
+        for tableCard in tableCards.hand {
+            sumOfTableCards += tableCard.rank.rawValue
+        }
+        
+        
+        if player2.hand[bestCardIndex].rank.rawValue == sumOfTableCards {
+            highlightedCards = tableCards.hand
+        }
+    }
+    
     
     
     func dealNewCards() {
@@ -707,6 +745,7 @@ class GameViewController: UIViewController {
                 card.flipCard()
             }
             player2.takeCardsFromDeck(4, fromDeck: decks)
+            player2.hand.sort { $0.rank.rawValue < $1.rank.rawValue }
             for card in player2.hand {
                 if card.faceUp {
                     card.flipCard()
@@ -719,6 +758,7 @@ class GameViewController: UIViewController {
                 card.flipCard()
             }
             player2.takeCardsFromDeck(4, fromDeck: decks)
+            player2.hand.sort { $0.rank.rawValue < $1.rank.rawValue }
             for card in player2.hand {
                 if card.faceUp {
                     card.flipCard()
@@ -802,18 +842,22 @@ class GameViewController: UIViewController {
     func animatePointsTaken(_ points: [Int], origin: CGPoint) {
         
         if activePlayer == player2 {
-            pointsLabel.textColor = UIColor.red
+            pointsLabel.textColor = ColorPalette.pink
         } else {
-            pointsLabel.textColor = UIColor.green
+            pointsLabel.textColor = ColorPalette.mint
         }
         
         // Filter out all occurencies of 0 points
         let points = points.filter{ $0 != 0 }
         
-        // Well, this is quite an ugly solution, but it's what works right now
+        // Fix: Sequential animations
         for point in points {
             
-            playSound(soundEffect: "1p")
+            if point == 1 || point == 2 {
+                playSound(soundEffect: "1p")
+            } else if point == 5 {
+                playSound(soundEffect: "5p")
+            }
             
             if points.count > 0 {
                 pointsLabel.center = origin
@@ -891,9 +935,11 @@ class GameViewController: UIViewController {
         
         if player1.numberOfSpades > player2.numberOfSpades {
             player1.spadePoints = 6
+            player2.spadePoints = 0
             
         } else if player1.numberOfSpades < player2.numberOfSpades {
             player2.spadePoints = 6
+            player1.spadePoints = 0
             
         } else {
             player1.spadePoints = 3
@@ -949,7 +995,7 @@ class GameViewController: UIViewController {
         
         changeDealer()
         
-        // Show deck next to the player who is currently dealer (needs improvement)
+        // Show deck next to the player who is currently dealer
         showDeck()
         
         // Deal cards
@@ -1001,25 +1047,27 @@ class GameViewController: UIViewController {
         }
         
         // Sanity check. Should add up to 20.
-        
+        /*
         var totalCardPoints = 0
         
-        totalCardPoints = player1.roundPoints - player1.numberOfTabbeCards - (player1.smulleCards.count * 5) + player2.roundPoints - player2.numberOfTabbeCards - (player2.smulleCards.count * 5)
+        totalCardPoints = player1.roundPoints - player1.spadePoints - player1.numberOfTabbeCards - (player1.smulleCards.count * 5) + player2.roundPoints - player2.spadePoints - player2.numberOfTabbeCards - (player2.smulleCards.count * 5)
         
         assert(totalCardPoints == 20, "Total points don't add up! \(totalCardPoints)")
-        
+        */
         
         if roundNumber <= numberOfRounds {
             
-            // TODO: Modal of round stats
-            let statCard = ModalViewController()
+            // Present stats modally
+            
+            statCard = ModalViewController()
+            statCard.delegate = self
             statCard.modalPresentationStyle = .overCurrentContext
             statCard.players = players
+            statCard.roundNumber = roundNumber
+            statCard.addStats()
             
             present(statCard, animated: true, completion: nil)
             
-            clearTable()
-            beginNewRound()
         } else {
             endGame()
         }
@@ -1090,7 +1138,7 @@ class GameViewController: UIViewController {
 
     }
     
-    func playSound(soundEffect: String) {
+    public func playSound(soundEffect: String) {
         let url = Bundle.main.url(forResource: soundEffect, withExtension: "m4a")
             let player = AVAudioPlayerPool.playerWithURL(url: url!)
             player?.play()
