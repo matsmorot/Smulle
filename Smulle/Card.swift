@@ -17,6 +17,13 @@ class Card: UIImageView {
     var cardImage: UIImage
     var cardImageView: UIImageView
     var faceUp: Bool
+    var origin: CGPoint {
+        didSet {
+            origin.x = abs(origin.x)
+            origin.y = abs(origin.y)
+            print(origin)
+        }
+    }
     
     init(rank: Rank, suit: Suit) {
         
@@ -26,6 +33,7 @@ class Card: UIImageView {
         cardImage = UIImage(named: "\(rank.simpleDescription())_\(suit)")!
         cardImageView = UIImageView(image: cardImageBack)
         faceUp = false
+        origin = CGPoint.zero
         
         super.init(frame: CGRect(x: 0, y: 0, width: 0, height: 0)) // Initialize a dummy UIView
         
@@ -74,14 +82,14 @@ class Card: UIImageView {
         }
     }
     
-    func getCardPoints(_ card: Card) -> Int {
+    func getCardPoints() -> Int {
         
-        switch card {
-        case _ where card.rank == .ace || card.rank == .aceOnTable:
+        switch self {
+        case _ where rank == .ace || rank == .aceOnTable:
             return 1
-        case _ where card.rank == .two && card.suit == .s:
+        case _ where rank == .two && suit == .s:
             return 1
-        case _ where card.rank == .ten && card.suit == .d:
+        case _ where rank == .ten && suit == .d:
             return 2
         default:
             return 0

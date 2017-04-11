@@ -30,17 +30,10 @@ class GameViewController: UIViewController {
     @IBOutlet weak var toolBar: UIToolbar!
     
     @IBAction func restartButton(_ sender: UIBarButtonItem) {
-        // Temporarily a button for stats
+        let testVC = TestViewController()
+        testVC.modalPresentationStyle = .overCurrentContext
         
-        let statCard = ModalViewController()
-        
-        statCard.modalPresentationStyle = .overCurrentContext
-        statCard.players = players
-        statCard.roundNumber = roundNumber
-        statCard.addStats()
-        
-        present(statCard, animated: true, completion: nil)
-        
+        present(testVC, animated: true)
     }
     @IBAction func helpButton(_ sender: UIBarButtonItem) {
         
@@ -275,6 +268,7 @@ class GameViewController: UIViewController {
                 
                 // Move tapped card 20p up and increase shadow
                 card.frame = card.frame.offsetBy(dx: 0.0, dy: -20.0)
+                card.origin = view.convert(card.frame.origin, to: player1.stockView) // Save origin value for collect animation
                 card.layer.shadowOpacity = 0.6
                 card.layer.shadowOffset = CGSize.zero
                 card.layer.shadowRadius = 5
@@ -307,9 +301,9 @@ class GameViewController: UIViewController {
                     
                     takeSmulle(card) // Check for smulle
                     player1.stock.append(card)
-                    player1.roundPoints += card.getCardPoints(card)
-                    pointsToAnimate.append(card.getCardPoints(card))
-                    //animatePointsTaken(card.getCardPoints(card), origin: card.center)
+                    player1.roundPoints += card.getCardPoints()
+                    pointsToAnimate.append(card.getCardPoints())
+                    //animatePointsTaken(card.getCardPoints(), origin: card.center)
                     
                     player1.hand.remove(at: player1.hand.index(of: card)!) // ...and remove it from hand
                     player1StackView.arrangedSubviews[player1StackView.arrangedSubviews.index(of: card)!].removeFromSuperview()
@@ -324,8 +318,8 @@ class GameViewController: UIViewController {
                 // If same card in hand as top card in stock, you can take a smulle with that
                 if player1.stock.last?.rank == card.rank && player1.stock.last?.suit == card.suit {
                     player1.smulleCards.append(card)
-                    player1.roundPoints += card.getCardPoints(card) + 5
-                    pointsToAnimate += [card.getCardPoints(card), 5]
+                    player1.roundPoints += card.getCardPoints() + 5
+                    pointsToAnimate += [card.getCardPoints(), 5]
                     animatePointsTaken(pointsToAnimate, origin: card.center)
                     player1.hand.remove(at: player1.hand.index(of: card)!)
                     player1StackView.arrangedSubviews[player1StackView.arrangedSubviews.index(of: card)!].removeFromSuperview()
@@ -337,15 +331,15 @@ class GameViewController: UIViewController {
                     player2.stock.removeLast()
                     for card in player2.stock {
                         player1.stock.insert(card, at: 0)
-                        player1.roundPoints += card.getCardPoints(card)
-                        pointsToAnimate.append(card.getCardPoints(card))
-                        //animatePointsTaken(card.getCardPoints(card), origin: card.center)
-                        player2.roundPoints -= card.getCardPoints(card)
+                        player1.roundPoints += card.getCardPoints()
+                        pointsToAnimate.append(card.getCardPoints())
+                        //animatePointsTaken(card.getCardPoints(), origin: card.center)
+                        player2.roundPoints -= card.getCardPoints()
                     }
                     player2.stock.removeAll()
                     player1.smulleCards.append(card)
-                    player1.roundPoints += card.getCardPoints(card) + 5
-                    pointsToAnimate += [card.getCardPoints(card), 5]
+                    player1.roundPoints += card.getCardPoints() + 5
+                    pointsToAnimate += [card.getCardPoints(), 5]
                     animatePointsTaken(pointsToAnimate, origin: card.center)
                     player1.hand.remove(at: player1.hand.index(of: card)!)
                     player1StackView.arrangedSubviews[player1StackView.arrangedSubviews.index(of: card)!].removeFromSuperview()
@@ -354,7 +348,7 @@ class GameViewController: UIViewController {
                 } else {
                     tapCount += 1
                     if tapCount == 3 {
-                        
+                        // Visual indication of where action should be taken
                         UIView.animate(withDuration: 0.2, delay: 0, options: [.autoreverse], animations: {
                             self.tableCardsStackView.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
                             }, completion: { (finished: Bool) -> Void in
@@ -397,9 +391,11 @@ class GameViewController: UIViewController {
             highlightedCards.removeAll()
         }
         
+        let cardCenter = view.convert(card.center, to: self.tableCardsStackView)
+        
         UIView.animate(withDuration: 0.2, delay: 0, options: [], animations: {
             
-            card.center = self.view.center
+            card.center = self.player1StackView.center
             
         }, completion: { (finished: Bool) -> Void in
             self.nextPlayer()
@@ -450,9 +446,9 @@ class GameViewController: UIViewController {
                     tableCards.hand.remove(at: tableCards.hand.index(of: h)!)
                     tableCardsStackView.arrangedSubviews[tableCardsStackView.arrangedSubviews.index(of: h)!].removeFromSuperview()
                     
-                    activePlayer.roundPoints += h.getCardPoints(h) + 5
+                    activePlayer.roundPoints += h.getCardPoints() + 5
                     
-                    pointsToAnimate += [h.getCardPoints(h), 5]
+                    pointsToAnimate += [h.getCardPoints(), 5]
                     //animatePointsTaken(pointsToAnimate, origin: h.frame.origin)
                     
                 }
@@ -472,9 +468,9 @@ class GameViewController: UIViewController {
                 tableCards.hand.remove(at: tableCards.hand.index(of: hc)!)
                 tableCardsStackView.arrangedSubviews[tableCardsStackView.arrangedSubviews.index(of: hc)!].removeFromSuperview()
                 
-                activePlayer.roundPoints += hc.getCardPoints(hc) + 5
+                activePlayer.roundPoints += hc.getCardPoints() + 5
                 
-                pointsToAnimate += [hc.getCardPoints(hc), 5]
+                pointsToAnimate += [hc.getCardPoints(), 5]
                 //animatePointsTaken(pointsToAnimate, origin: hc.frame.origin)
                 break
             }
@@ -482,21 +478,36 @@ class GameViewController: UIViewController {
         
     }
     
+    func CGPointDistance(from: CGPoint, to: CGPoint) -> CGFloat {
+        return sqrt(CGPointDistanceSquared(from: from, to: to));
+    }
+    
+    func CGPointDistanceSquared(from: CGPoint, to: CGPoint) -> CGFloat {
+        return (from.x - to.x) * (from.x - to.x) + (from.y - to.y) * (from.y - to.y);
+    }
+    
     func collectCards(_ cards: Array<Card>, player: Player) {
         
         var delay = 0.5
         var cardPoints = 0
-        var cardOrigin = CGPoint.zero
+        
         
         // Loop through collected cards, insert them in stock and remove them from table hand
         for card in cards {
             
+            let cardOrigin = view.convert(card.frame.origin, from: view)
+            let stockOrigin = view.convert(player.stockView.frame.origin, from: view)
+            
+            print(cardOrigin)
+            print(stockOrigin)
+            
             UIView.animate(withDuration: 0.3, delay: delay, options: [], animations: {
                 
-                card.center = self.tableCardsStackView.center
+                card.frame.origin.x = 100
+                card.frame.origin.y = 100
                 
             }, completion: { (finished: Bool) -> Void in
-                
+                //player.stockView.addArrangedSubview(card)
             })
             
             card.layer.shadowRadius = 0
@@ -504,13 +515,13 @@ class GameViewController: UIViewController {
             playSound(soundEffect: "collect")
             tableCards.hand.remove(at: tableCards.hand.index(of: card)!)
             
-            cardPoints += card.getCardPoints(card)
-            pointsToAnimate.append(card.getCardPoints(card))
-            cardOrigin = card.frame.origin
+            cardPoints += card.getCardPoints()
+            pointsToAnimate.append(card.getCardPoints())
+            //cardOrigin = card.frame.origin
             
             delay += 0.1
             lastPlayerToCollectCards = player
-            print("\(card.rank) of \(card.suit) taken! \(card.getCardPoints(card)) points! Origin: \(card.frame.origin)")
+            print("\(card.rank) of \(card.suit) taken! \(card.getCardPoints()) points! Origin: \(card.frame.origin)")
         }
         
         // If no cards exist on table you get a TABBE
@@ -525,7 +536,7 @@ class GameViewController: UIViewController {
         
         player.roundPoints += cardPoints
         
-        animatePointsTaken(pointsToAnimate, origin: cardOrigin)
+        animatePointsTaken(pointsToAnimate, origin: CGPoint.zero)
         
         
         print("\(activePlayer.name) has \(activePlayer.stock.count) cards in stock\n")
@@ -589,7 +600,7 @@ class GameViewController: UIViewController {
         
         infoLabel.alpha = 0
         view.isUserInteractionEnabled = false
-        UIView.animate(withDuration: 1, delay: 1, options: [], animations: {
+        UIView.animate(withDuration: 1, delay: 0.2, options: [], animations: {
             
             self.infoLabel.alpha = 1
             self.infoLabel.text = "Now it's \(self.player2.name)´s turn!"
@@ -608,6 +619,7 @@ class GameViewController: UIViewController {
             if self.player1.stock.last != nil {
                 p1LastCard = self.player1.stock.last!
             }
+            
             handLoop: for hc in self.player2.hand {
                 handCard = hc
                 
@@ -618,20 +630,20 @@ class GameViewController: UIViewController {
                     if p1LastCard.rank == hc.rank && p1LastCard.suit == hc.suit {
                         hc.flipCard()
                         self.player2.stock.append(hc)
-                        self.player2.roundPoints += hc.getCardPoints(hc)
-                        self.player1.roundPoints -= p1LastCard.getCardPoints(p1LastCard)
+                        self.player2.roundPoints += hc.getCardPoints()
+                        self.player1.roundPoints -= p1LastCard.getCardPoints()
                         self.player1.stock.removeLast()
                         for card in self.player1.stock {
                             self.player2.stock.insert(card, at: 0)
-                            self.player2.roundPoints += card.getCardPoints(card)
-                            self.pointsToAnimate.append(card.getCardPoints(card))
-                            //animatePointsTaken(card.getCardPoints(card), origin: card.center)
-                            self.player1.roundPoints -= card.getCardPoints(card)
+                            self.player2.roundPoints += card.getCardPoints()
+                            self.pointsToAnimate.append(card.getCardPoints())
+                            //animatePointsTaken(card.getCardPoints(), origin: card.center)
+                            self.player1.roundPoints -= card.getCardPoints()
                         }
                         self.player1.stock.removeAll()
                         self.player2.smulleCards.append(hc)
-                        self.player2.roundPoints += hc.getCardPoints(hc) + 5
-                        self.pointsToAnimate += [hc.getCardPoints(hc), 5]
+                        self.player2.roundPoints += hc.getCardPoints() + 5
+                        self.pointsToAnimate += [hc.getCardPoints(), 5]
                         self.animatePointsTaken(self.pointsToAnimate, origin: hc.center)
                         self.player2.hand.remove(at: self.player2.hand.index(of: hc)!)
                         self.player2StackView.arrangedSubviews[self.player2StackView.arrangedSubviews.index(of: hc)!].removeFromSuperview()
@@ -643,8 +655,8 @@ class GameViewController: UIViewController {
                     // and if you have the top card of your stock in your hand, take smulle (prio 2)
                     } else if self.player2.stock.last?.rank == hc.rank && self.player2.stock.last?.suit == hc.suit {
                         self.player2.smulleCards.append(hc)
-                        self.player2.roundPoints += hc.getCardPoints(hc) + 5
-                        self.pointsToAnimate += [hc.getCardPoints(hc), 5]
+                        self.player2.roundPoints += hc.getCardPoints() + 5
+                        self.pointsToAnimate += [hc.getCardPoints(), 5]
                         self.animatePointsTaken(self.pointsToAnimate, origin: hc.center)
                         self.player2.hand.remove(at: self.player2.hand.index(of: hc)!)
                         self.player2StackView.arrangedSubviews[self.player2StackView.arrangedSubviews.index(of: hc)!].removeFromSuperview()
@@ -656,15 +668,15 @@ class GameViewController: UIViewController {
                     } else if hc.rank == tc.rank && hc.suit == tc.suit {
                         
                         self.player2.smulleCards.append(tc)
-                        self.player2.roundPoints += tc.getCardPoints(tc) + 5
-                        self.pointsToAnimate += [tc.getCardPoints(hc), 5]
+                        self.player2.roundPoints += tc.getCardPoints() + 5
+                        self.pointsToAnimate += [tc.getCardPoints(), 5]
                         //animatePointsTaken(tc.getCardPoints(tc) + 5, origin: tc.center)
                         self.tableCards.hand.remove(at: self.tableCards.hand.index(of: tc)!)
                         self.tableCardsStackView.arrangedSubviews[self.tableCardsStackView.arrangedSubviews.index(of: tc)!].removeFromSuperview()
                         hc.flipCard()
                         self.player2.stock.append(hc)
-                        self.player2.roundPoints += hc.getCardPoints(hc)
-                        self.pointsToAnimate.append(hc.getCardPoints(hc))
+                        self.player2.roundPoints += hc.getCardPoints()
+                        self.pointsToAnimate.append(hc.getCardPoints())
                         self.animatePointsTaken(self.pointsToAnimate, origin: hc.center)
                         self.player2.hand.remove(at: hcIndex) // ...and remove it from hand
                         self.player2StackView.arrangedSubviews[self.player2StackView.arrangedSubviews.index(of: hc)!].removeFromSuperview()
@@ -681,8 +693,8 @@ class GameViewController: UIViewController {
                         
                         self.player2.stock.append(hc) // Add chosen card from hand to stock
                         self.player2.hand.remove(at: hcIndex) // ...and remove it from hand
-                        self.player2.roundPoints += hc.getCardPoints(hc)
-                        self.pointsToAnimate.append(hc.getCardPoints(hc))
+                        self.player2.roundPoints += hc.getCardPoints()
+                        self.pointsToAnimate.append(hc.getCardPoints())
                         self.animatePointsTaken(self.pointsToAnimate, origin: hc.center)
                         
                         break handLoop
@@ -720,7 +732,7 @@ class GameViewController: UIViewController {
     }
     
     func pickCards() {
-        
+        // TO DO: Making AI smarter
         // Can we take all of the table cards?
         var sumOfTableCards: Int = 0
         let bestCardIndex = findCardIndexToUse(player2.hand) // Begin with the best card in hand
@@ -779,7 +791,7 @@ class GameViewController: UIViewController {
     func findCardIndexToDiscard(_ cards: Array<Card>) -> Int {
         var values: Array<Int> = []
         for card in cards {
-            if card.getCardPoints(card) > 0 {
+            if card.getCardPoints() > 0 {
                 values.append(15) // If card has points, make sure it will be picked last
             } else {
                 values.append(card.rank.rawValue)
@@ -793,9 +805,9 @@ class GameViewController: UIViewController {
         // If card has points, make sure it will be picked first
         var values: Array<Int> = []
         for card in cards {
-            if card.getCardPoints(card) == 1 {
+            if card.getCardPoints() == 1 {
                 values.append(15)
-            } else if card.getCardPoints(card) == 2 {
+            } else if card.getCardPoints() == 2 {
                 values.append(16)
             } else {
                 values.append(card.rank.rawValue)
@@ -1013,14 +1025,19 @@ class GameViewController: UIViewController {
         
         // The leftover cards on table are given to the player who was last to collect cards
         if tableCards.hand.count > 0 {
+            
             var nextCardIndex = 1
             for card in tableCards.hand {
+                var tookSmulle: Bool = false
                 // Check the remaining cards for smullar
-                smulleLoop: for _ in nextCardIndex..<tableCards.hand.count {
-                    if card.rank.rawValue == tableCards.hand[nextCardIndex].rank.rawValue && card.suit == tableCards.hand[nextCardIndex].suit {
+                smulleLoop: for index in nextCardIndex..<tableCards.hand.count {
+                    
+                    if card.rank.rawValue == tableCards.hand[index].rank.rawValue && card.suit == tableCards.hand[index].suit {
                         lastPlayerToCollectCards.roundPoints += 5
+                        lastPlayerToCollectCards.roundPoints += card.getCardPoints()
                         lastPlayerToCollectCards.smulleCards.append(card)
-                        break smulleLoop
+                        tookSmulle = true
+                        break smulleLoop // Don't look any further if a pair is found
                     }
                 }
                 
@@ -1028,16 +1045,21 @@ class GameViewController: UIViewController {
                     nextCardIndex += 1
                 }
                 
-                lastPlayerToCollectCards.hand.append(card)
-                lastPlayerToCollectCards.roundPoints += card.getCardPoints(card)
-                pointsToAnimate.append(card.getCardPoints(card))
-                //animatePointsTaken(card.getCardPoints(card), origin: card.center)
+                if !tookSmulle {
+                    lastPlayerToCollectCards.stock.append(card)
+                    lastPlayerToCollectCards.roundPoints += card.getCardPoints()
+                    pointsToAnimate.append(card.getCardPoints())
+                }
+                
+                //animatePointsTaken(card.getCardPoints(), origin: card.center)
             }
             lastPlayerToCollectCards.roundPoints += 1 // Tabbe
             lastPlayerToCollectCards.numberOfTabbeCards += 1
             pointsToAnimate.append(1)
             animatePointsTaken(pointsToAnimate, origin: self.view.center)
         }
+        
+        tableCards.hand.removeAll()
         
         checkForMostSpades()
         

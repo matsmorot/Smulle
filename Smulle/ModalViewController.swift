@@ -91,7 +91,7 @@ import UIKit
         do {
             textString = try String(contentsOfFile: textFile!)
         } catch let error as NSError {
-            print("Failed reading from \(textFile). Error: " + error.localizedDescription)
+            print("Failed reading from \(String(describing: textFile)). Error: " + error.localizedDescription)
         }
         
         textView.frame = view.frame
@@ -109,7 +109,7 @@ import UIKit
     
     func addStats() {
         // Programatically made stack views and content for learning purposes
-        // Not the most readable code...
+        // A lot of nesting going on.
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(statCardTapped(_:)))
         let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(statCardSwipedDown(_:)))
@@ -248,7 +248,7 @@ import UIKit
             let collectedCards = player.stock + player.smulleCards
             
             for card in collectedCards {
-                if card.getCardPoints(card) > 0 {
+                if card.getCardPoints() > 0 {
                     let pointCard = Card(rank: card.rank, suit: card.suit)
                     let cardImageView = UIImageView(image: pointCard.cardImage)
                     pointCard.flipCard()

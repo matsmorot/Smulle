@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B2107CF91E7AE7E30067811E /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2107CF81E7AE7E30067811E /* TestViewController.swift */; };
 		B2144BF91D874386001DAE39 /* smulle_rules.txt in Resources */ = {isa = PBXBuildFile; fileRef = B2144BF81D874386001DAE39 /* smulle_rules.txt */; };
 		B215199C1CCBCC0000A2E47D /* CardHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B215199B1CCBCC0000A2E47D /* CardHolder.swift */; };
 		B25C5C3A1E6DB07B00D5C9C2 /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = B25C5C391E6DB07B00D5C9C2 /* Common.swift */; };
@@ -34,7 +35,21 @@
 		B2F01E571D8B2C7B005A5E3B /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2F01E561D8B2C7B005A5E3B /* StartViewController.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		B2107CFD1E7AFE630067811E /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		B2107CF81E7AE7E30067811E /* TestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
 		B2144BF81D874386001DAE39 /* smulle_rules.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = smulle_rules.txt; sourceTree = "<group>"; };
 		B215199B1CCBCC0000A2E47D /* CardHolder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardHolder.swift; sourceTree = "<group>"; };
 		B25C5C391E6DB07B00D5C9C2 /* Common.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
@@ -127,6 +142,7 @@
 				B204CD0A1E6B021000792F76 /* Sounds */,
 				B2C097C11C9AE738003BDA9E /* Assets.xcassets */,
 				B2C7DB921CBC49B300AFB1AA /* Main.storyboard */,
+				B2107CF81E7AE7E30067811E /* TestViewController.swift */,
 				B2C097C31C9AE738003BDA9E /* LaunchScreen.storyboard */,
 				B2C097C61C9AE738003BDA9E /* Info.plist */,
 			);
@@ -143,6 +159,7 @@
 				B2C097B31C9AE738003BDA9E /* Sources */,
 				B2C097B41C9AE738003BDA9E /* Frameworks */,
 				B2C097B51C9AE738003BDA9E /* Resources */,
+				B2107CFD1E7AFE630067811E /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -228,6 +245,7 @@
 				B2C097BD1C9AE738003BDA9E /* GameViewController.swift in Sources */,
 				B2C13B951E302D18005D3530 /* AVAudioPlayerPool.swift in Sources */,
 				B2E13B671CAFFF2E002F0613 /* Player.swift in Sources */,
+				B2107CF91E7AE7E30067811E /* TestViewController.swift in Sources */,
 				B2C097BB1C9AE738003BDA9E /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
