@@ -27,7 +27,7 @@ import UIKit
         blurView.layer.cornerRadius = 20
         blurView.alpha = 0.94
         
-        view.addSubview(blurView)
+        view.insertSubview(blurView, at: 0)
         
     }
 
@@ -65,7 +65,11 @@ import UIKit
         
         self.dismiss(animated: true, completion: { () -> Void in
             self.delegate.clearTable()
-            self.delegate.beginNewRound()
+            if self.delegate.roundNumber < self.delegate.numberOfRounds {
+                self.delegate.beginNewRound()
+            } else {
+                self.delegate.endGame()
+            }
         })
     }
     
@@ -73,7 +77,11 @@ import UIKit
         
         self.dismiss(animated: true, completion: { () -> Void in
             self.delegate.clearTable()
-            self.delegate.beginNewRound()
+            if self.delegate.roundNumber < self.delegate.numberOfRounds {
+                self.delegate.beginNewRound()
+            } else {
+                self.delegate.endGame()
+            }
         })
     }
     

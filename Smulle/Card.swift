@@ -16,6 +16,7 @@ class Card: UIImageView {
     var cardImageBack: UIImage
     var cardImage: UIImage
     var cardImageView: UIImageView
+    var cardLabel: UILabel
     var faceUp: Bool
     var origin: CGPoint {
         didSet {
@@ -32,10 +33,11 @@ class Card: UIImageView {
         cardImageBack = UIImage(named: "Back")!
         cardImage = UIImage(named: "\(rank.simpleDescription())_\(suit)")!
         cardImageView = UIImageView(image: cardImageBack)
+        cardLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
         faceUp = false
         origin = CGPoint.zero
         
-        super.init(frame: CGRect(x: 0, y: 0, width: 0, height: 0)) // Initialize a dummy UIView
+        super.init(frame: CGRect.zero) // Initialize a dummy UIView
         
         //addBorder(cardImageView)
     }
@@ -94,7 +96,6 @@ class Card: UIImageView {
         default:
             return 0
         }
-    
     }
     
     func addShadow(_ cardImage: UIImageView) {
@@ -105,7 +106,6 @@ class Card: UIImageView {
         cardImage.layer.shadowOpacity = 0.3
         cardImage.layer.shadowOffset = CGSize.zero
         cardImage.layer.shadowRadius = 5
-        
     }
     
     func addBorder(_ cardImageView: UIImageView) {
@@ -115,6 +115,17 @@ class Card: UIImageView {
         let borderColor = UIColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5).cgColor
         cardImageView.layer.borderColor = borderColor
         cardImageView.setContentCompressionResistancePriority(1000, for: .horizontal)
+    }
+    
+    func addLabel() {
+        cardLabel.center = self.center
+        cardLabel.textColor = UIColor.black
+        cardLabel.font = Fonts.big
+        cardLabel.textAlignment = .center
+        
+        cardLabel.text = String(self.getCardPoints())
+        
+        self.addSubview(cardLabel)
     }
     
     func flipCard() {
@@ -129,7 +140,7 @@ class Card: UIImageView {
             self.addSubview(back)
             UIView.transition(from: self.cardImageView, to: back, duration: 0.32, options: [.transitionFlipFromRight, .showHideTransitionViews], completion: { (finished: Bool) -> Void in
                 
-                // Should something happen after card has been flipped?
+                // Should something happen after card has been flipped from front to back?
                 
             })
             self.faceUp = false

@@ -12,7 +12,9 @@ import UIKit
 // Equatable
 
 func ==(lhs: Player, rhs: Player) -> Bool {
-    return lhs.hashValue == rhs.hashValue
+    return
+        lhs.hashValue == rhs.hashValue &&
+        lhs.points == rhs.points
 }
 
 protocol PlayerType {

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		B2107CF91E7AE7E30067811E /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2107CF81E7AE7E30067811E /* TestViewController.swift */; };
+		B21405D51E9D5B7B00ECEBA6 /* EndViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B21405D41E9D5B7A00ECEBA6 /* EndViewController.swift */; };
 		B2144BF91D874386001DAE39 /* smulle_rules.txt in Resources */ = {isa = PBXBuildFile; fileRef = B2144BF81D874386001DAE39 /* smulle_rules.txt */; };
 		B215199C1CCBCC0000A2E47D /* CardHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B215199B1CCBCC0000A2E47D /* CardHolder.swift */; };
 		B25C5C3A1E6DB07B00D5C9C2 /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = B25C5C391E6DB07B00D5C9C2 /* Common.swift */; };
@@ -50,6 +51,7 @@
 
 /* Begin PBXFileReference section */
 		B2107CF81E7AE7E30067811E /* TestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
+		B21405D41E9D5B7A00ECEBA6 /* EndViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EndViewController.swift; sourceTree = "<group>"; };
 		B2144BF81D874386001DAE39 /* smulle_rules.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = smulle_rules.txt; sourceTree = "<group>"; };
 		B215199B1CCBCC0000A2E47D /* CardHolder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardHolder.swift; sourceTree = "<group>"; };
 		B25C5C391E6DB07B00D5C9C2 /* Common.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
@@ -130,6 +132,7 @@
 				B2C097BA1C9AE738003BDA9E /* AppDelegate.swift */,
 				B2F01E561D8B2C7B005A5E3B /* StartViewController.swift */,
 				B2C097BC1C9AE738003BDA9E /* GameViewController.swift */,
+				B21405D41E9D5B7A00ECEBA6 /* EndViewController.swift */,
 				B25C5C391E6DB07B00D5C9C2 /* Common.swift */,
 				B2B427091E3FF19C005C7AAB /* ModalViewController.swift */,
 				B2C13B941E302D18005D3530 /* AVAudioPlayerPool.swift */,
@@ -244,6 +247,7 @@
 				B2C097CD1C9B0A4E003BDA9E /* Card.swift in Sources */,
 				B2C097BD1C9AE738003BDA9E /* GameViewController.swift in Sources */,
 				B2C13B951E302D18005D3530 /* AVAudioPlayerPool.swift in Sources */,
+				B21405D51E9D5B7B00ECEBA6 /* EndViewController.swift in Sources */,
 				B2E13B671CAFFF2E002F0613 /* Player.swift in Sources */,
 				B2107CF91E7AE7E30067811E /* TestViewController.swift in Sources */,
 				B2C097BB1C9AE738003BDA9E /* AppDelegate.swift in Sources */,

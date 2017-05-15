@@ -8,6 +8,7 @@
 
 import UIKit
 import AVFoundation
+import GameplayKit
 
 class GameViewController: UIViewController {
     
@@ -30,11 +31,15 @@ class GameViewController: UIViewController {
     @IBOutlet weak var toolBar: UIToolbar!
     
     @IBAction func restartButton(_ sender: UIBarButtonItem) {
-        let testVC = TestViewController()
-        testVC.modalPresentationStyle = .overCurrentContext
         
-        present(testVC, animated: true)
+        endCard = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "EndViewController") as! EndViewController
+        endCard.delegate = self
+        endCard.modalPresentationStyle = .overCurrentContext
+        endCard.players = players
+        
+        present(endCard, animated: true, completion: nil)
     }
+    
     @IBAction func helpButton(_ sender: UIBarButtonItem) {
         
         let rulesModal = ModalViewController()
@@ -45,6 +50,7 @@ class GameViewController: UIViewController {
     }
     
     var statCard = ModalViewController()
+    var endCard = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "EndViewController") as! EndViewController
     
     let gradientLayer = CAGradientLayer()
     let color1 = UIColor(red: 0x0A, green: 0xC9, blue: 0x5F)
@@ -73,13 +79,12 @@ class GameViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        print("viewDidLoad")
         
         navigationBar.setBackgroundImage(UIImage(named: "top_bar"), for: UIBarMetrics.default)
         toolBar.setBackgroundImage(nil, forToolbarPosition: .any, barMetrics: .default)
         
         pointsLabel.alpha = 0
-        infoLabel.alpha = 0
+        //infoLabel.alpha = 0
         infoLabel.textColor = UIColor.lightText
         roundLabel.textColor = ColorPalette.mint
         
@@ -98,8 +103,9 @@ class GameViewController: UIViewController {
         // Populate array players with players
         players = [player1, player2]
         
-        // Select initial dealer, manually for now
-        player2.isDealer = true
+        // Select initial dealer randomly
+        let dealers = GKRandomSource.sharedRandom().arrayByShufflingObjects(in: players) as! [Player]
+        dealers.first?.isDealer = true
         
         
         
@@ -139,7 +145,9 @@ class GameViewController: UIViewController {
         
         view.layer.insertSublayer(gradientLayer, at: 0)
         //tableCardsStackView.setContentCompressionResistancePriority(1000, for: .horizontal)
-        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
         // Start game
         beginNewRound()
     }
@@ -298,7 +306,9 @@ class GameViewController: UIViewController {
         } else {
             if highlightedCards.count > 0 {
                 if cardsAreCorrectlyChosen(card) {
-                    
+                    UIView.animate(withDuration: 1, animations: {
+                        card.origin.y = -200
+                    })
                     takeSmulle(card) // Check for smulle
                     player1.stock.append(card)
                     player1.roundPoints += card.getCardPoints()
@@ -317,6 +327,9 @@ class GameViewController: UIViewController {
                 
                 // If same card in hand as top card in stock, you can take a smulle with that
                 if player1.stock.last?.rank == card.rank && player1.stock.last?.suit == card.suit {
+                    UIView.animate(withDuration: 1, animations: {
+                        
+                    })
                     player1.smulleCards.append(card)
                     player1.roundPoints += card.getCardPoints() + 5
                     pointsToAnimate += [card.getCardPoints(), 5]
@@ -327,6 +340,9 @@ class GameViewController: UIViewController {
                     
                     // and if you have opponent's top stock card on hand you steal whole stock and also a smulle
                 } else if player2.stock.last?.rank == card.rank && player2.stock.last?.suit == card.suit {
+                    UIView.animate(withDuration: 1, animations: {
+                        
+                    })
                     player1.stock.append(card)
                     player2.stock.removeLast()
                     for card in player2.stock {
@@ -352,7 +368,7 @@ class GameViewController: UIViewController {
                         UIView.animate(withDuration: 0.2, delay: 0, options: [.autoreverse], animations: {
                             self.tableCardsStackView.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
                             }, completion: { (finished: Bool) -> Void in
-                                self.tableCardsStackView.transform = CGAffineTransform(scaleX: 1, y: 1)
+                                self.tableCardsStackView.transform = .identity
                             })
                         
                         print("Choose table cards first!")
@@ -391,11 +407,11 @@ class GameViewController: UIViewController {
             highlightedCards.removeAll()
         }
         
-        let cardCenter = view.convert(card.center, to: self.tableCardsStackView)
+        //let cardCenter = view.convert(card.center, to: self.tableCardsStackView)
         
         UIView.animate(withDuration: 0.2, delay: 0, options: [], animations: {
             
-            card.center = self.player1StackView.center
+            card.center = CGPoint(x: 100, y: -150)
             
         }, completion: { (finished: Bool) -> Void in
             self.nextPlayer()
@@ -488,7 +504,7 @@ class GameViewController: UIViewController {
     
     func collectCards(_ cards: Array<Card>, player: Player) {
         
-        var delay = 0.5
+        var delay = 0.0
         var cardPoints = 0
         
         
@@ -503,8 +519,8 @@ class GameViewController: UIViewController {
             
             UIView.animate(withDuration: 0.3, delay: delay, options: [], animations: {
                 
-                card.frame.origin.x = 100
-                card.frame.origin.y = 100
+                card.frame.origin.x = 140
+                card.frame.origin.y = 190
                 
             }, completion: { (finished: Bool) -> Void in
                 //player.stockView.addArrangedSubview(card)
@@ -516,6 +532,9 @@ class GameViewController: UIViewController {
             tableCards.hand.remove(at: tableCards.hand.index(of: card)!)
             
             cardPoints += card.getCardPoints()
+            
+            card.addLabel()
+            
             pointsToAnimate.append(card.getCardPoints())
             //cardOrigin = card.frame.origin
             
@@ -598,7 +617,7 @@ class GameViewController: UIViewController {
     
     func playAI() {
         
-        infoLabel.alpha = 0
+        //infoLabel.alpha = 0
         view.isUserInteractionEnabled = false
         UIView.animate(withDuration: 1, delay: 0.2, options: [], animations: {
             
@@ -607,8 +626,13 @@ class GameViewController: UIViewController {
             
         }, completion: { (finished: Bool) -> Void in
             
-            self.infoLabel.alpha = 0
-            self.view.isUserInteractionEnabled = true
+            UIView.animate(withDuration: 0.5, delay: 0, options: [], animations: {
+                
+                self.infoLabel.alpha = 0
+            
+            }, completion: { (finished: Bool) -> Void in
+                self.view.isUserInteractionEnabled = true
+            })
             
             var tookCards = false
             
@@ -875,61 +899,30 @@ class GameViewController: UIViewController {
                 pointsLabel.center = origin
                 pointsLabel.text = "\(point)"
                 pointsLabel.alpha = 1
-                pointsLabel.transform = CGAffineTransform(scaleX: 1, y: 1)
+                pointsLabel.transform = .identity
                 
-                UIView.animate(withDuration: 1, delay: 0.5, options: [], animations: {
+                UIView.animate(withDuration: 2, delay: 0.3, options: [], animations: {
                     self.pointsLabel.alpha = 0
                     //self.pointsLabel.center.y -= 200
-                    self.pointsLabel.transform = CGAffineTransform(scaleX: 20, y: 20)
-                }, completion: nil /*{ (finished: Bool) -> Void in
-                     
-                     if points.count > 1 {
+                    self.pointsLabel.transform = CGAffineTransform(scaleX: 40, y: 40)
+                }, completion: { (finished: Bool) -> Void in
+                     /*
+                     while point != points.endIndex {
                      self.pointsLabel.center = origin
-                     self.pointsLabel.text = "\(points[1])"
+                     self.pointsLabel.text = "\(point)"
                      self.pointsLabel.alpha = 1
-                     self.pointsLabel.transform = CGAffineTransform(scaleX: 1, y: 1)
+                     self.pointsLabel.transform = .identity
                      
-                     UIView.animate(withDuration: 1, delay: 0, options: [], animations: {
+                     UIView.animate(withDuration: 2, delay: 0, options: [], animations: {
                      self.pointsLabel.alpha = 0
-                     //self.pointsLabel.center.y -= 200
-                     self.pointsLabel.transform = CGAffineTransform(scaleX: 20, y: 20)
+                     self.pointsLabel.center.y -= 200
+                     self.pointsLabel.transform = CGAffineTransform(scaleX: 40, y: 40)
                      }, completion: { (finished: Bool) -> Void in
-                     
-                     if points.count > 2 {
-                     self.pointsLabel.center = origin
-                     self.pointsLabel.text = "\(points[2])"
-                     self.pointsLabel.alpha = 1
-                     self.pointsLabel.transform = CGAffineTransform(scaleX: 1, y: 1)
-                     
-                     UIView.animate(withDuration: 1, delay: 0, options: [], animations: {
-                     self.pointsLabel.alpha = 0
-                     //self.pointsLabel.center.y -= 200
-                     self.pointsLabel.transform = CGAffineTransform(scaleX: 20, y: 20)
-                     }, completion: { (finished: Bool) -> Void in
-                     
-                     if points.count > 3 {
-                     self.pointsLabel.center = origin
-                     self.pointsLabel.text = "\(points[3])"
-                     self.pointsLabel.alpha = 1
-                     self.pointsLabel.transform = CGAffineTransform(scaleX: 1, y: 1)
-                     
-                     UIView.animate(withDuration: 1, delay: 0, options: [], animations: {
-                     self.pointsLabel.alpha = 0
-                     //self.pointsLabel.center.y -= 200
-                     self.pointsLabel.transform = CGAffineTransform(scaleX: 20, y: 20)
-                     }, completion: { (finished: Bool) -> Void in
-                     
-                     })
-                     }
-                     })
-                     }
-                     })
-                     }
-                     }*/)
+                        self.pointsToAnimate.removeAll() // Empty pointsToAnimate after animations are done
+                     })}*/})
             }
         }
-        
-        pointsToAnimate.removeAll() // Empty pointsToAnimate after animations are done
+        self.pointsToAnimate.removeAll()
     }
     
     func checkForMostSpades() {
@@ -1014,10 +1007,24 @@ class GameViewController: UIViewController {
         dealNewCards()
         
         if activePlayer == player2 {
-            print("\(activePlayer.name) will start!")
+            infoLabel.text = "\(activePlayer.name) will start!"
+            infoLabel.alpha = 1
+            UIView.animate(withDuration: 2, delay: 1, options: [], animations: {
+                self.infoLabel.alpha = 0
+                self.infoLabel.transform = CGAffineTransform.init(scaleX: 40, y: 40)
+            }, completion: { (finished: Bool) -> Void in
+                self.infoLabel.transform = .identity
+            })
             playAI()
         } else if activePlayer == player1 {
-            print("\(activePlayer.name) will start!")
+            infoLabel.text = "\(activePlayer.name) will start!"
+            infoLabel.alpha = 1
+            UIView.animate(withDuration: 2, delay: 1, options: [], animations: {
+                self.infoLabel.alpha = 0
+                self.infoLabel.transform = CGAffineTransform.init(scaleX: 40, y: 40)
+            }, completion: { (finished: Bool) -> Void in
+                self.infoLabel.transform = .identity
+            })
         }
     }
     
@@ -1077,26 +1084,26 @@ class GameViewController: UIViewController {
         assert(totalCardPoints == 20, "Total points don't add up! \(totalCardPoints)")
         */
         
-        if roundNumber <= numberOfRounds {
-            
-            // Present stats modally
-            
-            statCard = ModalViewController()
-            statCard.delegate = self
-            statCard.modalPresentationStyle = .overCurrentContext
-            statCard.players = players
-            statCard.roundNumber = roundNumber
-            statCard.addStats()
-            
-            present(statCard, animated: true, completion: nil)
-            
-        } else {
-            endGame()
-        }
+        
+        // Present stats modally
+        
+        statCard = ModalViewController()
+        statCard.delegate = self
+        statCard.modalPresentationStyle = .overCurrentContext
+        statCard.players = players
+        statCard.roundNumber = roundNumber
+        statCard.addStats()
+        
+        present(statCard, animated: true, completion: nil)
     }
     
     func endGame() {
-        // TODO: Show modal of end state
+        // Show modal of end state
+        endCard.delegate = self
+        endCard.modalPresentationStyle = .overCurrentContext
+        endCard.players = players
+        
+        present(endCard, animated: true, completion: nil)
         
         if player1.points > player2.points {
             infoLabel.text = "Game over! \(player1.name) won!"

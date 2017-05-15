@@ -28,15 +28,38 @@ class StartViewController: UIViewController {
     let color1 = UIColor(red: 0x0A, green: 0xC9, blue: 0x5F)
     let color2 = UIColor(red: 0x09, green: 0xA0, blue: 0x43)
     
+    var numberOfRounds = 4
+    
+    @IBOutlet weak var roundsButton: UIButton!
+    
+    @IBAction func roundsButtonTouched(_ sender: Any) {
+        
+        if roundsButton.currentTitle == "4 rounds" {
+            roundsButton.setTitle("2 rounds", for: .normal)
+            numberOfRounds = 2
+        } else {
+            roundsButton.setTitle("4 rounds", for: .normal)
+            numberOfRounds = 4
+        }
+    }
     
     @IBAction func unwindToStartViewController(unwindSegue: UIStoryboardSegue) {
         
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "StartSegue" {
+            let gameVC = segue.destination as! GameViewController
+            gameVC.numberOfRounds = numberOfRounds
+        }
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
+        roundsButton.titleLabel?.shadowOffset = CGSize(width: 1, height: 1)
         
     }
     
