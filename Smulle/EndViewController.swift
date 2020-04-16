@@ -44,7 +44,7 @@ class EndViewController: ModalViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    func modalTapped(_ sender: UITapGestureRecognizer) {
+    @objc func modalTapped(_ sender: UITapGestureRecognizer) {
         self.dismiss(animated: true, completion: nil)
     }
     

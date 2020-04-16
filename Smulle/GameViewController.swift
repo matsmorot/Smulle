@@ -180,8 +180,8 @@ class GameViewController: UIViewController {
         for card in decks.deck {
             card.cardImageView = UIImageView(image: card.cardImageBack)
             
-            card.setContentHuggingPriority(1000, for: .horizontal)
-            card.setContentCompressionResistancePriority(1000, for: .horizontal)
+            card.setContentHuggingPriority(UILayoutPriority(rawValue: 1000), for: .horizontal)
+            card.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 1000), for: .horizontal)
             
             card.heightAnchor.constraint(lessThanOrEqualToConstant: card.cardImageView.frame.height).isActive = true
             card.widthAnchor.constraint(lessThanOrEqualToConstant: card.cardImageView.frame.width).isActive = true
@@ -257,7 +257,7 @@ class GameViewController: UIViewController {
             //player.smulleView.frame.origin.x = cardImage.frame.origin.x
             //player.smulleView.frame.origin.y = cardImage.frame.origin.y
             
-            cardImageView.contentMode = UIViewContentMode.top
+            cardImageView.contentMode = UIView.ContentMode.top
             cardImageView.clipsToBounds = true
             cardImageView.frame.size.height = cardImageView.frame.height / 3
             
@@ -266,7 +266,7 @@ class GameViewController: UIViewController {
         
     }
     
-    func cardTapped(_ sender: UITapGestureRecognizer) { // Tapper will always be player1
+    @objc func cardTapped(_ sender: UITapGestureRecognizer) { // Tapper will always be player1
         
         let card = sender.view as! Card
         
@@ -379,7 +379,7 @@ class GameViewController: UIViewController {
         }
     }
     
-    func cardSwipedUp(_ sender: UISwipeGestureRecognizer) {
+    @objc func cardSwipedUp(_ sender: UISwipeGestureRecognizer) {
         
         playSound(soundEffect: "discard")
         

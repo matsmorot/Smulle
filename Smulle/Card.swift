@@ -114,7 +114,7 @@ class Card: UIImageView {
         cardImageView.layer.cornerRadius = 2
         let borderColor = UIColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5).cgColor
         cardImageView.layer.borderColor = borderColor
-        cardImageView.setContentCompressionResistancePriority(1000, for: .horizontal)
+        cardImageView.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 1000), for: .horizontal)
     }
     
     func addLabel() {

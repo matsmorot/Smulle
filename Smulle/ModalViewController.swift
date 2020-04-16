@@ -47,21 +47,21 @@ import UIKit
     }
     */
 
-    func helpCardSwipedDown(_ sender: UISwipeGestureRecognizer) {
+    @objc func helpCardSwipedDown(_ sender: UISwipeGestureRecognizer) {
         
         self.dismiss(animated: true, completion: { () -> Void in
             
         })
     }
     
-    func helpCardTapped(_ sender: UITapGestureRecognizer) {
+    @objc func helpCardTapped(_ sender: UITapGestureRecognizer) {
         
         self.dismiss(animated: true, completion: { () -> Void in
             
         })
     }
     
-    func statCardSwipedDown(_ sender: UITapGestureRecognizer) {
+    @objc func statCardSwipedDown(_ sender: UITapGestureRecognizer) {
         
         self.dismiss(animated: true, completion: { () -> Void in
             self.delegate.clearTable()
@@ -73,7 +73,7 @@ import UIKit
         })
     }
     
-    func statCardTapped(_ sender: UITapGestureRecognizer) {
+    @objc func statCardTapped(_ sender: UITapGestureRecognizer) {
         
         self.dismiss(animated: true, completion: { () -> Void in
             self.delegate.clearTable()
@@ -108,7 +108,7 @@ import UIKit
         textView.backgroundColor = .none
         textView.textColor = UIColor.darkText
         textView.isEditable = false
-        textView.textContainerInset = UIEdgeInsetsMake(40, 25, 25, 40)
+        textView.textContainerInset = UIEdgeInsets.init(top: 40, left: 25, bottom: 25, right: 40)
         
         //view.layoutMargins = UIEdgeInsetsMake(0, 20, 20, 20)
         
@@ -131,7 +131,7 @@ import UIKit
         roundLabel.text = "Round \(roundNumber)"
         roundLabel.font = Fonts.biggerBold
         roundLabel.textAlignment = .center
-        roundLabel.setContentCompressionResistancePriority(1000, for: .vertical)
+        roundLabel.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 1000), for: .vertical)
         
         let mainStackView = UIStackView(frame: CGRect(x: 30, y: 25, width: view.frame.width - 60, height: view.frame.height - 50))
         
@@ -180,7 +180,7 @@ import UIKit
             nameLabel.text = "\(player.name)"
             nameLabel.font = Fonts.big
             nameLabel.textAlignment = .center
-            nameLabel.setContentCompressionResistancePriority(1000, for: .vertical)
+            nameLabel.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 1000), for: .vertical)
             
             pointsLabel.text = "Point cards"
             pointsCardPointsLabel.text = "\(pointsCardPoints)"

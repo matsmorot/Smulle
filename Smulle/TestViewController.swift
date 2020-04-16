@@ -32,8 +32,8 @@ class TestViewController: UIViewController {
             card.addGestureRecognizer(tap)
             card.cardImageView = UIImageView(image: card.cardImageBack)
             
-            card.setContentHuggingPriority(1000, for: .horizontal)
-            card.setContentCompressionResistancePriority(1000, for: .horizontal)
+            card.setContentHuggingPriority(UILayoutPriority(rawValue: 1000), for: .horizontal)
+            card.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 1000), for: .horizontal)
             
             card.heightAnchor.constraint(equalToConstant: card.cardImageView.frame.height).isActive = true
             card.widthAnchor.constraint(equalToConstant: card.cardImageView.frame.width).isActive = true
@@ -50,7 +50,7 @@ class TestViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    func firstTap(_ sender: UITapGestureRecognizer) {
+    @objc func firstTap(_ sender: UITapGestureRecognizer) {
         let card = sender.view as! Card
         let nextTap = UITapGestureRecognizer(target: self, action: #selector(nextTap(_:)))
         card.gestureRecognizers?.removeAll()
@@ -66,7 +66,7 @@ class TestViewController: UIViewController {
         
     }
     
-    func nextTap(_ sender: UITapGestureRecognizer) {
+    @objc func nextTap(_ sender: UITapGestureRecognizer) {
         let card = sender.view as! Card
         
         if stack1.arrangedSubviews.contains(card) {
