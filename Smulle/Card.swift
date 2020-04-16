@@ -39,7 +39,7 @@ class Card: UIImageView {
         
         super.init(frame: CGRect.zero) // Initialize a dummy UIView
         
-        //addBorder(cardImageView)
+        addLabel()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -118,10 +118,12 @@ class Card: UIImageView {
     }
     
     func addLabel() {
-        cardLabel.center = self.center
-        cardLabel.textColor = UIColor.black
+        cardLabel.frame.origin.x = self.cardImageView.frame.width / 2 - cardLabel.frame.width / 2
+        cardLabel.frame.origin.y = -cardLabel.frame.height
+        cardLabel.textColor = UIColor.white
         cardLabel.font = Fonts.big
         cardLabel.textAlignment = .center
+        //cardLabel.backgroundColor = UIColor.blue
         
         cardLabel.text = String(self.getCardPoints())
         

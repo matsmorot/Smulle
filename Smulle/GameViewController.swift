@@ -511,12 +511,6 @@ class GameViewController: UIViewController {
         // Loop through collected cards, insert them in stock and remove them from table hand
         for card in cards {
             
-            let cardOrigin = view.convert(card.frame.origin, from: view)
-            let stockOrigin = view.convert(player.stockView.frame.origin, from: view)
-            
-            print(cardOrigin)
-            print(stockOrigin)
-            
             UIView.animate(withDuration: 0.3, delay: delay, options: [], animations: {
                 
                 card.frame.origin.x = 140

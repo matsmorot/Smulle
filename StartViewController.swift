@@ -34,7 +34,7 @@ class StartViewController: UIViewController {
     
     @IBAction func roundsButtonTouched(_ sender: Any) {
         
-        if roundsButton.currentTitle == "4 rounds" {
+        if numberOfRounds == 4 {
             roundsButton.setTitle("2 rounds", for: .normal)
             numberOfRounds = 2
         } else {
